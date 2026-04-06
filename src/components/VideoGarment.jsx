@@ -40,6 +40,7 @@ export default function VideoGarment({ product, position, onClick, visible, vide
   const groupRef = useRef()
   const [hovered, setHovered] = useState(false)
   const [playing, setPlaying] = useState(false)
+  const [videoReady, setVideoReady] = useState(false)
   const floatOffset = useRef(Math.random() * Math.PI * 2)
   const videoRef = useRef(null)
   const videoTextureRef = useRef(null)
@@ -63,8 +64,16 @@ export default function VideoGarment({ product, position, onClick, visible, vide
 
     videoRef.current = v
     videoTextureRef.current = tex
-    v.play()
     setPlaying(true)
+
+    // Wait until video has actual frame data before showing shader
+    const onPlaying = () => {
+      v.removeEventListener('playing', onPlaying)
+      // Extra safety: wait one frame so texture has data
+      requestAnimationFrame(() => setVideoReady(true))
+    }
+    v.addEventListener('playing', onPlaying)
+    v.play()
   }
 
   useEffect(() => {
@@ -127,7 +136,7 @@ export default function VideoGarment({ product, position, onClick, visible, vide
 
       <mesh position={[0, -0.25, 0.01]}>
         <planeGeometry args={[planeW, planeH]} />
-        {!playing ? (
+        {(!playing || !videoReady) ? (
           <meshBasicMaterial
             map={posterTexture}
             transparent
