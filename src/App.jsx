@@ -41,7 +41,7 @@ export default function App() {
         dpr={[1, 2]}
       >
         <color attach="background" args={['#F8F6F3']} />
-        <fog attach="fog" args={['#F8F6F3', 20, 40]} />
+        <fog attach="fog" args={['#F8F6F3', 25, 50]} />
         <Experience
           phase={phase}
           onAssemblyComplete={advancePhase}

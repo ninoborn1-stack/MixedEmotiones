@@ -8,14 +8,24 @@ const ANIM_DURATION = 1.6
 const WAVE_SPREAD = 0.8
 
 const SURFACES = [
-  { id: 'floor', center: [0, 0.04, 0], extents: [6, 5], plane: 'xz', thickness: 0.08, baseDelay: 0, opacityBucket: 0 },
-  { id: 'back-wall', center: [0, 1.8, -2.4], extents: [6, 3.6], plane: 'xy', thickness: 0.08, baseDelay: 0.2, opacityBucket: 1 },
-  { id: 'left-wall', center: [-2.95, 1.8, 0], extents: [5, 3.6], plane: 'zy', thickness: 0.08, baseDelay: 0.4, opacityBucket: 1 },
-  { id: 'right-wall', center: [2.95, 1.8, 0], extents: [5, 3.6], plane: 'zy', thickness: 0.08, baseDelay: 0.5, opacityBucket: 1 },
-  { id: 'front-l', center: [-1.8, 1.8, 2.46], extents: [2.3, 3.6], plane: 'xy', thickness: 0.08, baseDelay: 0.6, opacityBucket: 1 },
-  { id: 'front-r', center: [1.8, 1.8, 2.46], extents: [2.3, 3.6], plane: 'xy', thickness: 0.08, baseDelay: 0.65, opacityBucket: 1 },
-  { id: 'ceiling', center: [0, 3.6, 0], extents: [6, 5], plane: 'xz', thickness: 0.06, baseDelay: 0.8, opacityBucket: 2 },
-  { id: 'front-top', center: [0, 3.2, 2.46], extents: [1.5, 0.8], plane: 'xy', thickness: 0.08, baseDelay: 0.9, opacityBucket: 1 },
+  // ==================== OUTDOOR GROUND ====================
+  // Large ground plane around the store (with hole where store floor is)
+  { id: 'ground-back', center: [0, -0.02, -6], extents: [20, 7], plane: 'xz', thickness: 0.06, baseDelay: 0, opacityBucket: 0, tileSize: 0.5 },
+  { id: 'ground-front', center: [0, -0.02, 6], extents: [20, 5], plane: 'xz', thickness: 0.06, baseDelay: 0.05, opacityBucket: 0, tileSize: 0.5 },
+  { id: 'ground-left', center: [-7, -0.02, 0], extents: [4, 5], plane: 'xz', thickness: 0.06, baseDelay: 0.1, opacityBucket: 0, tileSize: 0.5 },
+  { id: 'ground-right', center: [7, -0.02, 0], extents: [4, 5], plane: 'xz', thickness: 0.06, baseDelay: 0.1, opacityBucket: 0, tileSize: 0.5 },
+
+  // ==================== STORE ARCHITECTURE ====================
+  { id: 'floor', center: [0, 0.04, 0], extents: [6, 5], plane: 'xz', thickness: 0.08, baseDelay: 0.15, opacityBucket: 0 },
+  { id: 'back-wall', center: [0, 1.8, -2.4], extents: [6, 3.6], plane: 'xy', thickness: 0.08, baseDelay: 0.3, opacityBucket: 1 },
+  { id: 'left-wall', center: [-2.95, 1.8, 0], extents: [5, 3.6], plane: 'zy', thickness: 0.08, baseDelay: 0.5, opacityBucket: 1 },
+  { id: 'right-wall', center: [2.95, 1.8, 0], extents: [5, 3.6], plane: 'zy', thickness: 0.08, baseDelay: 0.55, opacityBucket: 1 },
+  { id: 'front-l', center: [-1.8, 1.8, 2.46], extents: [2.3, 3.6], plane: 'xy', thickness: 0.08, baseDelay: 0.65, opacityBucket: 1 },
+  { id: 'front-r', center: [1.8, 1.8, 2.46], extents: [2.3, 3.6], plane: 'xy', thickness: 0.08, baseDelay: 0.7, opacityBucket: 1 },
+  { id: 'ceiling', center: [0, 3.6, 0], extents: [6, 5], plane: 'xz', thickness: 0.06, baseDelay: 0.85, opacityBucket: 2 },
+  { id: 'front-top', center: [0, 3.2, 2.46], extents: [1.5, 0.8], plane: 'xy', thickness: 0.08, baseDelay: 0.95, opacityBucket: 1 },
+
+  // ==================== STORE INTERIOR ====================
   { id: 'shelf-bl', center: [-1.8, 0.7, -2.1], extents: [1.2, 0.5], plane: 'xz', thickness: 0.06, baseDelay: 1.1, opacityBucket: 0, tileSize: 0.18 },
   { id: 'shelf-br', center: [1.8, 0.7, -2.1], extents: [1.2, 0.5], plane: 'xz', thickness: 0.06, baseDelay: 1.15, opacityBucket: 0, tileSize: 0.18 },
   { id: 'shelf-bc', center: [0, 0.7, -2.1], extents: [1.0, 0.5], plane: 'xz', thickness: 0.06, baseDelay: 1.2, opacityBucket: 0, tileSize: 0.18 },
@@ -23,6 +33,39 @@ const SURFACES = [
   { id: 'rail-sl', center: [-2.2, 3.05, -1.5], extents: [0.08, 1.1], plane: 'xy', thickness: 0.04, baseDelay: 1.3, opacityBucket: 0, tileSize: 0.1 },
   { id: 'rail-sr', center: [2.2, 3.05, -1.5], extents: [0.08, 1.1], plane: 'xy', thickness: 0.04, baseDelay: 1.3, opacityBucket: 0, tileSize: 0.1 },
   { id: 'sign', center: [0, 3.0, -2.33], extents: [2.0, 0.3], plane: 'xy', thickness: 0.04, baseDelay: 1.45, opacityBucket: 0, tileSize: 0.15 },
+
+  // ==================== FOUNTAIN (left of store) ====================
+  // Base platform
+  { id: 'fount-base', center: [-5.5, 0.1, 1.5], extents: [1.4, 1.4], plane: 'xz', thickness: 0.12, baseDelay: 0.3, opacityBucket: 0, tileSize: 0.2 },
+  // Basin walls (4 sides of a square basin)
+  { id: 'fount-wall-f', center: [-5.5, 0.4, 2.15], extents: [1.4, 0.5], plane: 'xy', thickness: 0.1, baseDelay: 0.5, opacityBucket: 0, tileSize: 0.16 },
+  { id: 'fount-wall-b', center: [-5.5, 0.4, 0.85], extents: [1.4, 0.5], plane: 'xy', thickness: 0.1, baseDelay: 0.5, opacityBucket: 0, tileSize: 0.16 },
+  { id: 'fount-wall-l', center: [-6.15, 0.4, 1.5], extents: [1.4, 0.5], plane: 'zy', thickness: 0.1, baseDelay: 0.55, opacityBucket: 0, tileSize: 0.16 },
+  { id: 'fount-wall-r', center: [-4.85, 0.4, 1.5], extents: [1.4, 0.5], plane: 'zy', thickness: 0.1, baseDelay: 0.55, opacityBucket: 0, tileSize: 0.16 },
+  // Center pillar (tall narrow column)
+  { id: 'fount-pillar-f', center: [-5.5, 1.0, 1.58], extents: [0.2, 1.4], plane: 'xy', thickness: 0.12, baseDelay: 0.7, opacityBucket: 0, tileSize: 0.12 },
+  { id: 'fount-pillar-s', center: [-5.42, 1.0, 1.5], extents: [0.2, 1.4], plane: 'zy', thickness: 0.12, baseDelay: 0.7, opacityBucket: 0, tileSize: 0.12 },
+  // Pillar top cap
+  { id: 'fount-cap', center: [-5.5, 1.72, 1.5], extents: [0.4, 0.4], plane: 'xz', thickness: 0.08, baseDelay: 0.85, opacityBucket: 0, tileSize: 0.12 },
+
+  // ==================== LANTERN (right of store) ====================
+  // Base block
+  { id: 'lamp-base', center: [5.5, 0.15, 1.5], extents: [0.4, 0.4], plane: 'xz', thickness: 0.2, baseDelay: 0.35, opacityBucket: 0, tileSize: 0.12 },
+  // Pole (tall thin column)
+  { id: 'lamp-pole-f', center: [5.5, 1.5, 1.56], extents: [0.12, 2.5], plane: 'xy', thickness: 0.08, baseDelay: 0.5, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'lamp-pole-s', center: [5.44, 1.5, 1.5], extents: [0.12, 2.5], plane: 'zy', thickness: 0.08, baseDelay: 0.5, opacityBucket: 0, tileSize: 0.1 },
+  // Lantern head — bottom plate
+  { id: 'lamp-head-bot', center: [5.5, 2.7, 1.5], extents: [0.5, 0.5], plane: 'xz', thickness: 0.06, baseDelay: 0.8, opacityBucket: 0, tileSize: 0.1 },
+  // Lantern head — 4 glass sides (semi-transparent)
+  { id: 'lamp-glass-f', center: [5.5, 3.05, 1.73], extents: [0.5, 0.6], plane: 'xy', thickness: 0.04, baseDelay: 0.9, opacityBucket: 1, tileSize: 0.1 },
+  { id: 'lamp-glass-b', center: [5.5, 3.05, 1.27], extents: [0.5, 0.6], plane: 'xy', thickness: 0.04, baseDelay: 0.9, opacityBucket: 1, tileSize: 0.1 },
+  { id: 'lamp-glass-l', center: [5.27, 3.05, 1.5], extents: [0.5, 0.6], plane: 'zy', thickness: 0.04, baseDelay: 0.95, opacityBucket: 1, tileSize: 0.1 },
+  { id: 'lamp-glass-r', center: [5.73, 3.05, 1.5], extents: [0.5, 0.6], plane: 'zy', thickness: 0.04, baseDelay: 0.95, opacityBucket: 1, tileSize: 0.1 },
+  // Lantern head — top cap (roof)
+  { id: 'lamp-head-top', center: [5.5, 3.4, 1.5], extents: [0.55, 0.55], plane: 'xz', thickness: 0.06, baseDelay: 1.0, opacityBucket: 0, tileSize: 0.1 },
+  // Lantern finial (small top piece)
+  { id: 'lamp-finial-f', center: [5.5, 3.55, 1.53], extents: [0.08, 0.25], plane: 'xy', thickness: 0.05, baseDelay: 1.05, opacityBucket: 0, tileSize: 0.08 },
+  { id: 'lamp-finial-s', center: [5.47, 3.55, 1.5], extents: [0.08, 0.25], plane: 'zy', thickness: 0.05, baseDelay: 1.05, opacityBucket: 0, tileSize: 0.08 },
 ]
 
 const BUCKET_OPACITIES = [0.85, 0.3, 0.12]
@@ -70,7 +113,6 @@ function generateTiles() {
 
         const delay = surface.baseDelay + waveT * WAVE_SPREAD
 
-        // Start: gently above and slightly offset — no wild scatter
         const offsetX = (Math.random() - 0.5) * 2
         const offsetZ = (Math.random() - 0.5) * 2
         const offsetY = 2 + Math.random() * 3
@@ -81,7 +123,6 @@ function generateTiles() {
           ox: wx + offsetX,
           oy: wy + offsetY,
           oz: wz + offsetZ,
-          // Gentle rotation only
           rx: (Math.random() - 0.5) * 0.4,
           ry: (Math.random() - 0.5) * 0.4,
           rz: (Math.random() - 0.5) * 0.2,
@@ -114,7 +155,6 @@ export default function TileCloud({ onSettled }) {
     return max
   }, [buckets])
 
-  // Initialize: tiles start invisible
   useEffect(() => {
     const d = dummy.current
     d.scale.set(0, 0, 0)
@@ -145,12 +185,11 @@ export default function TileCloud({ onSettled }) {
 
       for (let i = 0; i < tiles.length; i++) {
         const t = tiles[i]
-        if (t.settled) continue // skip already settled tiles
+        if (t.settled) continue
 
         const timeAfterDelay = elapsed - t.delay
 
         if (timeAfterDelay < 0) {
-          // Not started — invisible
           allDone = false
           continue
         }
@@ -168,7 +207,7 @@ export default function TileCloud({ onSettled }) {
         }
 
         const raw = timeAfterDelay / ANIM_DURATION
-        const p = 1 - Math.pow(1 - raw, 3) // ease-out cubic
+        const p = 1 - Math.pow(1 - raw, 3)
 
         d.position.set(
           t.ox + (t.tx - t.ox) * p,
@@ -180,9 +219,8 @@ export default function TileCloud({ onSettled }) {
           t.ry * (1 - p),
           t.rz * (1 - p)
         )
-        // Smooth scale-in over first 40% of animation
         const scaleP = Math.min(raw / 0.4, 1)
-        const smoothScale = scaleP * scaleP * (3 - 2 * scaleP) // smoothstep
+        const smoothScale = scaleP * scaleP * (3 - 2 * scaleP)
         d.scale.set(t.sx * smoothScale, t.sy * smoothScale, t.sz * smoothScale)
         d.updateMatrix()
         mesh.setMatrixAt(i, d.matrix)

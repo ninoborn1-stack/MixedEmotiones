@@ -51,8 +51,8 @@ const PRODUCTS = [
 ]
 
 const CAMERA_TARGETS = {
-  assembling: { pos: [10, 7, 10], lookAt: [0, 1.5, 0] },
-  exterior: { pos: [0, 2.2, 8], lookAt: [0, 1.5, 0] },
+  assembling: { pos: [14, 9, 14], lookAt: [0, 1, 0] },
+  exterior: { pos: [2, 3.5, 16], lookAt: [0, 1.0, 0] },
   entering: { pos: [0, 1.8, 3.5], lookAt: [0, 1.5, -1] },
   interior: { pos: [0, 1.9, 2.4], lookAt: [0, 1.2, -1.8] },
 }
