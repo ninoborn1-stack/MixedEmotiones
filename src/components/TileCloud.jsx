@@ -4,27 +4,25 @@ import * as THREE from 'three'
 
 const TILE_SIZE = 0.35
 const GAP = 0.015
-const ANIM_DURATION = 1.0 // seconds per tile fly-in
-const WAVE_SPREAD = 0.6 // seconds of wave spread within a surface
+const ANIM_DURATION = 1.6
+const WAVE_SPREAD = 0.8
 
 const SURFACES = [
-  // === ARCHITECTURE ===
   { id: 'floor', center: [0, 0.04, 0], extents: [6, 5], plane: 'xz', thickness: 0.08, baseDelay: 0, opacityBucket: 0 },
-  { id: 'back-wall', center: [0, 1.8, -2.4], extents: [6, 3.6], plane: 'xy', thickness: 0.08, baseDelay: 0.15, opacityBucket: 1 },
-  { id: 'left-wall', center: [-2.95, 1.8, 0], extents: [5, 3.6], plane: 'zy', thickness: 0.08, baseDelay: 0.25, opacityBucket: 1 },
-  { id: 'right-wall', center: [2.95, 1.8, 0], extents: [5, 3.6], plane: 'zy', thickness: 0.08, baseDelay: 0.3, opacityBucket: 1 },
-  { id: 'front-l', center: [-1.8, 1.8, 2.46], extents: [2.3, 3.6], plane: 'xy', thickness: 0.08, baseDelay: 0.4, opacityBucket: 1 },
-  { id: 'front-r', center: [1.8, 1.8, 2.46], extents: [2.3, 3.6], plane: 'xy', thickness: 0.08, baseDelay: 0.42, opacityBucket: 1 },
-  { id: 'ceiling', center: [0, 3.6, 0], extents: [6, 5], plane: 'xz', thickness: 0.06, baseDelay: 0.5, opacityBucket: 2 },
-  { id: 'front-top', center: [0, 3.2, 2.46], extents: [1.5, 0.8], plane: 'xy', thickness: 0.08, baseDelay: 0.55, opacityBucket: 1 },
-  // === INTERIOR FURNITURE ===
-  { id: 'shelf-bl', center: [-1.8, 0.7, -2.1], extents: [1.2, 0.5], plane: 'xz', thickness: 0.06, baseDelay: 0.7, opacityBucket: 0, tileSize: 0.18 },
-  { id: 'shelf-br', center: [1.8, 0.7, -2.1], extents: [1.2, 0.5], plane: 'xz', thickness: 0.06, baseDelay: 0.72, opacityBucket: 0, tileSize: 0.18 },
-  { id: 'shelf-bc', center: [0, 0.7, -2.1], extents: [1.0, 0.5], plane: 'xz', thickness: 0.06, baseDelay: 0.75, opacityBucket: 0, tileSize: 0.18 },
-  { id: 'rail', center: [0, 2.5, -1.5], extents: [4.5, 0.12], plane: 'xy', thickness: 0.04, baseDelay: 0.85, opacityBucket: 0, tileSize: 0.12 },
-  { id: 'rail-sl', center: [-2.2, 3.05, -1.5], extents: [0.08, 1.1], plane: 'xy', thickness: 0.04, baseDelay: 0.8, opacityBucket: 0, tileSize: 0.1 },
-  { id: 'rail-sr', center: [2.2, 3.05, -1.5], extents: [0.08, 1.1], plane: 'xy', thickness: 0.04, baseDelay: 0.8, opacityBucket: 0, tileSize: 0.1 },
-  { id: 'sign', center: [0, 3.0, -2.33], extents: [2.0, 0.3], plane: 'xy', thickness: 0.04, baseDelay: 0.9, opacityBucket: 0, tileSize: 0.15 },
+  { id: 'back-wall', center: [0, 1.8, -2.4], extents: [6, 3.6], plane: 'xy', thickness: 0.08, baseDelay: 0.2, opacityBucket: 1 },
+  { id: 'left-wall', center: [-2.95, 1.8, 0], extents: [5, 3.6], plane: 'zy', thickness: 0.08, baseDelay: 0.4, opacityBucket: 1 },
+  { id: 'right-wall', center: [2.95, 1.8, 0], extents: [5, 3.6], plane: 'zy', thickness: 0.08, baseDelay: 0.5, opacityBucket: 1 },
+  { id: 'front-l', center: [-1.8, 1.8, 2.46], extents: [2.3, 3.6], plane: 'xy', thickness: 0.08, baseDelay: 0.6, opacityBucket: 1 },
+  { id: 'front-r', center: [1.8, 1.8, 2.46], extents: [2.3, 3.6], plane: 'xy', thickness: 0.08, baseDelay: 0.65, opacityBucket: 1 },
+  { id: 'ceiling', center: [0, 3.6, 0], extents: [6, 5], plane: 'xz', thickness: 0.06, baseDelay: 0.8, opacityBucket: 2 },
+  { id: 'front-top', center: [0, 3.2, 2.46], extents: [1.5, 0.8], plane: 'xy', thickness: 0.08, baseDelay: 0.9, opacityBucket: 1 },
+  { id: 'shelf-bl', center: [-1.8, 0.7, -2.1], extents: [1.2, 0.5], plane: 'xz', thickness: 0.06, baseDelay: 1.1, opacityBucket: 0, tileSize: 0.18 },
+  { id: 'shelf-br', center: [1.8, 0.7, -2.1], extents: [1.2, 0.5], plane: 'xz', thickness: 0.06, baseDelay: 1.15, opacityBucket: 0, tileSize: 0.18 },
+  { id: 'shelf-bc', center: [0, 0.7, -2.1], extents: [1.0, 0.5], plane: 'xz', thickness: 0.06, baseDelay: 1.2, opacityBucket: 0, tileSize: 0.18 },
+  { id: 'rail', center: [0, 2.5, -1.5], extents: [4.5, 0.12], plane: 'xy', thickness: 0.04, baseDelay: 1.35, opacityBucket: 0, tileSize: 0.12 },
+  { id: 'rail-sl', center: [-2.2, 3.05, -1.5], extents: [0.08, 1.1], plane: 'xy', thickness: 0.04, baseDelay: 1.3, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'rail-sr', center: [2.2, 3.05, -1.5], extents: [0.08, 1.1], plane: 'xy', thickness: 0.04, baseDelay: 1.3, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'sign', center: [0, 3.0, -2.33], extents: [2.0, 0.3], plane: 'xy', thickness: 0.04, baseDelay: 1.45, opacityBucket: 0, tileSize: 0.15 },
 ]
 
 const BUCKET_OPACITIES = [0.85, 0.3, 0.12]
@@ -61,7 +59,6 @@ function generateTiles() {
           sx = thk; sy = ts; sz = ts
         }
 
-        // Wave delay — radial for floors/ceilings, bottom-up for walls
         let waveT
         if (surface.plane === 'xz') {
           const nc = c / (cols - 1 || 1) - 0.5
@@ -73,21 +70,23 @@ function generateTiles() {
 
         const delay = surface.baseDelay + waveT * WAVE_SPREAD
 
-        // Start position — closer (4-8 units away) for faster, cleaner fly-in
-        const angle = Math.random() * Math.PI * 2
-        const dist = 4 + Math.random() * 4
-        const startY = wy + 3 + Math.random() * 5
+        // Start: gently above and slightly offset — no wild scatter
+        const offsetX = (Math.random() - 0.5) * 2
+        const offsetZ = (Math.random() - 0.5) * 2
+        const offsetY = 2 + Math.random() * 3
 
         tiles[surface.opacityBucket].push({
           tx: wx, ty: wy, tz: wz,
           sx, sy, sz,
-          ox: wx + Math.cos(angle) * dist,
-          oy: startY,
-          oz: wz + Math.sin(angle) * dist,
-          rx: (Math.random() - 0.5) * 1.2,
-          ry: (Math.random() - 0.5) * 1.2,
-          rz: (Math.random() - 0.5) * 0.6,
+          ox: wx + offsetX,
+          oy: wy + offsetY,
+          oz: wz + offsetZ,
+          // Gentle rotation only
+          rx: (Math.random() - 0.5) * 0.4,
+          ry: (Math.random() - 0.5) * 0.4,
+          rz: (Math.random() - 0.5) * 0.2,
           delay,
+          settled: false,
         })
       }
     }
@@ -115,15 +114,19 @@ export default function TileCloud({ onSettled }) {
     return max
   }, [buckets])
 
-  // Initialize all instances to zero scale
+  // Initialize: tiles start at full scale at their start position (visible from the start)
   useEffect(() => {
     const d = dummy.current
     for (let b = 0; b < 3; b++) {
       const mesh = meshRefs[b].current
       if (!mesh) continue
-      d.scale.set(0, 0, 0)
-      d.updateMatrix()
-      for (let i = 0; i < buckets[b].length; i++) {
+      const tiles = buckets[b]
+      for (let i = 0; i < tiles.length; i++) {
+        const t = tiles[i]
+        d.position.set(t.ox, t.oy, t.oz)
+        d.rotation.set(t.rx, t.ry, t.rz)
+        d.scale.set(t.sx, t.sy, t.sz)
+        d.updateMatrix()
         mesh.setMatrixAt(i, d.matrix)
       }
       mesh.instanceMatrix.needsUpdate = true
@@ -137,6 +140,7 @@ export default function TileCloud({ onSettled }) {
     const elapsed = elapsedRef.current
     const d = dummy.current
     let allDone = true
+    const needsUpdate = [false, false, false]
 
     for (let b = 0; b < 3; b++) {
       const mesh = meshRefs[b].current
@@ -145,44 +149,52 @@ export default function TileCloud({ onSettled }) {
 
       for (let i = 0; i < tiles.length; i++) {
         const t = tiles[i]
+        if (t.settled) continue // skip already settled tiles
+
         const timeAfterDelay = elapsed - t.delay
 
         if (timeAfterDelay < 0) {
-          d.position.set(t.ox, t.oy, t.oz)
-          d.rotation.set(t.rx, t.ry, t.rz)
-          d.scale.set(0, 0, 0)
+          // Not started — stays at start pos, no update needed (already set in init)
           allDone = false
-        } else if (timeAfterDelay < ANIM_DURATION) {
-          const raw = timeAfterDelay / ANIM_DURATION
-          // Smooth ease-out quart for snappy arrival
-          const p = 1 - Math.pow(1 - raw, 4)
+          continue
+        }
 
-          d.position.set(
-            t.ox + (t.tx - t.ox) * p,
-            t.oy + (t.ty - t.oy) * p,
-            t.oz + (t.tz - t.oz) * p
-          )
-          d.rotation.set(
-            t.rx * (1 - p),
-            t.ry * (1 - p),
-            t.rz * (1 - p)
-          )
-          // Scale snaps in quickly — full size by 30% of animation
-          const scaleP = Math.min(raw / 0.3, 1)
-          d.scale.set(t.sx * scaleP, t.sy * scaleP, t.sz * scaleP)
-          allDone = false
-        } else {
-          // Settled — exact target
+        needsUpdate[b] = true
+
+        if (timeAfterDelay >= ANIM_DURATION) {
+          // Snap to final position
           d.position.set(t.tx, t.ty, t.tz)
           d.rotation.set(0, 0, 0)
           d.scale.set(t.sx, t.sy, t.sz)
+          d.updateMatrix()
+          mesh.setMatrixAt(i, d.matrix)
+          t.settled = true
+          continue
         }
 
+        const raw = timeAfterDelay / ANIM_DURATION
+        // Smooth ease-out cubic
+        const p = 1 - Math.pow(1 - raw, 3)
+
+        d.position.set(
+          t.ox + (t.tx - t.ox) * p,
+          t.oy + (t.ty - t.oy) * p,
+          t.oz + (t.tz - t.oz) * p
+        )
+        d.rotation.set(
+          t.rx * (1 - p),
+          t.ry * (1 - p),
+          t.rz * (1 - p)
+        )
+        d.scale.set(t.sx, t.sy, t.sz) // Always full size
         d.updateMatrix()
         mesh.setMatrixAt(i, d.matrix)
+        allDone = false
       }
 
-      mesh.instanceMatrix.needsUpdate = true
+      if (needsUpdate[b]) {
+        mesh.instanceMatrix.needsUpdate = true
+      }
     }
 
     if (allDone && !settledRef.current) {
@@ -200,19 +212,16 @@ export default function TileCloud({ onSettled }) {
           key={b}
           ref={meshRefs[b]}
           args={[geometry, undefined, bucket.length]}
-          castShadow
-          receiveShadow
+          castShadow={b === 0}
+          receiveShadow={b === 0}
           renderOrder={b}
         >
-          <meshPhysicalMaterial
+          <meshStandardMaterial
             color="#FAFAF8"
             transparent
             opacity={BUCKET_OPACITIES[b]}
-            roughness={0.3}
+            roughness={0.35}
             metalness={0}
-            clearcoat={0.05}
-            transmission={b >= 1 ? 0.15 : 0}
-            thickness={0.3}
             side={THREE.DoubleSide}
             depthWrite={b === 0}
           />

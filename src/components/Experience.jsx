@@ -52,7 +52,7 @@ export default function Experience({ phase, onAssemblyComplete, onEnter, selecte
   const groupRef = useRef()
 
   const handleTilesSettled = useCallback(() => {
-    setTimeout(onAssemblyComplete, 800)
+    setTimeout(onAssemblyComplete, 1200)
   }, [onAssemblyComplete])
 
   useEffect(() => {
