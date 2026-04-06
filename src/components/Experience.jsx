@@ -3,42 +3,47 @@ import { useFrame, useThree } from '@react-three/fiber'
 import { Environment } from '@react-three/drei'
 import * as THREE from 'three'
 import TileCloud from './TileCloud'
-import GarmentDisplay from './GarmentDisplay'
 import VideoGarment from './VideoGarment'
 
 const PRODUCTS = [
   {
     id: 1,
-    name: 'Essential Tee',
-    subtitle: 'Midnight',
+    name: 'Bear Tee',
+    subtitle: 'Black',
     price: '89',
     type: 'T-Shirt',
     color: '#1A1A1A',
-    description: 'Premium heavyweight cotton. Relaxed fit. Minimal branding.',
+    description: 'Premium heavyweight cotton. Relaxed fit. Bear graphic print.',
     details: ['100% organic cotton', '240 GSM', 'Relaxed fit', 'Made in Portugal'],
     position: [-1.3, 1.6, -1.5],
+    videoSrc: 'Tlinks.mp4',
+    posterSrc: 'poster-left.png',
   },
   {
     id: 2,
-    name: 'Essential Tee',
-    subtitle: 'Bone',
-    price: '89',
-    type: 'T-Shirt',
-    color: '#EDE8E2',
-    description: 'Premium heavyweight cotton. Relaxed fit. Minimal branding.',
-    details: ['100% organic cotton', '240 GSM', 'Relaxed fit', 'Made in Portugal'],
+    name: 'MXD Hoodie',
+    subtitle: 'Black',
+    price: '149',
+    type: 'Hoodie',
+    color: '#1A1A1A',
+    description: 'Brushed fleece interior. Oversized silhouette. Heart line art.',
+    details: ['80% cotton, 20% polyester', '380 GSM', 'Oversized fit', 'Made in Portugal'],
     position: [0, 1.6, -1.7],
+    videoSrc: 'Hmitte.mp4',
+    posterSrc: 'poster-center.png',
   },
   {
     id: 3,
-    name: 'Archive Pullover',
-    subtitle: 'Stone',
-    price: '149',
-    type: 'Pullover',
-    color: '#B8AFA5',
-    description: 'Brushed fleece interior. Oversized silhouette. Drop shoulder.',
-    details: ['80% cotton, 20% polyester', '380 GSM', 'Oversized fit', 'Made in Portugal'],
+    name: 'Happy & Sad Tee',
+    subtitle: 'Black',
+    price: '89',
+    type: 'T-Shirt',
+    color: '#1A1A1A',
+    description: 'Premium heavyweight cotton. Relaxed fit. Bubble typography.',
+    details: ['100% organic cotton', '240 GSM', 'Relaxed fit', 'Made in Portugal'],
     position: [1.3, 1.6, -1.5],
+    videoSrc: 'Trechts.mp4',
+    posterSrc: 'poster-right.png',
   },
 ]
 
@@ -94,25 +99,17 @@ export default function Experience({ phase, onAssemblyComplete, onEnter, selecte
 
         {/* Products */}
         {(phase === 'interior' || phase === 'entering') &&
-          PRODUCTS.map((product) =>
-            product.id === 1 ? (
-              <VideoGarment
-                key={product.id}
-                product={product}
-                position={product.position}
-                onClick={() => onSelectProduct(product)}
-                visible={phase === 'interior'}
-              />
-            ) : (
-              <GarmentDisplay
-                key={product.id}
-                product={product}
-                position={product.position}
-                onClick={() => onSelectProduct(product)}
-                visible={phase === 'interior'}
-              />
-            )
-          )}
+          PRODUCTS.map((product) => (
+            <VideoGarment
+              key={product.id}
+              product={product}
+              position={product.position}
+              onClick={() => onSelectProduct(product)}
+              visible={phase === 'interior'}
+              videoSrc={product.videoSrc}
+              posterSrc={product.posterSrc}
+            />
+          ))}
       </group>
     </>
   )

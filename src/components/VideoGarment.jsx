@@ -21,7 +21,7 @@ const fragShader = `
   }
 `
 
-export default function VideoGarment({ product, position, onClick, visible }) {
+export default function VideoGarment({ product, position, onClick, visible, videoSrc, posterSrc }) {
   const groupRef = useRef()
   const [hovered, setHovered] = useState(false)
   const [playing, setPlaying] = useState(false)
@@ -30,7 +30,7 @@ export default function VideoGarment({ product, position, onClick, visible }) {
   const videoTextureRef = useRef(null)
 
   // Load poster image (PNG with alpha)
-  const posterTexture = useLoader(THREE.TextureLoader, import.meta.env.BASE_URL + 'tshirt-poster.png')
+  const posterTexture = useLoader(THREE.TextureLoader, import.meta.env.BASE_URL + posterSrc)
   posterTexture.colorSpace = THREE.SRGBColorSpace
 
   // Create video lazily on first click
@@ -38,7 +38,7 @@ export default function VideoGarment({ product, position, onClick, visible }) {
     if (videoRef.current) return // already created
 
     const v = document.createElement('video')
-    v.src = import.meta.env.BASE_URL + 'tshirtlinks.mp4'
+    v.src = import.meta.env.BASE_URL + videoSrc
     v.crossOrigin = 'anonymous'
     v.loop = true
     v.muted = true
