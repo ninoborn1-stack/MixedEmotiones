@@ -30,9 +30,9 @@ const PRODUCTS = [
     description: 'Brushed fleece interior. Oversized silhouette. Heart line art.',
     details: ['80% cotton, 20% polyester', '380 GSM', 'Oversized fit', 'Made in Portugal'],
     position: [0, 1.6, -1.7],
-    videoSrc: 'Hmitte.mp4',
+    videoSrc: 'HM2.mp4',
     posterSrc: 'poster-center.png',
-    bgType: 'black',
+    bgType: 'white',
   },
   {
     id: 3,
