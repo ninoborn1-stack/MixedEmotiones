@@ -4,6 +4,7 @@ import { Environment } from '@react-three/drei'
 import * as THREE from 'three'
 import TileCloud from './TileCloud'
 import GarmentDisplay from './GarmentDisplay'
+import VideoGarment from './VideoGarment'
 
 const PRODUCTS = [
   {
@@ -93,15 +94,25 @@ export default function Experience({ phase, onAssemblyComplete, onEnter, selecte
 
         {/* Products */}
         {(phase === 'interior' || phase === 'entering') &&
-          PRODUCTS.map((product) => (
-            <GarmentDisplay
-              key={product.id}
-              product={product}
-              position={product.position}
-              onClick={() => onSelectProduct(product)}
-              visible={phase === 'interior'}
-            />
-          ))}
+          PRODUCTS.map((product) =>
+            product.id === 1 ? (
+              <VideoGarment
+                key={product.id}
+                product={product}
+                position={product.position}
+                onClick={() => onSelectProduct(product)}
+                visible={phase === 'interior'}
+              />
+            ) : (
+              <GarmentDisplay
+                key={product.id}
+                product={product}
+                position={product.position}
+                onClick={() => onSelectProduct(product)}
+                visible={phase === 'interior'}
+              />
+            )
+          )}
       </group>
     </>
   )
