@@ -16,12 +16,10 @@ const fragShader = `
   void main() {
     vec4 color = texture2D(videoTexture, vUv);
     float maxC = max(color.r, max(color.g, color.b));
-    // Pure black background → fully transparent
-    if (maxC < 0.05) discard;
-    // Near-black edge pixels → force to solid black (kills white fringe)
-    float t = smoothstep(0.05, 0.18, maxC);
-    vec3 rgb = mix(vec3(0.0), color.rgb, t);
-    gl_FragColor = vec4(rgb, 1.0);
+    // Only discard pure black pixels (background)
+    if (maxC < 0.02) discard;
+    // Everything else: show original colors, fully opaque
+    gl_FragColor = vec4(color.rgb, 1.0);
   }
 `
 
