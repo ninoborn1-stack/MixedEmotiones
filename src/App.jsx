@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Experience from './components/Experience'
 
 export default function App() {
-  // assembling -> exterior -> doorfront -> entering -> interior
+  // assembling -> exterior -> entering -> interior
   const [phase, setPhase] = useState('assembling')
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [uiVisible, setUiVisible] = useState(false)
@@ -12,17 +12,16 @@ export default function App() {
   const advancePhase = useCallback(() => {
     setPhase((prev) => {
       if (prev === 'assembling') return 'exterior'
-      if (prev === 'exterior') return 'doorfront'
-      if (prev === 'doorfront') return 'entering'
+      if (prev === 'exterior') return 'entering'
       if (prev === 'entering') return 'interior'
       return prev
     })
   }, [])
 
-  // Auto-advance from doorfront -> entering after camera reaches door
+  // Auto-advance from entering -> interior (smooth continuous fly-through)
   useEffect(() => {
-    if (phase === 'doorfront') {
-      const t = setTimeout(() => setPhase('entering'), 3000)
+    if (phase === 'entering') {
+      const t = setTimeout(() => setPhase('interior'), 3500)
       return () => clearTimeout(t)
     }
   }, [phase])
@@ -87,7 +86,7 @@ export default function App() {
             transition={{ duration: 0.8 }}
           >
             <div className="absolute top-8 left-0 right-0 text-center">
-              <h1 className="font-display text-3xl tracking-[0.4em] text-[#1A1A1A] font-normal opacity-60">
+              <h1 className="text-5xl md:text-6xl tracking-[0.5em] text-[#1A1A1A] font-normal opacity-70" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
                 MXD MTNS
               </h1>
             </div>
@@ -130,7 +129,7 @@ export default function App() {
                 </svg>
                 Exit
               </motion.button>
-              <span className="font-display text-lg tracking-[0.35em] text-[#1A1A1A] font-normal opacity-50">
+              <span className="text-2xl tracking-[0.4em] text-[#1A1A1A] font-normal opacity-60" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
                 MXD MTNS
               </span>
               <span className="text-[9px] tracking-[0.2em] uppercase text-[#8A8478]/40 font-light">

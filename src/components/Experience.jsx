@@ -53,9 +53,8 @@ const PRODUCTS = [
 const CAMERA_TARGETS = {
   assembling: { pos: [14, 9, 14], lookAt: [0, 1, 0] },
   exterior:   { pos: [2, 3.5, 16], lookAt: [0, 1.0, 0] },
-  doorfront:  { pos: [0, 2.0, 4.5], lookAt: [0, 1.6, 0] },
-  entering:   { pos: [0, 1.8, 2.2], lookAt: [0, 1.5, -1.0] },
-  interior:   { pos: [0, 1.8, 2.0], lookAt: [0, 1.5, -1.0] },
+  entering:   { pos: [0, 1.8, 2.0], lookAt: [0, 1.4, -1.0] },
+  interior:   { pos: [0, 1.7, 2.0], lookAt: [0, 1.3, -1.2] },
 }
 
 export default function Experience({ phase, onAssemblyComplete, onEnter, selectedProduct, onSelectProduct }) {
@@ -65,12 +64,7 @@ export default function Experience({ phase, onAssemblyComplete, onEnter, selecte
     setTimeout(onAssemblyComplete, 2000)
   }, [onAssemblyComplete])
 
-  useEffect(() => {
-    if (phase === 'entering') {
-      const timer = setTimeout(onEnter, 2500)
-      return () => clearTimeout(timer)
-    }
-  }, [phase, onEnter])
+  // entering -> interior auto-advance handled by App.jsx
 
   return (
     <>
@@ -127,9 +121,8 @@ function CameraController({ phase }) {
     const speed =
       phase === 'assembling' ? 0.5 :
       phase === 'exterior' ? 0.6 :
-      phase === 'doorfront' ? 0.8 :
-      phase === 'entering' ? 0.7 :
-      1.2
+      phase === 'entering' ? 0.6 :
+      1.0
 
     const t = 1 - Math.pow(0.001, delta * speed)
 

@@ -48,8 +48,19 @@ export default function VideoGarment({ product, position, onClick, visible, vide
   const posterTexture = useLoader(THREE.TextureLoader, import.meta.env.BASE_URL + posterSrc)
   posterTexture.colorSpace = THREE.SRGBColorSpace
 
+  const loopCountRef = useRef(0)
+
   const startVideo = () => {
-    if (videoRef.current) return
+    if (videoRef.current) {
+      // Restart: reset loop count and play again
+      loopCountRef.current = 0
+      videoRef.current.currentTime = 0
+      videoRef.current.play()
+      setPlaying(true)
+      setVideoReady(true)
+      return
+    }
+
     const v = document.createElement('video')
     v.src = import.meta.env.BASE_URL + videoSrc
     v.crossOrigin = 'anonymous'
@@ -62,14 +73,41 @@ export default function VideoGarment({ product, position, onClick, visible, vide
     tex.magFilter = THREE.LinearFilter
     tex.colorSpace = THREE.SRGBColorSpace
 
+    // Stop after 3 loops
+    v.addEventListener('ended', () => {
+      loopCountRef.current++
+      if (loopCountRef.current >= 3) {
+        v.loop = false
+        v.pause()
+        v.currentTime = 0
+        setPlaying(false)
+        setVideoReady(false)
+        loopCountRef.current = 0
+      }
+    })
+    // Count loops via timeupdate (since loop=true doesn't fire 'ended')
+    let lastTime = 0
+    v.addEventListener('timeupdate', () => {
+      if (v.currentTime < lastTime - 0.5) {
+        // Video looped back to start
+        loopCountRef.current++
+        if (loopCountRef.current >= 3) {
+          v.pause()
+          v.currentTime = 0
+          setPlaying(false)
+          setVideoReady(false)
+          loopCountRef.current = 0
+        }
+      }
+      lastTime = v.currentTime
+    })
+
     videoRef.current = v
     videoTextureRef.current = tex
     setPlaying(true)
 
-    // Wait until video has actual frame data before showing shader
     const onPlaying = () => {
       v.removeEventListener('playing', onPlaying)
-      // Extra safety: wait one frame so texture has data
       requestAnimationFrame(() => setVideoReady(true))
     }
     v.addEventListener('playing', onPlaying)
