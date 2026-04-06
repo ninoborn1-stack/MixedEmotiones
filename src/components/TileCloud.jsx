@@ -114,19 +114,15 @@ export default function TileCloud({ onSettled }) {
     return max
   }, [buckets])
 
-  // Initialize: tiles start at full scale at their start position (visible from the start)
+  // Initialize: tiles start invisible
   useEffect(() => {
     const d = dummy.current
+    d.scale.set(0, 0, 0)
+    d.updateMatrix()
     for (let b = 0; b < 3; b++) {
       const mesh = meshRefs[b].current
       if (!mesh) continue
-      const tiles = buckets[b]
-      for (let i = 0; i < tiles.length; i++) {
-        const t = tiles[i]
-        d.position.set(t.ox, t.oy, t.oz)
-        d.rotation.set(t.rx, t.ry, t.rz)
-        d.scale.set(t.sx, t.sy, t.sz)
-        d.updateMatrix()
+      for (let i = 0; i < buckets[b].length; i++) {
         mesh.setMatrixAt(i, d.matrix)
       }
       mesh.instanceMatrix.needsUpdate = true
@@ -154,7 +150,7 @@ export default function TileCloud({ onSettled }) {
         const timeAfterDelay = elapsed - t.delay
 
         if (timeAfterDelay < 0) {
-          // Not started — stays at start pos, no update needed (already set in init)
+          // Not started — invisible
           allDone = false
           continue
         }
@@ -162,7 +158,6 @@ export default function TileCloud({ onSettled }) {
         needsUpdate[b] = true
 
         if (timeAfterDelay >= ANIM_DURATION) {
-          // Snap to final position
           d.position.set(t.tx, t.ty, t.tz)
           d.rotation.set(0, 0, 0)
           d.scale.set(t.sx, t.sy, t.sz)
@@ -173,8 +168,7 @@ export default function TileCloud({ onSettled }) {
         }
 
         const raw = timeAfterDelay / ANIM_DURATION
-        // Smooth ease-out cubic
-        const p = 1 - Math.pow(1 - raw, 3)
+        const p = 1 - Math.pow(1 - raw, 3) // ease-out cubic
 
         d.position.set(
           t.ox + (t.tx - t.ox) * p,
@@ -186,7 +180,10 @@ export default function TileCloud({ onSettled }) {
           t.ry * (1 - p),
           t.rz * (1 - p)
         )
-        d.scale.set(t.sx, t.sy, t.sz) // Always full size
+        // Smooth scale-in over first 40% of animation
+        const scaleP = Math.min(raw / 0.4, 1)
+        const smoothScale = scaleP * scaleP * (3 - 2 * scaleP) // smoothstep
+        d.scale.set(t.sx * smoothScale, t.sy * smoothScale, t.sz * smoothScale)
         d.updateMatrix()
         mesh.setMatrixAt(i, d.matrix)
         allDone = false
