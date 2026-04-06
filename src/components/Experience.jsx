@@ -16,8 +16,9 @@ const PRODUCTS = [
     description: 'Premium heavyweight cotton. Relaxed fit. Bear graphic print.',
     details: ['100% organic cotton', '240 GSM', 'Relaxed fit', 'Made in Portugal'],
     position: [-1.3, 1.6, -1.5],
-    videoSrc: 'Tlinks.mp4',
+    videoSrc: 'TL.mp4',
     posterSrc: 'poster-left.png',
+    bgType: 'white',
   },
   {
     id: 2,
@@ -31,6 +32,7 @@ const PRODUCTS = [
     position: [0, 1.6, -1.7],
     videoSrc: 'Hmitte.mp4',
     posterSrc: 'poster-center.png',
+    bgType: 'black',
   },
   {
     id: 3,
@@ -42,8 +44,9 @@ const PRODUCTS = [
     description: 'Premium heavyweight cotton. Relaxed fit. Bubble typography.',
     details: ['100% organic cotton', '240 GSM', 'Relaxed fit', 'Made in Portugal'],
     position: [1.3, 1.6, -1.5],
-    videoSrc: 'Trechts.mp4',
+    videoSrc: 'TR.mp4',
     posterSrc: 'poster-right.png',
+    bgType: 'white',
   },
 ]
 
@@ -108,6 +111,7 @@ export default function Experience({ phase, onAssemblyComplete, onEnter, selecte
               visible={phase === 'interior'}
               videoSrc={product.videoSrc}
               posterSrc={product.posterSrc}
+              bgType={product.bgType}
             />
           ))}
       </group>

@@ -3,7 +3,6 @@ import { useFrame, useLoader } from '@react-three/fiber'
 import { Html } from '@react-three/drei'
 import * as THREE from 'three'
 
-// Chroma-key shader for VIDEO only (removes black BG live)
 const vertShader = `
   varying vec2 vUv;
   void main() {
@@ -11,7 +10,19 @@ const vertShader = `
     gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
   }
 `
-const videoFragShader = `
+// Removes WHITE background
+const whiteKeyFrag = `
+  uniform sampler2D map;
+  varying vec2 vUv;
+  void main() {
+    vec4 color = texture2D(map, vUv);
+    float avg = (color.r + color.g + color.b) / 3.0;
+    if (avg > 0.62) discard;
+    gl_FragColor = vec4(color.rgb, 1.0);
+  }
+`
+// Removes BLACK background
+const blackKeyFrag = `
   uniform sampler2D map;
   varying vec2 vUv;
   void main() {
@@ -22,7 +33,7 @@ const videoFragShader = `
   }
 `
 
-export default function VideoGarment({ product, position, onClick, visible, videoSrc, posterSrc }) {
+export default function VideoGarment({ product, position, onClick, visible, videoSrc, posterSrc, bgType = 'black' }) {
   const groupRef = useRef()
   const [hovered, setHovered] = useState(false)
   const [playing, setPlaying] = useState(false)
@@ -30,7 +41,6 @@ export default function VideoGarment({ product, position, onClick, visible, vide
   const videoRef = useRef(null)
   const videoTextureRef = useRef(null)
 
-  // Poster PNG with pre-baked alpha from ffmpeg
   const posterTexture = useLoader(THREE.TextureLoader, import.meta.env.BASE_URL + posterSrc)
   posterTexture.colorSpace = THREE.SRGBColorSpace
 
@@ -88,6 +98,7 @@ export default function VideoGarment({ product, position, onClick, visible, vide
 
   const planeW = 1.1
   const planeH = planeW * (720 / 1280)
+  const fragShader = bgType === 'white' ? whiteKeyFrag : blackKeyFrag
 
   return (
     <group
@@ -114,7 +125,6 @@ export default function VideoGarment({ product, position, onClick, visible, vide
       <mesh position={[0, -0.25, 0.01]}>
         <planeGeometry args={[planeW, planeH]} />
         {!playing ? (
-          /* Poster: PNG with alpha — use alphaTest to cut out transparent pixels cleanly */
           <meshBasicMaterial
             map={posterTexture}
             transparent
@@ -122,10 +132,9 @@ export default function VideoGarment({ product, position, onClick, visible, vide
             side={THREE.DoubleSide}
           />
         ) : (
-          /* Video: chroma-key shader removes black BG live */
           <shaderMaterial
             vertexShader={vertShader}
-            fragmentShader={videoFragShader}
+            fragmentShader={fragShader}
             uniforms={{ map: { value: videoTextureRef.current } }}
             transparent
             side={THREE.DoubleSide}
