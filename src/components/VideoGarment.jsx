@@ -16,7 +16,7 @@ const fragShader = `
   void main() {
     vec4 color = texture2D(videoTexture, vUv);
     float maxC = max(color.r, max(color.g, color.b));
-    float alpha = smoothstep(0.04, 0.10, maxC);
+    float alpha = smoothstep(0.01, 0.025, maxC);
     gl_FragColor = vec4(color.rgb, alpha);
   }
 `
