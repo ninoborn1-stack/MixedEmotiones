@@ -50,24 +50,21 @@ const PRODUCTS = [
   },
 ]
 
-// Phase flow: assembling -> exterior -> doorfront -> entering -> interior
 const CAMERA_TARGETS = {
   assembling: { pos: [14, 9, 14], lookAt: [0, 1, 0] },
   exterior:   { pos: [2, 3.5, 16], lookAt: [0, 1.0, 0] },
   doorfront:  { pos: [0, 2.0, 4.5], lookAt: [0, 1.6, 0] },
-  entering:   { pos: [0, 1.8, 2.8], lookAt: [0, 1.5, -1] },
-  interior:   { pos: [0, 1.9, 2.4], lookAt: [0, 1.2, -1.8] },
+  entering:   { pos: [0, 1.8, 2.2], lookAt: [0, 1.5, -1.0] },
+  interior:   { pos: [0, 1.8, 2.0], lookAt: [0, 1.5, -1.0] },
 }
 
 export default function Experience({ phase, onAssemblyComplete, onEnter, selectedProduct, onSelectProduct }) {
   const groupRef = useRef()
 
   const handleTilesSettled = useCallback(() => {
-    // Stay at assembling view for a moment, then go to exterior
     setTimeout(onAssemblyComplete, 2000)
   }, [onAssemblyComplete])
 
-  // Auto-advance: entering -> interior (smooth fly-through, no cut)
   useEffect(() => {
     if (phase === 'entering') {
       const timer = setTimeout(onEnter, 2500)
@@ -95,7 +92,6 @@ export default function Experience({ phase, onAssemblyComplete, onEnter, selecte
 
       <CameraController phase={phase} />
 
-      {/* Ground plane (beneath tiles, fills to horizon) */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.04, 0]} receiveShadow>
         <planeGeometry args={[80, 80]} />
         <meshStandardMaterial color="#F0EDE9" />
@@ -104,20 +100,19 @@ export default function Experience({ phase, onAssemblyComplete, onEnter, selecte
       <group ref={groupRef}>
         <TileCloud onSettled={handleTilesSettled} />
 
-        {/* Products visible during entering + interior (fade in naturally) */}
-        {(phase === 'entering' || phase === 'interior') &&
-          PRODUCTS.map((product) => (
-            <VideoGarment
-              key={product.id}
-              product={product}
-              position={product.position}
-              onClick={() => onSelectProduct(product)}
-              visible={phase === 'interior' || phase === 'entering'}
-              videoSrc={product.videoSrc}
-              posterSrc={product.posterSrc}
-              bgType={product.bgType}
-            />
-          ))}
+        {/* Products ALWAYS rendered — they are part of the store, visible from outside through glass walls */}
+        {PRODUCTS.map((product) => (
+          <VideoGarment
+            key={product.id}
+            product={product}
+            position={product.position}
+            onClick={() => onSelectProduct(product)}
+            visible={true}
+            videoSrc={product.videoSrc}
+            posterSrc={product.posterSrc}
+            bgType={product.bgType}
+          />
+        ))}
       </group>
     </>
   )

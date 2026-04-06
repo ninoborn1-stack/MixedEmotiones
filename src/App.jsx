@@ -45,7 +45,7 @@ export default function App() {
     <div className="w-full h-full bg-[#F8F6F3] overflow-hidden relative">
       <Canvas
         shadows
-        camera={{ position: [14, 9, 14], fov: 40, near: 0.1, far: 100 }}
+        camera={{ position: [14, 9, 14], fov: 50, near: 0.1, far: 100 }}
         gl={{ antialias: true, alpha: false }}
         dpr={[1, 2]}
       >
