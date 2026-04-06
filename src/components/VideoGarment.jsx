@@ -10,14 +10,17 @@ const vertShader = `
     gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
   }
 `
-// Removes WHITE background
+// Removes WHITE/GRAY background — high threshold to preserve white graphics on shirt
 const whiteKeyFrag = `
   uniform sampler2D map;
   varying vec2 vUv;
   void main() {
     vec4 color = texture2D(map, vUv);
-    float avg = (color.r + color.g + color.b) / 3.0;
-    if (avg > 0.62) discard;
+    float minC = min(color.r, min(color.g, color.b));
+    // Only discard pixels where ALL channels are very bright (near-white BG)
+    // This preserves white graphics on the shirt because they have slight
+    // color variation and shadows from the fabric texture
+    if (minC > 0.58) discard;
     gl_FragColor = vec4(color.rgb, 1.0);
   }
 `
