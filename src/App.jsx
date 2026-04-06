@@ -4,18 +4,28 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Experience from './components/Experience'
 
 export default function App() {
-  const [phase, setPhase] = useState('assembling') // assembling -> exterior -> entering -> interior
+  // assembling -> exterior -> doorfront -> entering -> interior
+  const [phase, setPhase] = useState('assembling')
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [uiVisible, setUiVisible] = useState(false)
 
   const advancePhase = useCallback(() => {
     setPhase((prev) => {
       if (prev === 'assembling') return 'exterior'
-      if (prev === 'exterior') return 'entering'
+      if (prev === 'exterior') return 'doorfront'
+      if (prev === 'doorfront') return 'entering'
       if (prev === 'entering') return 'interior'
       return prev
     })
   }, [])
+
+  // Auto-advance from doorfront -> entering after camera reaches door
+  useEffect(() => {
+    if (phase === 'doorfront') {
+      const t = setTimeout(() => setPhase('entering'), 3000)
+      return () => clearTimeout(t)
+    }
+  }, [phase])
 
   const goBack = useCallback(() => {
     setSelectedProduct(null)
@@ -33,15 +43,14 @@ export default function App() {
 
   return (
     <div className="w-full h-full bg-[#F8F6F3] overflow-hidden relative">
-      {/* 3D Canvas */}
       <Canvas
         shadows
-        camera={{ position: [12, 6, 12], fov: 40, near: 0.1, far: 100 }}
+        camera={{ position: [14, 9, 14], fov: 40, near: 0.1, far: 100 }}
         gl={{ antialias: true, alpha: false }}
         dpr={[1, 2]}
       >
         <color attach="background" args={['#F8F6F3']} />
-        <fog attach="fog" args={['#F8F6F3', 25, 50]} />
+        <fog attach="fog" args={['#F8F6F3', 20, 45]} />
         <Experience
           phase={phase}
           onAssemblyComplete={advancePhase}
@@ -77,13 +86,11 @@ export default function App() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8 }}
           >
-            {/* Brand */}
             <div className="absolute top-8 left-0 right-0 text-center">
               <h1 className="font-display text-3xl tracking-[0.4em] text-[#1A1A1A] font-normal opacity-60">
                 MXD MTNS
               </h1>
             </div>
-            {/* Enter hint */}
             <motion.div
               className="absolute bottom-12 left-0 right-0 text-center pointer-events-auto cursor-pointer"
               onClick={advancePhase}
@@ -97,7 +104,6 @@ export default function App() {
                 <path d="M1,1 L8,8 L15,1" fill="none" stroke="#8A8478" strokeWidth="0.8" />
               </svg>
             </motion.div>
-            {/* Collection */}
             <p className="absolute bottom-8 right-10 text-[8px] tracking-[0.3em] uppercase text-[#8A8478]/30 font-light">
               001
             </p>
@@ -113,7 +119,6 @@ export default function App() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.6 }}
           >
-            {/* Top bar */}
             <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-10 py-7">
               <motion.button
                 className="text-[10px] tracking-[0.3em] uppercase text-[#8A8478] hover:text-[#1A1A1A] transition-colors duration-300 cursor-pointer bg-transparent border-none font-light pointer-events-auto flex items-center gap-2"
@@ -132,8 +137,6 @@ export default function App() {
                 001
               </span>
             </div>
-
-            {/* Bottom hint */}
             <div className="absolute bottom-7 left-0 right-0 text-center">
               <p className="text-[8px] tracking-[0.35em] uppercase text-[#8A8478]/25 font-light">
                 Select to view

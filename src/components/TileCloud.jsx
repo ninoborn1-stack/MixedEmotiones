@@ -9,11 +9,11 @@ const WAVE_SPREAD = 0.8
 
 const SURFACES = [
   // ==================== OUTDOOR GROUND ====================
-  // Large ground plane around the store (with hole where store floor is)
-  { id: 'ground-back', center: [0, -0.02, -6], extents: [20, 7], plane: 'xz', thickness: 0.06, baseDelay: 0, opacityBucket: 0, tileSize: 0.5 },
-  { id: 'ground-front', center: [0, -0.02, 6], extents: [20, 5], plane: 'xz', thickness: 0.06, baseDelay: 0.05, opacityBucket: 0, tileSize: 0.5 },
-  { id: 'ground-left', center: [-7, -0.02, 0], extents: [4, 5], plane: 'xz', thickness: 0.06, baseDelay: 0.1, opacityBucket: 0, tileSize: 0.5 },
-  { id: 'ground-right', center: [7, -0.02, 0], extents: [4, 5], plane: 'xz', thickness: 0.06, baseDelay: 0.1, opacityBucket: 0, tileSize: 0.5 },
+  // Large ground tiles around the store — extends far, fog handles fade
+  { id: 'ground-back', center: [0, -0.02, -12], extents: [40, 16], plane: 'xz', thickness: 0.06, baseDelay: 0, opacityBucket: 0, tileSize: 0.7 },
+  { id: 'ground-front', center: [0, -0.02, 10], extents: [40, 10], plane: 'xz', thickness: 0.06, baseDelay: 0.05, opacityBucket: 0, tileSize: 0.7 },
+  { id: 'ground-left', center: [-10, -0.02, 0], extents: [8, 5], plane: 'xz', thickness: 0.06, baseDelay: 0.08, opacityBucket: 0, tileSize: 0.7 },
+  { id: 'ground-right', center: [10, -0.02, 0], extents: [8, 5], plane: 'xz', thickness: 0.06, baseDelay: 0.08, opacityBucket: 0, tileSize: 0.7 },
 
   // ==================== STORE ARCHITECTURE ====================
   { id: 'floor', center: [0, 0.04, 0], extents: [6, 5], plane: 'xz', thickness: 0.08, baseDelay: 0.15, opacityBucket: 0 },

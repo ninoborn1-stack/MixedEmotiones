@@ -50,23 +50,27 @@ const PRODUCTS = [
   },
 ]
 
+// Phase flow: assembling -> exterior -> doorfront -> entering -> interior
 const CAMERA_TARGETS = {
   assembling: { pos: [14, 9, 14], lookAt: [0, 1, 0] },
-  exterior: { pos: [2, 3.5, 16], lookAt: [0, 1.0, 0] },
-  entering: { pos: [0, 1.8, 3.5], lookAt: [0, 1.5, -1] },
-  interior: { pos: [0, 1.9, 2.4], lookAt: [0, 1.2, -1.8] },
+  exterior:   { pos: [2, 3.5, 16], lookAt: [0, 1.0, 0] },
+  doorfront:  { pos: [0, 2.0, 4.5], lookAt: [0, 1.6, 0] },
+  entering:   { pos: [0, 1.8, 2.8], lookAt: [0, 1.5, -1] },
+  interior:   { pos: [0, 1.9, 2.4], lookAt: [0, 1.2, -1.8] },
 }
 
 export default function Experience({ phase, onAssemblyComplete, onEnter, selectedProduct, onSelectProduct }) {
   const groupRef = useRef()
 
   const handleTilesSettled = useCallback(() => {
-    setTimeout(onAssemblyComplete, 1200)
+    // Stay at assembling view for a moment, then go to exterior
+    setTimeout(onAssemblyComplete, 2000)
   }, [onAssemblyComplete])
 
+  // Auto-advance: entering -> interior (smooth fly-through, no cut)
   useEffect(() => {
     if (phase === 'entering') {
-      const timer = setTimeout(onEnter, 2000)
+      const timer = setTimeout(onEnter, 2500)
       return () => clearTimeout(timer)
     }
   }, [phase, onEnter])
@@ -91,24 +95,24 @@ export default function Experience({ phase, onAssemblyComplete, onEnter, selecte
 
       <CameraController phase={phase} />
 
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.01, 0]} receiveShadow>
-        <planeGeometry args={[50, 50]} />
-        <meshStandardMaterial color="#F5F2EF" />
+      {/* Ground plane (beneath tiles, fills to horizon) */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.04, 0]} receiveShadow>
+        <planeGeometry args={[80, 80]} />
+        <meshStandardMaterial color="#F0EDE9" />
       </mesh>
 
       <group ref={groupRef}>
-        {/* Everything built from tiles */}
         <TileCloud onSettled={handleTilesSettled} />
 
-        {/* Products */}
-        {(phase === 'interior' || phase === 'entering') &&
+        {/* Products visible during entering + interior (fade in naturally) */}
+        {(phase === 'entering' || phase === 'interior') &&
           PRODUCTS.map((product) => (
             <VideoGarment
               key={product.id}
               product={product}
               position={product.position}
               onClick={() => onSelectProduct(product)}
-              visible={phase === 'interior'}
+              visible={phase === 'interior' || phase === 'entering'}
               videoSrc={product.videoSrc}
               posterSrc={product.posterSrc}
               bgType={product.bgType}
@@ -125,8 +129,13 @@ function CameraController({ phase }) {
   const lookAtRef = useRef(new THREE.Vector3(...CAMERA_TARGETS.assembling.lookAt))
 
   useFrame((_, delta) => {
-    // Slower camera for assembling->exterior transition, medium for entering
-    const speed = phase === 'assembling' ? 0.6 : phase === 'exterior' ? 0.8 : phase === 'entering' ? 1.0 : 1.5
+    const speed =
+      phase === 'assembling' ? 0.5 :
+      phase === 'exterior' ? 0.6 :
+      phase === 'doorfront' ? 0.8 :
+      phase === 'entering' ? 0.7 :
+      1.2
+
     const t = 1 - Math.pow(0.001, delta * speed)
 
     camera.position.lerp(new THREE.Vector3(...target.pos), t)
