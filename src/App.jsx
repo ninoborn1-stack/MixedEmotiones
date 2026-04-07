@@ -190,7 +190,7 @@ export default function App() {
               transition={{ delay: 1.2, duration: 1 }}
             >
               <p className="text-[9px] md:text-xs tracking-[0.2em] uppercase text-[#1A1A1A] font-bold" style={{ fontFamily: "'Cinzel', serif" }}>
-                100% Highfashion Streetwear
+                Highfashion Streetwear
               </p>
             </motion.div>
             {/* Right established */}
