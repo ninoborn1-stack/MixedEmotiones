@@ -86,7 +86,7 @@ export default function App() {
             transition={{ duration: 0.8 }}
           >
             <div className="absolute top-8 left-0 right-0 text-center">
-              <h1 className="text-5xl md:text-6xl tracking-[0.5em] text-[#1A1A1A] font-normal opacity-70" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+              <h1 className="text-5xl md:text-6xl tracking-[0.3em] text-[#1A1A1A] font-bold opacity-70" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                 MXD MTNS
               </h1>
             </div>
@@ -129,7 +129,7 @@ export default function App() {
                 </svg>
                 Exit
               </motion.button>
-              <span className="text-2xl tracking-[0.4em] text-[#1A1A1A] font-normal opacity-60" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+              <span className="text-2xl tracking-[0.25em] text-[#1A1A1A] font-bold opacity-60" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                 MXD MTNS
               </span>
               <span className="text-[9px] tracking-[0.2em] uppercase text-[#8A8478]/40 font-light">

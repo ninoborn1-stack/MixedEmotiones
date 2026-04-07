@@ -34,6 +34,18 @@ const SURFACES = [
   { id: 'rail-sr', center: [2.2, 2.8, -1.5], extents: [0.08, 1.0], plane: 'xy', thickness: 0.04, baseDelay: 1.3, opacityBucket: 0, tileSize: 0.1 },
   { id: 'sign', center: [0, 2.8, -2.33], extents: [2.0, 0.3], plane: 'xy', thickness: 0.04, baseDelay: 1.45, opacityBucket: 0, tileSize: 0.15 },
 
+  // ==================== ROOF ====================
+  // Flat roof overhang (extends slightly beyond walls)
+  { id: 'roof-base', center: [0, 3.38, 0], extents: [6.6, 5.6], plane: 'xz', thickness: 0.12, baseDelay: 0.95, opacityBucket: 0, tileSize: 0.4 },
+  // Raised center ridge
+  { id: 'roof-ridge', center: [0, 3.55, 0], extents: [5.0, 3.0], plane: 'xz', thickness: 0.1, baseDelay: 1.0, opacityBucket: 0, tileSize: 0.35 },
+  // Top cap
+  { id: 'roof-cap', center: [0, 3.7, 0], extents: [3.0, 1.5], plane: 'xz', thickness: 0.08, baseDelay: 1.05, opacityBucket: 0, tileSize: 0.3 },
+  // Front edge detail
+  { id: 'roof-front', center: [0, 3.44, 2.76], extents: [6.6, 0.2], plane: 'xy', thickness: 0.12, baseDelay: 1.0, opacityBucket: 0, tileSize: 0.12 },
+  // Back edge detail
+  { id: 'roof-back', center: [0, 3.44, -2.76], extents: [6.6, 0.2], plane: 'xy', thickness: 0.12, baseDelay: 1.0, opacityBucket: 0, tileSize: 0.12 },
+
   // ==================== FOUNTAIN (left of store) ====================
   // Base platform
   { id: 'fount-base', center: [-5.5, 0.1, 1.5], extents: [1.4, 1.4], plane: 'xz', thickness: 0.12, baseDelay: 0.3, opacityBucket: 0, tileSize: 0.2 },
