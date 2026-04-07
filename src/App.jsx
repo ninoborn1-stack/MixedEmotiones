@@ -118,15 +118,30 @@ export default function App() {
         {phase === 'assembling' && (
           <motion.div
             key="assembling-ui"
-            className="absolute bottom-8 left-0 right-0 text-center pointer-events-none"
+            className="absolute inset-0 pointer-events-none"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 0.4 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ delay: 1, duration: 1 }}
+            transition={{ duration: 0.8 }}
           >
-            <p className="text-[9px] tracking-[0.4em] uppercase text-[#8A8478] font-light">
+            <motion.div
+              className="absolute top-8 left-0 right-0 text-center"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 0.7, y: 0 }}
+              transition={{ delay: 2, duration: 1.5 }}
+            >
+              <h1 className="text-5xl md:text-6xl tracking-[0.3em] text-[#1A1A1A] font-bold" style={{ fontFamily: "'Cinzel', serif" }}>
+                MXD MTNS
+              </h1>
+            </motion.div>
+            <motion.p
+              className="absolute bottom-8 left-0 right-0 text-center text-[9px] tracking-[0.4em] uppercase text-[#8A8478] font-light"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.4 }}
+              transition={{ delay: 1, duration: 1 }}
+            >
               Constructing
-            </p>
+            </motion.p>
           </motion.div>
         )}
 
@@ -140,7 +155,7 @@ export default function App() {
             transition={{ duration: 0.8 }}
           >
             <div className="absolute top-8 left-0 right-0 text-center">
-              <h1 className="text-5xl md:text-6xl tracking-[0.3em] text-[#1A1A1A] font-bold opacity-70" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              <h1 className="text-5xl md:text-6xl tracking-[0.3em] text-[#1A1A1A] font-bold opacity-70" style={{ fontFamily: "'Cinzel', serif" }}>
                 MXD MTNS
               </h1>
             </div>
@@ -151,13 +166,13 @@ export default function App() {
               transition={{ delay: 0.5, duration: 0.8 }}
             >
               <motion.button
-                className="group relative px-10 py-3.5 text-[#1A1A1A] text-lg tracking-[0.35em] uppercase font-bold border-2 border-transparent cursor-pointer overflow-hidden"
-                style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                className="group flex flex-col items-center gap-2 bg-transparent border-none cursor-pointer text-[#1A1A1A] text-lg tracking-[0.35em] uppercase font-bold"
+                style={{ fontFamily: "'Cinzel', serif" }}
                 onClick={advancePhase}
                 whileTap={{ scale: 0.97 }}
               >
-                <span className="relative z-10 transition-colors duration-300 group-hover:text-[#F8F6F3]">Enter Store</span>
-                <span className="absolute inset-x-0 bottom-0 h-[2px] bg-[#1A1A1A] transition-all duration-400 ease-out group-hover:h-full" />
+                Enter Store
+                <span className="block bg-[#1A1A1A] transition-all duration-400 ease-out w-10 h-[2px] group-hover:w-full group-hover:h-[6px]" />
               </motion.button>
             </motion.div>
             <p className="absolute bottom-8 right-10 text-[8px] tracking-[0.3em] uppercase text-[#8A8478]/30 font-light">
@@ -178,7 +193,7 @@ export default function App() {
             <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-6 py-6">
               <motion.button
                 className="text-sm tracking-[0.25em] uppercase text-[#1A1A1A] cursor-pointer bg-transparent border-none font-bold pointer-events-auto flex items-center gap-3 ml-2"
-                style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                style={{ fontFamily: "'Cinzel', serif" }}
                 onClick={goBack}
                 whileHover={{ x: -4 }}
               >
