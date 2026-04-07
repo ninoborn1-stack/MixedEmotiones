@@ -200,32 +200,29 @@ export default function PlayerFigure() {
         <planeGeometry args={[ts * 2.4, 0.28]} />
         <meshBasicMaterial map={teeTexture} transparent alphaTest={0.5} />
       </mesh>
-      {/* Left arm — sleeve (black top) + skin (bottom) */}
+      {/* Left arm — full black */}
       <group ref={leftArmRef} position={[-0.22, 0.6, 0]}>
-        <mesh position={[0, -0.06, 0]}>
-          <boxGeometry args={[ts * 0.7, 0.12, ts * 0.8]} />
+        <mesh position={[0, -0.12, 0]}>
+          <boxGeometry args={[ts * 0.7, 0.25, ts * 0.8]} />
           <meshStandardMaterial color="#1A1A1A" />
-        </mesh>
-        <mesh position={[0, -0.19, 0]}>
-          <boxGeometry args={[ts * 0.7, 0.12, ts * 0.8]} />
-          <meshStandardMaterial color="#FAFAF8" />
         </mesh>
       </group>
-      {/* Right arm — sleeve (black top) + skin (bottom) */}
+      {/* Right arm — full black */}
       <group ref={rightArmRef} position={[0.22, 0.6, 0]}>
-        <mesh position={[0, -0.06, 0]}>
-          <boxGeometry args={[ts * 0.7, 0.12, ts * 0.8]} />
+        <mesh position={[0, -0.12, 0]}>
+          <boxGeometry args={[ts * 0.7, 0.25, ts * 0.8]} />
           <meshStandardMaterial color="#1A1A1A" />
-        </mesh>
-        <mesh position={[0, -0.19, 0]}>
-          <boxGeometry args={[ts * 0.7, 0.12, ts * 0.8]} />
-          <meshStandardMaterial color="#FAFAF8" />
         </mesh>
       </group>
       {/* Head */}
       <mesh position={[0, 0.78, 0]}>
         <boxGeometry args={[ts * 1.1, ts * 1.1, ts * 1.1]} />
         <meshStandardMaterial color="#FAFAF8" />
+      </mesh>
+      {/* Hood — behind and over head */}
+      <mesh position={[0, 0.82, -0.05]}>
+        <boxGeometry args={[ts * 1.4, ts * 1.3, ts * 0.8]} />
+        <meshStandardMaterial color="#1A1A1A" />
       </mesh>
     </group>
   )
