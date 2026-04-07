@@ -28,6 +28,9 @@ export default function PlayerFigure() {
   const keysRef = useRef({})
   const walkPhaseRef = useRef(0)
   const facingRef = useRef(0)
+  const velYRef = useRef(0)
+  const posYRef = useRef(0)
+  const onGroundRef = useRef(true)
 
   useEffect(() => {
     const onDown = (e) => { keysRef.current[e.key] = true }
@@ -102,12 +105,53 @@ export default function PlayerFigure() {
       walkPhaseRef.current += delta * 10
     }
 
-    // Floor height — step up when inside store
-    const inside = isInsideStore(pos.x, pos.z)
-    const targetY = inside ? STORE_FLOOR_Y : GROUND_Y
-    const bob = moving ? Math.abs(Math.sin(walkPhaseRef.current)) * 0.03 : 0
+    // Jump
+    const GRAVITY = -12
+    const JUMP_FORCE = 5
 
-    groupRef.current.position.set(pos.x, targetY + bob, pos.z)
+    if ((keys[' '] || keys['Space']) && onGroundRef.current) {
+      velYRef.current = JUMP_FORCE
+      onGroundRef.current = false
+    }
+
+    // Apply gravity
+    velYRef.current += GRAVITY * delta
+    posYRef.current += velYRef.current * delta
+
+    // Floor height — base floor level
+    const inside = isInsideStore(pos.x, pos.z)
+    let floorY = inside ? STORE_FLOOR_Y : GROUND_Y
+
+    // Shelf collision — can stand on shelves if above them
+    // Shelves: y=0.7, thickness=0.06 → top at y=0.73
+    // shelf-bl: center [-1.8, 0.7, -2.1], extents [1.2, 0.5]
+    // shelf-bc: center [0, 0.7, -2.1], extents [1.0, 0.5]
+    // shelf-br: center [1.8, 0.7, -2.1], extents [1.2, 0.5]
+    const SHELF_TOP = 0.76
+    const shelves = [
+      { cx: -1.8, cz: -2.1, hw: 0.6, hd: 0.25 },
+      { cx: 0, cz: -2.1, hw: 0.5, hd: 0.25 },
+      { cx: 1.8, cz: -2.1, hw: 0.6, hd: 0.25 },
+    ]
+    for (const sh of shelves) {
+      if (pos.x > sh.cx - sh.hw && pos.x < sh.cx + sh.hw &&
+          pos.z > sh.cz - sh.hd && pos.z < sh.cz + sh.hd) {
+        if (posYRef.current <= SHELF_TOP && posYRef.current > SHELF_TOP - 0.3) {
+          floorY = SHELF_TOP
+        }
+      }
+    }
+
+    // Land on floor
+    if (posYRef.current <= floorY) {
+      posYRef.current = floorY
+      velYRef.current = 0
+      onGroundRef.current = true
+    }
+
+    const bob = (moving && onGroundRef.current) ? Math.abs(Math.sin(walkPhaseRef.current)) * 0.03 : 0
+
+    groupRef.current.position.set(pos.x, posYRef.current + bob, pos.z)
     groupRef.current.rotation.y = facingRef.current
 
     // Leg + arm swing
