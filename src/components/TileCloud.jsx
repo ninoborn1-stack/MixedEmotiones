@@ -46,26 +46,25 @@ const SURFACES = [
   // Back edge detail
   { id: 'roof-back', center: [0, 3.44, -2.76], extents: [6.6, 0.2], plane: 'xy', thickness: 0.12, baseDelay: 1.0, opacityBucket: 0, tileSize: 0.12 },
 
-  // ==================== STATUE ON ROOF ====================
-  // Pedestal base
-  { id: 'statue-base', center: [0, 3.85, 0], extents: [0.8, 0.8], plane: 'xz', thickness: 0.2, baseDelay: 1.15, opacityBucket: 0, tileSize: 0.12 },
-  // Pedestal column
-  { id: 'statue-pedestal-f', center: [0, 4.15, 0.06], extents: [0.5, 0.4], plane: 'xy', thickness: 0.15, baseDelay: 1.2, opacityBucket: 0, tileSize: 0.1 },
-  { id: 'statue-pedestal-s', center: [-0.06, 4.15, 0], extents: [0.5, 0.4], plane: 'zy', thickness: 0.15, baseDelay: 1.2, opacityBucket: 0, tileSize: 0.1 },
-  // Legs / lower body
-  { id: 'statue-legs-f', center: [0, 4.7, 0.05], extents: [0.35, 0.7], plane: 'xy', thickness: 0.12, baseDelay: 1.25, opacityBucket: 0, tileSize: 0.08 },
-  { id: 'statue-legs-s', center: [-0.05, 4.7, 0], extents: [0.3, 0.7], plane: 'zy', thickness: 0.12, baseDelay: 1.25, opacityBucket: 0, tileSize: 0.08 },
-  // Torso (wider)
-  { id: 'statue-torso-f', center: [0, 5.3, 0.05], extents: [0.45, 0.6], plane: 'xy', thickness: 0.14, baseDelay: 1.3, opacityBucket: 0, tileSize: 0.09 },
-  { id: 'statue-torso-s', center: [-0.05, 5.3, 0], extents: [0.35, 0.6], plane: 'zy', thickness: 0.14, baseDelay: 1.3, opacityBucket: 0, tileSize: 0.09 },
-  // Arms (left + right, angled outward)
-  { id: 'statue-arm-l', center: [-0.35, 5.2, 0.04], extents: [0.25, 0.5], plane: 'xy', thickness: 0.08, baseDelay: 1.35, opacityBucket: 0, tileSize: 0.07 },
-  { id: 'statue-arm-r', center: [0.35, 5.2, 0.04], extents: [0.25, 0.5], plane: 'xy', thickness: 0.08, baseDelay: 1.35, opacityBucket: 0, tileSize: 0.07 },
-  // Head
-  { id: 'statue-head-f', center: [0, 5.8, 0.04], extents: [0.25, 0.3], plane: 'xy', thickness: 0.12, baseDelay: 1.4, opacityBucket: 0, tileSize: 0.07 },
-  { id: 'statue-head-s', center: [-0.04, 5.8, 0], extents: [0.25, 0.3], plane: 'zy', thickness: 0.12, baseDelay: 1.4, opacityBucket: 0, tileSize: 0.07 },
-  // Head top
-  { id: 'statue-crown', center: [0, 5.98, 0], extents: [0.18, 0.18], plane: 'xz', thickness: 0.06, baseDelay: 1.45, opacityBucket: 0, tileSize: 0.06 },
+  // ==================== EAGLE SCULPTURE ON ROOF ====================
+  // Wide pedestal
+  { id: 'eagle-base', center: [0, 3.85, 0], extents: [2.0, 0.8], plane: 'xz', thickness: 0.15, baseDelay: 1.15, opacityBucket: 0, tileSize: 0.14 },
+  // Central body (compact, low)
+  { id: 'eagle-body-f', center: [0, 4.15, 0.05], extents: [0.8, 0.4], plane: 'xy', thickness: 0.2, baseDelay: 1.2, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'eagle-body-s', center: [-0.05, 4.15, 0], extents: [0.6, 0.4], plane: 'zy', thickness: 0.2, baseDelay: 1.2, opacityBucket: 0, tileSize: 0.1 },
+  // Left wing — spread wide
+  { id: 'eagle-wing-l1', center: [-0.8, 4.2, 0.04], extents: [0.8, 0.35], plane: 'xy', thickness: 0.06, baseDelay: 1.25, opacityBucket: 0, tileSize: 0.09 },
+  { id: 'eagle-wing-l2', center: [-1.5, 4.35, 0.04], extents: [0.7, 0.25], plane: 'xy', thickness: 0.05, baseDelay: 1.3, opacityBucket: 0, tileSize: 0.08 },
+  { id: 'eagle-wing-l3', center: [-2.0, 4.45, 0.03], extents: [0.5, 0.15], plane: 'xy', thickness: 0.04, baseDelay: 1.35, opacityBucket: 0, tileSize: 0.07 },
+  // Right wing — spread wide
+  { id: 'eagle-wing-r1', center: [0.8, 4.2, 0.04], extents: [0.8, 0.35], plane: 'xy', thickness: 0.06, baseDelay: 1.25, opacityBucket: 0, tileSize: 0.09 },
+  { id: 'eagle-wing-r2', center: [1.5, 4.35, 0.04], extents: [0.7, 0.25], plane: 'xy', thickness: 0.05, baseDelay: 1.3, opacityBucket: 0, tileSize: 0.08 },
+  { id: 'eagle-wing-r3', center: [2.0, 4.45, 0.03], extents: [0.5, 0.15], plane: 'xy', thickness: 0.04, baseDelay: 1.35, opacityBucket: 0, tileSize: 0.07 },
+  // Head (small, forward)
+  { id: 'eagle-head-f', center: [0, 4.4, 0.2], extents: [0.3, 0.2], plane: 'xy', thickness: 0.12, baseDelay: 1.35, opacityBucket: 0, tileSize: 0.07 },
+  { id: 'eagle-head-s', center: [-0.04, 4.4, 0.2], extents: [0.2, 0.2], plane: 'zy', thickness: 0.12, baseDelay: 1.35, opacityBucket: 0, tileSize: 0.07 },
+  // Tail (small, backward)
+  { id: 'eagle-tail', center: [0, 4.1, -0.3], extents: [0.4, 0.15], plane: 'xy', thickness: 0.06, baseDelay: 1.3, opacityBucket: 0, tileSize: 0.07 },
 
   // ==================== FOUNTAIN (left of store) ====================
   // Base platform
@@ -218,7 +217,7 @@ export default function TileCloud({ onSettled, pulseTime }) {
     // Pulse effect on settled tiles
     if (settledRef.current && pulseStartRef.current > 0) {
       const timeSincePulse = state.clock.elapsedTime - pulseStartRef.current
-      if (timeSincePulse > 0 && timeSincePulse < 1.5) {
+      if (timeSincePulse > 0 && timeSincePulse < 3.0) {
         const d = dummy.current
         for (let b = 0; b < 3; b++) {
           const mesh = meshRefs[b].current
@@ -227,15 +226,15 @@ export default function TileCloud({ onSettled, pulseTime }) {
           for (let i = 0; i < tiles.length; i++) {
             const t = tiles[i]
             const dist = Math.sqrt(t.tx * t.tx + t.tz * t.tz)
-            const waveTime = timeSincePulse - dist * 0.04
-            if (waveTime > 0 && waveTime < 0.6) {
-              const pulseAmount = Math.sin(waveTime * Math.PI / 0.6) * 0.06
+            const waveTime = timeSincePulse - dist * 0.025
+            if (waveTime > 0 && waveTime < 0.8) {
+              const pulseAmount = Math.sin(waveTime * Math.PI / 0.8) * 0.15
               d.position.set(t.tx, t.ty + pulseAmount, t.tz)
               d.rotation.set(0, 0, 0)
               d.scale.set(t.sx, t.sy, t.sz)
               d.updateMatrix()
               mesh.setMatrixAt(i, d.matrix)
-            } else if (waveTime >= 0.6) {
+            } else if (waveTime >= 0.8) {
               d.position.set(t.tx, t.ty, t.tz)
               d.rotation.set(0, 0, 0)
               d.scale.set(t.sx, t.sy, t.sz)
@@ -245,7 +244,7 @@ export default function TileCloud({ onSettled, pulseTime }) {
           }
           mesh.instanceMatrix.needsUpdate = true
         }
-        if (timeSincePulse > 1.4) pulseStartRef.current = 0
+        if (timeSincePulse > 2.8) pulseStartRef.current = 0
         return
       }
       return

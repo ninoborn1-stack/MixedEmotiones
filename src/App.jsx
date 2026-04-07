@@ -99,10 +99,10 @@ export default function App() {
               className="absolute bottom-14 left-0 right-0 flex justify-center pointer-events-auto"
             >
               <motion.button
-                className="px-10 py-3.5 bg-[#1A1A1A] text-[#F8F6F3] text-[11px] tracking-[0.35em] uppercase font-medium border-none cursor-pointer"
+                className="px-10 py-3.5 bg-transparent text-[#1A1A1A] text-lg tracking-[0.35em] uppercase font-bold border-none cursor-pointer"
                 style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                 onClick={advancePhase}
-                whileHover={{ backgroundColor: '#2A2A2A', scale: 1.03 }}
+                whileHover={{ scale: 1.05, letterSpacing: '0.45em' }}
                 whileTap={{ scale: 0.97 }}
               >
                 Enter Store
