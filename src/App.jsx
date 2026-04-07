@@ -235,15 +235,15 @@ export default function App() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="absolute top-8 md:top-0 left-0 right-0 flex items-center justify-between px-6 py-4 md:px-6 md:py-6">
+            <div className="absolute top-10 md:top-4 left-4 md:left-6">
               <motion.button
-                className="text-[10px] md:text-sm tracking-[0.25em] uppercase text-[#1A1A1A] cursor-pointer bg-transparent border-none font-bold pointer-events-auto flex items-center gap-2 md:gap-3 ml-4 md:ml-2"
+                className="text-[9px] md:text-sm tracking-[0.2em] md:tracking-[0.25em] uppercase text-[#1A1A1A] cursor-pointer bg-transparent border-none font-bold pointer-events-auto flex items-center gap-1.5 md:gap-3"
                 style={{ fontFamily: "'Cinzel', serif" }}
                 onClick={goBack}
                 whileHover={{ x: -4 }}
               >
-                <svg width="16" height="10" viewBox="0 0 16 10" className="opacity-70">
-                  <path d="M0,5 L6,0 M0,5 L6,10 M0,5 L16,5" fill="none" stroke="currentColor" strokeWidth="1.2" />
+                <svg width="12" height="8" viewBox="0 0 12 8" className="opacity-60 md:w-4 md:h-[10px]">
+                  <path d="M0,4 L5,0 M0,4 L5,8 M0,4 L12,4" fill="none" stroke="currentColor" strokeWidth="1" />
                 </svg>
                 Exit
               </motion.button>
