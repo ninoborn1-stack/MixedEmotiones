@@ -159,6 +159,28 @@ export default function App() {
                 MXD MTNS
               </h1>
             </div>
+            {/* Left tagline */}
+            <motion.div
+              className="absolute left-6 md:left-12 top-[35%] -translate-y-1/2"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 0.5, x: 0 }}
+              transition={{ delay: 0.8, duration: 1 }}
+            >
+              <p className="text-[10px] md:text-xs tracking-[0.2em] uppercase text-[#1A1A1A] font-medium leading-relaxed" style={{ fontFamily: "'Cinzel', serif", writingMode: 'vertical-lr', transform: 'rotate(180deg)' }}>
+                100% Highfashion Streetwear
+              </p>
+            </motion.div>
+            {/* Right established */}
+            <motion.div
+              className="absolute right-6 md:right-12 top-[35%] -translate-y-1/2"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 0.5, x: 0 }}
+              transition={{ delay: 0.8, duration: 1 }}
+            >
+              <p className="text-[10px] md:text-xs tracking-[0.2em] uppercase text-[#1A1A1A] font-medium leading-relaxed" style={{ fontFamily: "'Cinzel', serif", writingMode: 'vertical-lr' }}>
+                Est. 2000
+              </p>
+            </motion.div>
             <motion.div
               className="absolute bottom-14 left-0 right-0 flex justify-center pointer-events-auto"
               initial={{ opacity: 0, y: 10 }}
