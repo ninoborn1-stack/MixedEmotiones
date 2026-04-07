@@ -90,18 +90,6 @@ export default function VirtualJoystick({ keysRef }) {
         />
       </div>
 
-      {/* Jump button */}
-      <div
-        className="absolute bottom-8 right-8 w-14 h-14 rounded-full border-2 border-[#1A1A1A]/20 bg-[#1A1A1A]/5 pointer-events-auto flex items-center justify-center"
-        onTouchStart={(e) => {
-          e.preventDefault()
-          handleJump()
-        }}
-      >
-        <svg width="16" height="12" viewBox="0 0 16 12" className="opacity-40">
-          <path d="M8,2 L14,10 L2,10 Z" fill="#1A1A1A" />
-        </svg>
-      </div>
     </div>
   )
 }
