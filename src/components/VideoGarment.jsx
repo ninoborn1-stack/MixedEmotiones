@@ -180,12 +180,11 @@ export default function VideoGarment({ product, position, onClick, visible, vide
       {/* Labels only visible inside the store */}
       {showLabels && (
         <Html
-          position={[0, -0.7, 0]}
-          center
+          position={[0.4, -1.3, 0]}
           distanceFactor={6}
           style={{ opacity: hovered ? 1 : 0.7, transition: 'opacity 0.3s', pointerEvents: 'none' }}
         >
-          <div className="text-center select-none whitespace-nowrap">
+          <div className="text-left select-none whitespace-nowrap">
             <p className="text-[8px] tracking-[0.3em] uppercase text-[#4A4540] font-light mb-0.5">{product.type}</p>
             <p className="font-display text-[13px] tracking-wide text-[#1A1A1A] font-medium">{product.name}</p>
             <p className="text-[8px] tracking-[0.15em] text-[#4A4540] mt-0.5">{product.subtitle}</p>
