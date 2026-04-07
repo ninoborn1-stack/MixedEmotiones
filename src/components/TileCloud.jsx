@@ -145,9 +145,39 @@ function generateTiles() {
         const offsetZ = (Math.random() - 0.5) * 2
         const offsetY = 2 + Math.random() * 3
 
+        // Color: outdoor ground tiles far from store get pastel colors
+        let cr = 0.98, cg = 0.97, cb = 0.95 // default white (#FAFAF8)
+        if (surface.id.startsWith('ground-')) {
+          const distFromCenter = Math.sqrt(wx * wx + wz * wz)
+          if (distFromCenter > 5) {
+            // Gradually more colorful the further from center
+            const colorChance = Math.min((distFromCenter - 5) / 10, 0.8)
+            if (Math.random() < colorChance) {
+              const hue = Math.random()
+              // Soft pastels: high lightness, low saturation
+              const s = 0.3 + Math.random() * 0.4
+              const l = 0.75 + Math.random() * 0.15
+              // HSL to RGB
+              const c = (1 - Math.abs(2 * l - 1)) * s
+              const x = c * (1 - Math.abs((hue * 6) % 2 - 1))
+              const m = l - c / 2
+              let r1, g1, b1
+              const h6 = hue * 6
+              if (h6 < 1) { r1 = c; g1 = x; b1 = 0 }
+              else if (h6 < 2) { r1 = x; g1 = c; b1 = 0 }
+              else if (h6 < 3) { r1 = 0; g1 = c; b1 = x }
+              else if (h6 < 4) { r1 = 0; g1 = x; b1 = c }
+              else if (h6 < 5) { r1 = x; g1 = 0; b1 = c }
+              else { r1 = c; g1 = 0; b1 = x }
+              cr = r1 + m; cg = g1 + m; cb = b1 + m
+            }
+          }
+        }
+
         tiles[surface.opacityBucket].push({
           tx: wx, ty: wy, tz: wz,
           sx, sy, sz,
+          cr, cg, cb,
           ox: wx + offsetX,
           oy: wy + offsetY,
           oz: wz + offsetZ,
@@ -183,6 +213,8 @@ export default function TileCloud({ onSettled, pulseTime }) {
     return max
   }, [buckets])
 
+  const colorTemp = useRef(new THREE.Color())
+
   useEffect(() => {
     const d = dummy.current
     d.scale.set(0, 0, 0)
@@ -190,10 +222,15 @@ export default function TileCloud({ onSettled, pulseTime }) {
     for (let b = 0; b < 3; b++) {
       const mesh = meshRefs[b].current
       if (!mesh) continue
-      for (let i = 0; i < buckets[b].length; i++) {
+      const tiles = buckets[b]
+      for (let i = 0; i < tiles.length; i++) {
         mesh.setMatrixAt(i, d.matrix)
+        // Set per-instance color
+        colorTemp.current.setRGB(tiles[i].cr, tiles[i].cg, tiles[i].cb)
+        mesh.setColorAt(i, colorTemp.current)
       }
       mesh.instanceMatrix.needsUpdate = true
+      if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true
     }
   }, [buckets])
 
@@ -328,7 +365,7 @@ export default function TileCloud({ onSettled, pulseTime }) {
           renderOrder={b}
         >
           <meshStandardMaterial
-            color="#FAFAF8"
+            color="#FFFFFF"
             transparent
             opacity={BUCKET_OPACITIES[b]}
             roughness={0.35}
