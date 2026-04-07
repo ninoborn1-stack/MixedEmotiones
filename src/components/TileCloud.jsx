@@ -20,10 +20,10 @@ const SURFACES = [
   { id: 'back-wall', center: [0, 1.65, -2.4], extents: [6, 3.3], plane: 'xy', thickness: 0.08, baseDelay: 0.3, opacityBucket: 1 },
   { id: 'left-wall', center: [-2.95, 1.65, 0], extents: [5, 3.3], plane: 'zy', thickness: 0.08, baseDelay: 0.5, opacityBucket: 1 },
   { id: 'right-wall', center: [2.95, 1.65, 0], extents: [5, 3.3], plane: 'zy', thickness: 0.08, baseDelay: 0.55, opacityBucket: 1 },
-  { id: 'front-l', center: [-1.8, 1.65, 2.46], extents: [2.3, 3.3], plane: 'xy', thickness: 0.08, baseDelay: 0.65, opacityBucket: 1 },
-  { id: 'front-r', center: [1.8, 1.65, 2.46], extents: [2.3, 3.3], plane: 'xy', thickness: 0.08, baseDelay: 0.7, opacityBucket: 1 },
+  { id: 'front-l', center: [-1.98, 1.65, 2.46], extents: [1.95, 3.3], plane: 'xy', thickness: 0.08, baseDelay: 0.65, opacityBucket: 1 },
+  { id: 'front-r', center: [1.98, 1.65, 2.46], extents: [1.95, 3.3], plane: 'xy', thickness: 0.08, baseDelay: 0.7, opacityBucket: 1 },
   { id: 'ceiling', center: [0, 3.3, 0], extents: [6, 5], plane: 'xz', thickness: 0.06, baseDelay: 0.85, opacityBucket: 2 },
-  { id: 'front-top', center: [0, 2.95, 2.46], extents: [1.5, 0.7], plane: 'xy', thickness: 0.08, baseDelay: 0.95, opacityBucket: 1 },
+  { id: 'front-top', center: [0, 2.95, 2.46], extents: [2.0, 0.7], plane: 'xy', thickness: 0.08, baseDelay: 0.95, opacityBucket: 1 },
 
   // ==================== STORE INTERIOR ====================
   { id: 'shelf-bl', center: [-1.8, 0.7, -2.1], extents: [1.2, 0.5], plane: 'xz', thickness: 0.06, baseDelay: 1.1, opacityBucket: 0, tileSize: 0.18 },

@@ -184,7 +184,7 @@ export default function App() {
             </motion.div>
             {/* Left tagline */}
             <motion.div
-              className="absolute left-[8%] md:left-[12%] top-[26.5%] md:top-[22.5%]"
+              className="absolute left-[8%] md:left-[13.5%] top-[26.5%] md:top-[22.5%]"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 0.5, x: 0 }}
               transition={{ delay: 1.2, duration: 1 }}
@@ -235,7 +235,7 @@ export default function App() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="absolute top-10 md:top-4 left-4 md:left-6">
+            <div className="absolute top-10 md:top-10 left-4 md:left-8">
               <motion.button
                 className="text-[9px] md:text-sm tracking-[0.2em] md:tracking-[0.25em] uppercase text-[#1A1A1A] cursor-pointer bg-transparent border-none font-bold pointer-events-auto flex items-center gap-1.5 md:gap-3"
                 style={{ fontFamily: "'Cinzel', serif" }}

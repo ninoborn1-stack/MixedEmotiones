@@ -8,8 +8,8 @@ const WALLS = {
   right: 2.95,
   back: -2.4,
   front: 2.46,
-  doorLeft: -0.65,
-  doorRight: 0.65,
+  doorLeft: -1.0,
+  doorRight: 1.0,
 }
 
 // Store floor is at y=0.04, ground outside at y=-0.02
