@@ -34,7 +34,7 @@ const PRODUCTS = [
     details: ['80% cotton, 20% polyester', '380 GSM', 'Oversized fit', 'Made in Portugal', 'Ab 2 Produkten Lieferung inkl.'],
     position: [-0.08, 1.42, -1.8],
     displayScale: 1.45,
-    labelOffset: [0.06, -1.05, 0.3],
+    labelOffset: [0.1, -1.05, 0.3],
     videoSrc: 'HM2.mp4',
     posterSrc: 'poster-center.png',
     bgType: 'white',
@@ -50,6 +50,7 @@ const PRODUCTS = [
     details: ['100% organic cotton', '240 GSM', 'Relaxed fit', 'Made in Portugal', 'Ab 2 Produkten Lieferung inkl.'],
     position: [1.8, 1.5, -1.8],
     displayScale: 1.0,
+    labelOffset: [-0.05, -0.95, 0.3],
     videoSrc: 'TR.mp4',
     posterSrc: 'poster-right.png',
     bgType: 'white',
@@ -135,13 +136,16 @@ function CameraController({ phase, playerPosRef }) {
       phase === 'entering' ? 0.6 :
       1.0
 
-    // In interior, camera slightly follows player horizontally
+    // In interior, camera slightly follows player — only if player is inside store
     let targetPos = new THREE.Vector3(...target.pos)
     if (phase === 'interior' && playerPosRef) {
       const px = playerPosRef.current.x
-      // Clamp the camera offset so it doesn't swing too far
-      const offsetX = Math.max(-0.8, Math.min(0.8, px * 0.15))
-      targetPos.x = target.pos[0] + offsetX
+      const pz = playerPosRef.current.z
+      const playerInStore = px > -2.95 && px < 2.95 && pz > -2.4 && pz < 2.46
+      if (playerInStore) {
+        const offsetX = Math.max(-0.8, Math.min(0.8, px * 0.15))
+        targetPos.x = target.pos[0] + offsetX
+      }
     }
 
     const t = 1 - Math.pow(0.001, delta * speed)
