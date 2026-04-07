@@ -269,44 +269,38 @@ export default function PlayerFigure({ playerPosRef }) {
         <boxGeometry args={[ts * 0.4, ts * 0.7, ts * 0.4]} />
         <meshStandardMaterial color="#FFEE88" emissive="#FFD700" emissiveIntensity={0.8} />
       </mesh>
-      {/* Arrow keys painted on floor + arrow above head */}
+      {/* Keyboard arrow keys on floor in front of player */}
       {showHint && (
         <>
-          {/* Arrow above head */}
+          {/* Bouncing arrow above head */}
           <Html position={[0, 1.4, 0]} center distanceFactor={5} style={{ pointerEvents: 'none' }}>
-            <div className="flex flex-col items-center gap-0.5 select-none opacity-70 animate-bounce">
+            <div className="flex flex-col items-center select-none opacity-70 animate-bounce">
               <svg width="16" height="12" viewBox="0 0 16 12">
                 <path d="M8,1 L14,10 L2,10 Z" fill="#1A1A1A" />
               </svg>
             </div>
           </Html>
-          {/* Floor arrows — flat on ground */}
-          {/* Forward arrow */}
-          <mesh position={[0, 0.02, -0.6]} rotation={[-Math.PI / 2, 0, 0]}>
-            <planeGeometry args={[0.25, 0.4]} />
-            <meshBasicMaterial color="#1A1A1A" transparent opacity={0.3} />
-          </mesh>
-          <mesh position={[0, 0.02, -0.85]} rotation={[-Math.PI / 2, 0, 0]}>
-            <bufferGeometry>
-              <float32BufferAttribute attach="attributes-position" args={[new Float32Array([-0.2,0,0, 0.2,0,0, 0,0.25,0]), 3]} />
-            </bufferGeometry>
-            <meshBasicMaterial color="#1A1A1A" transparent opacity={0.3} side={THREE.DoubleSide} />
-          </mesh>
-          {/* Back arrow */}
-          <mesh position={[0, 0.02, 0.6]} rotation={[-Math.PI / 2, 0, Math.PI]}>
-            <planeGeometry args={[0.25, 0.4]} />
-            <meshBasicMaterial color="#1A1A1A" transparent opacity={0.2} />
-          </mesh>
-          {/* Left arrow */}
-          <mesh position={[-0.6, 0.02, 0]} rotation={[-Math.PI / 2, 0, Math.PI / 2]}>
-            <planeGeometry args={[0.25, 0.4]} />
-            <meshBasicMaterial color="#1A1A1A" transparent opacity={0.2} />
-          </mesh>
-          {/* Right arrow */}
-          <mesh position={[0.6, 0.02, 0]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]}>
-            <planeGeometry args={[0.25, 0.4]} />
-            <meshBasicMaterial color="#1A1A1A" transparent opacity={0.2} />
-          </mesh>
+          {/* Arrow keys — flat on floor in front */}
+          <Html position={[0, 0.03, 1.2]} center distanceFactor={4}
+            style={{ pointerEvents: 'none', transform: 'rotateX(65deg)' }}
+          >
+            <div className="flex flex-col items-center gap-[3px] select-none opacity-60">
+              <div className="w-8 h-8 bg-[#F0EDE9] border-2 border-[#C0B8AE] rounded-[3px] flex items-center justify-center" style={{ boxShadow: '0 2px 0 #A09890' }}>
+                <svg width="12" height="8" viewBox="0 0 12 8"><path d="M6,1 L11,7 L1,7 Z" fill="#1A1A1A" /></svg>
+              </div>
+              <div className="flex gap-[3px]">
+                <div className="w-8 h-8 bg-[#F0EDE9] border-2 border-[#C0B8AE] rounded-[3px] flex items-center justify-center" style={{ boxShadow: '0 2px 0 #A09890' }}>
+                  <svg width="8" height="12" viewBox="0 0 8 12"><path d="M1,6 L7,1 L7,11 Z" fill="#1A1A1A" /></svg>
+                </div>
+                <div className="w-8 h-8 bg-[#F0EDE9] border-2 border-[#C0B8AE] rounded-[3px] flex items-center justify-center" style={{ boxShadow: '0 2px 0 #A09890' }}>
+                  <svg width="12" height="8" viewBox="0 0 12 8"><path d="M6,7 L1,1 L11,1 Z" fill="#1A1A1A" /></svg>
+                </div>
+                <div className="w-8 h-8 bg-[#F0EDE9] border-2 border-[#C0B8AE] rounded-[3px] flex items-center justify-center" style={{ boxShadow: '0 2px 0 #A09890' }}>
+                  <svg width="8" height="12" viewBox="0 0 8 12"><path d="M7,6 L1,1 L1,11 Z" fill="#1A1A1A" /></svg>
+                </div>
+              </div>
+            </div>
+          </Html>
         </>
       )}
     </group>
