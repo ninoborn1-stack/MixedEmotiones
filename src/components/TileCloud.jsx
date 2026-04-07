@@ -42,55 +42,21 @@ const SURFACES = [
   // Back edge detail
   { id: 'roof-back', center: [0, 3.44, -2.76], extents: [6.6, 0.2], plane: 'xy', thickness: 0.12, baseDelay: 1.0, opacityBucket: 0, tileSize: 0.12 },
 
-  // ==================== "MXD" LETTERS ON ROOF ====================
-  // Pixel-block style matching screenshot exactly
-  // Tile unit = 0.1. Letters built from 1-tile-wide columns.
-  // Base y = 3.8, top y = 4.9 → height 1.1 (11 tiles)
-  // Gap between letters = 0.4
-  //
-  // --- M (x: -1.6 to -0.6) — 4 verticals + top bar + bottom connector ---
-  // Outer left vertical (full height)
-  { id: 'M-1', center: [-1.55, 4.35, 0.04], extents: [0.1, 1.1], plane: 'xy', thickness: 0.1, baseDelay: 1.15, opacityBucket: 0, tileSize: 0.1 },
-  // Inner left vertical (shorter, starts lower)
-  { id: 'M-2', center: [-1.3, 4.2, 0.04], extents: [0.1, 0.8], plane: 'xy', thickness: 0.1, baseDelay: 1.18, opacityBucket: 0, tileSize: 0.1 },
-  // Inner right vertical (shorter)
-  { id: 'M-3', center: [-0.9, 4.2, 0.04], extents: [0.1, 0.8], plane: 'xy', thickness: 0.1, baseDelay: 1.18, opacityBucket: 0, tileSize: 0.1 },
-  // Outer right vertical (full height)
-  { id: 'M-4', center: [-0.65, 4.35, 0.04], extents: [0.1, 1.1], plane: 'xy', thickness: 0.1, baseDelay: 1.15, opacityBucket: 0, tileSize: 0.1 },
-  // Top bar connecting all 4
-  { id: 'M-5', center: [-1.1, 4.85, 0.04], extents: [0.8, 0.1], plane: 'xy', thickness: 0.1, baseDelay: 1.2, opacityBucket: 0, tileSize: 0.1 },
-  // Bottom connector between inner verticals
-  { id: 'M-6', center: [-1.1, 3.85, 0.04], extents: [0.3, 0.1], plane: 'xy', thickness: 0.1, baseDelay: 1.22, opacityBucket: 0, tileSize: 0.1 },
-  //
-  // --- X (x: -0.1 to 0.5) — like H: 2 verticals + middle bar ---
-  // Left vertical (full height)
-  { id: 'X-1', center: [-0.05, 4.35, 0.04], extents: [0.1, 1.1], plane: 'xy', thickness: 0.1, baseDelay: 1.18, opacityBucket: 0, tileSize: 0.1 },
-  // Right vertical (full height)
-  { id: 'X-2', center: [0.45, 4.35, 0.04], extents: [0.1, 1.1], plane: 'xy', thickness: 0.1, baseDelay: 1.18, opacityBucket: 0, tileSize: 0.1 },
-  // Middle crossbar
-  { id: 'X-3', center: [0.2, 4.35, 0.04], extents: [0.4, 0.1], plane: 'xy', thickness: 0.1, baseDelay: 1.22, opacityBucket: 0, tileSize: 0.1 },
-  // Top-left diagonal stub
-  { id: 'X-4', center: [0.08, 4.7, 0.04], extents: [0.1, 0.2], plane: 'xy', thickness: 0.1, baseDelay: 1.2, opacityBucket: 0, tileSize: 0.1 },
-  // Top-right diagonal stub
-  { id: 'X-5', center: [0.32, 4.7, 0.04], extents: [0.1, 0.2], plane: 'xy', thickness: 0.1, baseDelay: 1.2, opacityBucket: 0, tileSize: 0.1 },
-  // Bottom-left diagonal stub
-  { id: 'X-6', center: [0.08, 4.0, 0.04], extents: [0.1, 0.2], plane: 'xy', thickness: 0.1, baseDelay: 1.2, opacityBucket: 0, tileSize: 0.1 },
-  // Bottom-right diagonal stub
-  { id: 'X-7', center: [0.32, 4.0, 0.04], extents: [0.1, 0.2], plane: 'xy', thickness: 0.1, baseDelay: 1.2, opacityBucket: 0, tileSize: 0.1 },
-  //
-  // --- D (x: 0.85 to 1.65) — left vertical + curved right side ---
-  // Left vertical (full height)
-  { id: 'D-1', center: [0.9, 4.35, 0.04], extents: [0.1, 1.1], plane: 'xy', thickness: 0.1, baseDelay: 1.2, opacityBucket: 0, tileSize: 0.1 },
-  // Top bar
-  { id: 'D-2', center: [1.15, 4.85, 0.04], extents: [0.4, 0.1], plane: 'xy', thickness: 0.1, baseDelay: 1.22, opacityBucket: 0, tileSize: 0.1 },
-  // Bottom bar
-  { id: 'D-3', center: [1.15, 3.85, 0.04], extents: [0.4, 0.1], plane: 'xy', thickness: 0.1, baseDelay: 1.22, opacityBucket: 0, tileSize: 0.1 },
-  // Right curve — upper segment
-  { id: 'D-4', center: [1.45, 4.65, 0.04], extents: [0.1, 0.3], plane: 'xy', thickness: 0.1, baseDelay: 1.25, opacityBucket: 0, tileSize: 0.1 },
-  // Right curve — middle (furthest right)
-  { id: 'D-5', center: [1.55, 4.35, 0.04], extents: [0.1, 0.4], plane: 'xy', thickness: 0.1, baseDelay: 1.27, opacityBucket: 0, tileSize: 0.1 },
-  // Right curve — lower segment
-  { id: 'D-6', center: [1.45, 4.05, 0.04], extents: [0.1, 0.3], plane: 'xy', thickness: 0.1, baseDelay: 1.25, opacityBucket: 0, tileSize: 0.1 },
+  // ==================== SPOTLIGHTS AT CORNERS ====================
+  // Front-left corner spotlight (pole + head angled up)
+  { id: 'spot-fl-pole', center: [-3.1, 2.0, 2.6], extents: [0.08, 1.2], plane: 'xy', thickness: 0.06, baseDelay: 1.1, opacityBucket: 0, tileSize: 0.08 },
+  { id: 'spot-fl-head', center: [-3.1, 2.65, 2.6], extents: [0.2, 0.12], plane: 'xy', thickness: 0.1, baseDelay: 1.15, opacityBucket: 0, tileSize: 0.08 },
+  { id: 'spot-fl-arm', center: [-3.0, 2.55, 2.6], extents: [0.15, 0.06], plane: 'xy', thickness: 0.06, baseDelay: 1.13, opacityBucket: 0, tileSize: 0.06 },
+  // Front-right corner spotlight
+  { id: 'spot-fr-pole', center: [3.1, 2.0, 2.6], extents: [0.08, 1.2], plane: 'xy', thickness: 0.06, baseDelay: 1.1, opacityBucket: 0, tileSize: 0.08 },
+  { id: 'spot-fr-head', center: [3.1, 2.65, 2.6], extents: [0.2, 0.12], plane: 'xy', thickness: 0.1, baseDelay: 1.15, opacityBucket: 0, tileSize: 0.08 },
+  { id: 'spot-fr-arm', center: [3.2, 2.55, 2.6], extents: [0.15, 0.06], plane: 'xy', thickness: 0.06, baseDelay: 1.13, opacityBucket: 0, tileSize: 0.06 },
+  // Back-left corner spotlight
+  { id: 'spot-bl-pole', center: [-3.1, 2.0, -2.5], extents: [0.08, 1.2], plane: 'xy', thickness: 0.06, baseDelay: 1.1, opacityBucket: 0, tileSize: 0.08 },
+  { id: 'spot-bl-head', center: [-3.1, 2.65, -2.5], extents: [0.2, 0.12], plane: 'xy', thickness: 0.1, baseDelay: 1.15, opacityBucket: 0, tileSize: 0.08 },
+  // Back-right corner spotlight
+  { id: 'spot-br-pole', center: [3.1, 2.0, -2.5], extents: [0.08, 1.2], plane: 'xy', thickness: 0.06, baseDelay: 1.1, opacityBucket: 0, tileSize: 0.08 },
+  { id: 'spot-br-head', center: [3.1, 2.65, -2.5], extents: [0.2, 0.12], plane: 'xy', thickness: 0.1, baseDelay: 1.15, opacityBucket: 0, tileSize: 0.08 },
 
   // ==================== FOUNTAIN (left of store) ====================
   // Base platform
