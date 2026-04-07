@@ -1,5 +1,6 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { useFrame, useLoader } from '@react-three/fiber'
+import { Html } from '@react-three/drei'
 import * as THREE from 'three'
 
 const WALLS = {
@@ -32,6 +33,8 @@ export default function PlayerFigure({ playerPosRef }) {
   const keysRef = useRef({})
   const walkPhaseRef = useRef(0)
   const facingRef = useRef(0)
+  const [showHint, setShowHint] = useState(true)
+  const hasMovedRef = useRef(false)
   const velYRef = useRef(0)
   const posYRef = useRef(0)
   const onGroundRef = useRef(true)
@@ -67,6 +70,10 @@ export default function PlayerFigure({ playerPosRef }) {
     if (keys['ArrowDown'] || keys['s']) dz = 1
 
     const moving = dx !== 0 || dz !== 0
+    if (moving && !hasMovedRef.current) {
+      hasMovedRef.current = true
+      setShowHint(false)
+    }
 
     if (moving) {
       const len = Math.sqrt(dx * dx + dz * dz)
@@ -262,6 +269,29 @@ export default function PlayerFigure({ playerPosRef }) {
         <boxGeometry args={[ts * 0.4, ts * 0.7, ts * 0.4]} />
         <meshStandardMaterial color="#FFEE88" emissive="#FFD700" emissiveIntensity={0.8} />
       </mesh>
+      {/* Arrow keys hint + pointer above head */}
+      {showHint && (
+        <>
+          <Html position={[0, 1.4, 0]} center distanceFactor={5} style={{ pointerEvents: 'none' }}>
+            <div className="flex flex-col items-center gap-0.5 select-none opacity-70">
+              <svg width="14" height="10" viewBox="0 0 14 10">
+                <path d="M7,1 L12,9 L2,9 Z" fill="#1A1A1A" />
+              </svg>
+              <span className="text-[7px] tracking-[0.15em] text-[#1A1A1A] font-medium">MOVE</span>
+            </div>
+          </Html>
+          <Html position={[0, -0.3, 0.5]} center distanceFactor={5} style={{ pointerEvents: 'none' }}>
+            <div className="flex flex-col items-center gap-[2px] select-none opacity-60">
+              <div className="w-4 h-4 border border-[#1A1A1A] rounded-[2px] flex items-center justify-center text-[6px] text-[#1A1A1A]">W</div>
+              <div className="flex gap-[2px]">
+                <div className="w-4 h-4 border border-[#1A1A1A] rounded-[2px] flex items-center justify-center text-[6px] text-[#1A1A1A]">A</div>
+                <div className="w-4 h-4 border border-[#1A1A1A] rounded-[2px] flex items-center justify-center text-[6px] text-[#1A1A1A]">S</div>
+                <div className="w-4 h-4 border border-[#1A1A1A] rounded-[2px] flex items-center justify-center text-[6px] text-[#1A1A1A]">D</div>
+              </div>
+            </div>
+          </Html>
+        </>
+      )}
     </group>
   )
 }

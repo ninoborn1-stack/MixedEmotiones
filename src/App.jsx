@@ -154,17 +154,22 @@ export default function App() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="absolute top-8 left-0 right-0 text-center">
-              <h1 className="text-7xl md:text-9xl tracking-[0.3em] text-[#1A1A1A] font-bold opacity-70" style={{ fontFamily: "'Cinzel', serif" }}>
+            <motion.div
+              className="absolute top-8 left-0 right-0 text-center"
+              initial={{ opacity: 0, y: -30, scale: 0.9 }}
+              animate={{ opacity: 0.7, y: 0, scale: 1 }}
+              transition={{ delay: 0.3, duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <h1 className="text-7xl md:text-9xl tracking-[0.3em] text-[#1A1A1A] font-bold" style={{ fontFamily: "'Cinzel', serif" }}>
                 MXD MTNS
               </h1>
-            </div>
+            </motion.div>
             {/* Left tagline */}
             <motion.div
-              className="absolute left-6 md:left-12 top-[22%] md:top-[18%]"
+              className="absolute left-[8%] md:left-[12%] top-[22%] md:top-[18%]"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 0.5, x: 0 }}
-              transition={{ delay: 0.8, duration: 1 }}
+              transition={{ delay: 1.2, duration: 1 }}
             >
               <p className="text-[9px] md:text-xs tracking-[0.2em] uppercase text-[#1A1A1A] font-medium" style={{ fontFamily: "'Cinzel', serif" }}>
                 100% Highfashion Streetwear
@@ -172,10 +177,10 @@ export default function App() {
             </motion.div>
             {/* Right established */}
             <motion.div
-              className="absolute right-6 md:right-12 top-[22%] md:top-[18%]"
+              className="absolute right-[8%] md:right-[12%] top-[22%] md:top-[18%]"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 0.5, x: 0 }}
-              transition={{ delay: 0.8, duration: 1 }}
+              transition={{ delay: 1.2, duration: 1 }}
             >
               <p className="text-[9px] md:text-xs tracking-[0.2em] uppercase text-[#1A1A1A] font-medium" style={{ fontFamily: "'Cinzel', serif" }}>
                 Est. 2000
