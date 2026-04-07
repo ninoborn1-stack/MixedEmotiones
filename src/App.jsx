@@ -166,23 +166,23 @@ export default function App() {
             </motion.div>
             {/* Left tagline */}
             <motion.div
-              className="absolute left-[8%] md:left-[12%] top-[25%] md:top-[21%]"
+              className="absolute left-[8%] md:left-[12%] top-[26.5%] md:top-[22.5%]"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 0.5, x: 0 }}
               transition={{ delay: 1.2, duration: 1 }}
             >
-              <p className="text-[9px] md:text-xs tracking-[0.2em] uppercase text-[#1A1A1A] font-medium" style={{ fontFamily: "'Cinzel', serif" }}>
+              <p className="text-[9px] md:text-xs tracking-[0.2em] uppercase text-[#1A1A1A] font-bold" style={{ fontFamily: "'Cinzel', serif" }}>
                 100% Highfashion Streetwear
               </p>
             </motion.div>
             {/* Right established */}
             <motion.div
-              className="absolute right-[10%] md:right-[20%] top-[25%] md:top-[21%]"
+              className="absolute right-[10%] md:right-[20%] top-[26.5%] md:top-[22.5%]"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 0.5, x: 0 }}
               transition={{ delay: 1.2, duration: 1 }}
             >
-              <p className="text-[9px] md:text-xs tracking-[0.2em] uppercase text-[#1A1A1A] font-medium" style={{ fontFamily: "'Cinzel', serif" }}>
+              <p className="text-[9px] md:text-xs tracking-[0.2em] uppercase text-[#1A1A1A] font-bold" style={{ fontFamily: "'Cinzel', serif" }}>
                 Est. 2000
               </p>
             </motion.div>
