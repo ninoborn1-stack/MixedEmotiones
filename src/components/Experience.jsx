@@ -64,7 +64,7 @@ const CAMERA_TARGETS = {
   interior:   { pos: [0, 1.8, 2.0], lookAt: [0, 1.3, -1.2] },
 }
 
-export default function Experience({ phase, onAssemblyComplete, onEnter, onExit, selectedProduct, onSelectProduct, pulseTime }) {
+export default function Experience({ phase, onAssemblyComplete, onEnter, onExit, selectedProduct, onSelectProduct, pulseTime, keysRef }) {
   const groupRef = useRef()
   const playerPosRef = useRef({ x: 4.5, z: 2.5 })
 
@@ -101,7 +101,7 @@ export default function Experience({ phase, onAssemblyComplete, onEnter, onExit,
 
       <group ref={groupRef}>
         <TileCloud onSettled={handleTilesSettled} pulseTime={pulseTime} playerPosRef={playerPosRef} />
-        <PlayerFigure playerPosRef={playerPosRef} onEnterStore={onEnter} onExitStore={onExit} />
+        <PlayerFigure playerPosRef={playerPosRef} onEnterStore={onEnter} onExitStore={onExit} sharedKeysRef={keysRef} />
 
         {/* Products ALWAYS rendered — they are part of the store, visible from outside through glass walls */}
         {PRODUCTS.map((product) => (

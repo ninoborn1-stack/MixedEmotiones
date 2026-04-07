@@ -20,7 +20,7 @@ const GROUND_Y = 0
 const MOVE_SPEED = 3
 const ts = 0.12
 
-export default function PlayerFigure({ playerPosRef, onEnterStore, onExitStore }) {
+export default function PlayerFigure({ playerPosRef, onEnterStore, onExitStore, sharedKeysRef }) {
   const wasInsideRef = useRef(false)
   const groupRef = useRef()
   const leftLegRef = useRef()
@@ -36,6 +36,7 @@ export default function PlayerFigure({ playerPosRef, onEnterStore, onExitStore }
   const facingRef = useRef(0)
   const [showHint, setShowHint] = useState(true)
   const hasMovedRef = useRef(false)
+  const isTouchDevice = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0)
   const velYRef = useRef(0)
   const posYRef = useRef(0)
   const onGroundRef = useRef(true)
@@ -61,14 +62,16 @@ export default function PlayerFigure({ playerPosRef, onEnterStore, onExitStore }
 
   useFrame((state, delta) => {
     if (!groupRef.current) return
+    // Merge keyboard keys + joystick keys
     const keys = keysRef.current
+    const jk = sharedKeysRef?.current || {}
     const pos = posRef.current
 
     let dx = 0, dz = 0
-    if (keys['ArrowLeft'] || keys['a']) dx = -1
-    if (keys['ArrowRight'] || keys['d']) dx = 1
-    if (keys['ArrowUp'] || keys['w']) dz = -1
-    if (keys['ArrowDown'] || keys['s']) dz = 1
+    if (keys['ArrowLeft'] || keys['a'] || jk['ArrowLeft']) dx = -1
+    if (keys['ArrowRight'] || keys['d'] || jk['ArrowRight']) dx = 1
+    if (keys['ArrowUp'] || keys['w'] || jk['ArrowUp']) dz = -1
+    if (keys['ArrowDown'] || keys['s'] || jk['ArrowDown']) dz = 1
 
     const moving = dx !== 0 || dz !== 0
     if (moving && !hasMovedRef.current) {
@@ -145,7 +148,7 @@ export default function PlayerFigure({ playerPosRef, onEnterStore, onExitStore }
     const GRAVITY = -12
     const JUMP_FORCE = 5
 
-    if ((keys[' '] || keys['Space']) && onGroundRef.current) {
+    if ((keys[' '] || keys['Space'] || jk[' ']) && onGroundRef.current) {
       velYRef.current = JUMP_FORCE
       onGroundRef.current = false
     }
@@ -280,8 +283,15 @@ export default function PlayerFigure({ playerPosRef, onEnterStore, onExitStore }
         <boxGeometry args={[ts * 0.4, ts * 0.7, ts * 0.4]} />
         <meshStandardMaterial color="#FFEE88" emissive="#FFD700" emissiveIntensity={0.8} />
       </mesh>
-      {/* Arrow keys flat on floor in front of player — world-fixed, not billboard */}
-      {showHint && (
+      {/* Arrow keys on floor (desktop) or joystick hint (mobile) */}
+      {showHint && isTouchDevice && (
+        <Html position={[0, 1.2, 0]} center distanceFactor={5} style={{ pointerEvents: 'none' }}>
+          <div className="text-center select-none opacity-60">
+            <p className="text-[8px] tracking-[0.15em] text-[#1A1A1A] font-medium animate-bounce">Use joystick</p>
+          </div>
+        </Html>
+      )}
+      {showHint && !isTouchDevice && (
         <group position={[0, 0.03, 0.9]} rotation={[-Math.PI / 2, 0, 0]}>
           {/* Up key */}
           <mesh position={[0, 0.24, 0]}>

@@ -2,6 +2,7 @@ import { useState, useRef, useCallback, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { motion, AnimatePresence } from 'framer-motion'
 import Experience from './components/Experience'
+import VirtualJoystick from './components/VirtualJoystick'
 
 function ChromaKeyVideo({ src, bgType }) {
   const canvasRef = useRef(null)
@@ -19,7 +20,9 @@ function ChromaKeyVideo({ src, bgType }) {
       const vw = video.videoWidth
       const vh = video.videoHeight
       // Fit into max 400x300 keeping aspect ratio
-      const scale = Math.min(400 / vw, 300 / vh)
+      const maxW = window.innerWidth < 768 ? 250 : 400
+      const maxH = window.innerWidth < 768 ? 188 : 300
+      const scale = Math.min(maxW / vw, maxH / vh)
       setDims({ w: Math.round(vw * scale), h: Math.round(vh * scale) })
     })
 
@@ -58,6 +61,16 @@ export default function App() {
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [uiVisible, setUiVisible] = useState(false)
   const [pulseTime, setPulseTime] = useState(0)
+  const [fov, setFov] = useState(50)
+  const keysRef = useRef({})
+
+  // Dynamic FOV based on viewport width
+  useEffect(() => {
+    const updateFov = () => setFov(window.innerWidth < 768 ? 70 : 50)
+    updateFov()
+    window.addEventListener('resize', updateFov)
+    return () => window.removeEventListener('resize', updateFov)
+  }, [])
 
   const advancePhase = useCallback(() => {
     setPhase((prev) => {
@@ -97,7 +110,7 @@ export default function App() {
     >
       <Canvas
         shadows
-        camera={{ position: [14, 9, 14], fov: 50, near: 0.1, far: 100 }}
+        camera={{ position: [14, 9, 14], fov, near: 0.1, far: 100 }}
         gl={{ antialias: true, alpha: false }}
         dpr={[1, 2]}
       >
@@ -111,8 +124,12 @@ export default function App() {
           onSelectProduct={setSelectedProduct}
           pulseTime={pulseTime}
           onExit={goBack}
+          keysRef={keysRef}
         />
       </Canvas>
+
+      {/* Virtual Joystick for mobile */}
+      <VirtualJoystick keysRef={keysRef} />
 
       {/* UI Overlays */}
       <AnimatePresence>
@@ -131,7 +148,7 @@ export default function App() {
               animate={{ opacity: 0.7, y: 0 }}
               transition={{ delay: 2, duration: 1.5 }}
             >
-              <h1 className="text-7xl md:text-9xl tracking-[0.3em] text-[#1A1A1A] font-bold" style={{ fontFamily: "'Cinzel', serif" }}>
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-9xl tracking-[0.2em] md:tracking-[0.3em] text-[#1A1A1A] font-bold" style={{ fontFamily: "'Cinzel', serif" }}>
                 MXD MTNS
               </h1>
             </motion.div>
@@ -161,7 +178,7 @@ export default function App() {
               animate={{ opacity: 0.7, y: 0, scale: 1 }}
               transition={{ delay: 0.3, duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
             >
-              <h1 className="text-7xl md:text-9xl tracking-[0.3em] text-[#1A1A1A] font-bold" style={{ fontFamily: "'Cinzel', serif" }}>
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-9xl tracking-[0.2em] md:tracking-[0.3em] text-[#1A1A1A] font-bold" style={{ fontFamily: "'Cinzel', serif" }}>
                 MXD MTNS
               </h1>
             </motion.div>
@@ -194,7 +211,7 @@ export default function App() {
               transition={{ delay: 0.5, duration: 0.8 }}
             >
               <motion.button
-                className="group flex flex-col items-center gap-2 bg-transparent border-none cursor-pointer text-[#1A1A1A] text-sm md:text-lg tracking-[0.3em] md:tracking-[0.35em] uppercase font-bold"
+                className="group flex flex-col items-center gap-2 bg-transparent border-none cursor-pointer text-[#1A1A1A] text-xs sm:text-sm md:text-lg tracking-[0.25em] md:tracking-[0.35em] uppercase font-bold"
                 style={{ fontFamily: "'Cinzel', serif" }}
                 onClick={advancePhase}
                 whileTap={{ scale: 0.97 }}
@@ -276,7 +293,7 @@ export default function App() {
                 <p className="text-[10px] tracking-[0.35em] uppercase text-[#3A3530] font-light">
                   {selectedProduct.type}
                 </p>
-                <h2 className="font-display text-2xl md:text-3xl tracking-wide text-[#1A1A1A] font-semibold">
+                <h2 className="font-display text-xl sm:text-2xl md:text-3xl tracking-wide text-[#1A1A1A] font-semibold">
                   {selectedProduct.name}
                 </h2>
                 <p className="text-sm tracking-[0.15em] text-[#3A3530]">
