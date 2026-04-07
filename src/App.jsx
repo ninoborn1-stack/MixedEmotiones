@@ -3,9 +3,9 @@ import { Canvas } from '@react-three/fiber'
 import { motion, AnimatePresence } from 'framer-motion'
 import Experience from './components/Experience'
 
-function ChromaKeyVideo({ src, bgType, width, height }) {
+function ChromaKeyVideo({ src, bgType }) {
   const canvasRef = useRef(null)
-  const videoRef = useRef(null)
+  const [dims, setDims] = useState({ w: 400, h: 300 })
 
   useEffect(() => {
     const video = document.createElement('video')
@@ -14,25 +14,31 @@ function ChromaKeyVideo({ src, bgType, width, height }) {
     video.loop = true
     video.muted = true
     video.playsInline = true
-    videoRef.current = video
-    video.play()
 
-    const canvas = canvasRef.current
-    const ctx = canvas.getContext('2d')
+    video.addEventListener('loadedmetadata', () => {
+      const vw = video.videoWidth
+      const vh = video.videoHeight
+      // Fit into max 400x300 keeping aspect ratio
+      const scale = Math.min(400 / vw, 300 / vh)
+      setDims({ w: Math.round(vw * scale), h: Math.round(vh * scale) })
+    })
+
+    video.play()
 
     const draw = () => {
       if (video.paused || video.ended) return
-      ctx.drawImage(video, 0, 0, width, height)
-      const frame = ctx.getImageData(0, 0, width, height)
+      const canvas = canvasRef.current
+      if (!canvas) { requestAnimationFrame(draw); return }
+      const ctx = canvas.getContext('2d')
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
+      const frame = ctx.getImageData(0, 0, canvas.width, canvas.height)
       const d = frame.data
       for (let i = 0; i < d.length; i += 4) {
         const r = d[i], g = d[i + 1], b = d[i + 2]
         if (bgType === 'white') {
-          const minC = Math.min(r, g, b)
-          if (minC > 148) d[i + 3] = 0
+          if (Math.min(r, g, b) > 148) d[i + 3] = 0
         } else {
-          const maxC = Math.max(r, g, b)
-          if (maxC < 5) d[i + 3] = 0
+          if (Math.max(r, g, b) < 5) d[i + 3] = 0
         }
       }
       ctx.putImageData(frame, 0, 0)
@@ -41,9 +47,9 @@ function ChromaKeyVideo({ src, bgType, width, height }) {
     video.addEventListener('playing', () => requestAnimationFrame(draw))
 
     return () => { video.pause(); video.src = '' }
-  }, [src, bgType, width, height])
+  }, [src, bgType])
 
-  return <canvas ref={canvasRef} width={width} height={height} className="max-w-full max-h-full object-contain" />
+  return <canvas ref={canvasRef} width={dims.w} height={dims.h} style={{ width: dims.w, height: dims.h }} />
 }
 
 export default function App() {
@@ -220,12 +226,10 @@ export default function App() {
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             >
               {/* Video on the left with BG removal */}
-              <div className="flex-shrink-0 w-[320px] h-[240px] flex items-center justify-center">
+              <div className="flex-shrink-0 flex items-center justify-center">
                 <ChromaKeyVideo
                   src={import.meta.env.BASE_URL + selectedProduct.videoSrc}
                   bgType={selectedProduct.bgType}
-                  width={320}
-                  height={240}
                 />
               </div>
               {/* Info on the right */}

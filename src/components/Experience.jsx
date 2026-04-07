@@ -106,7 +106,7 @@ export default function Experience({ phase, onAssemblyComplete, onEnter, selecte
             videoSrc={product.videoSrc}
             posterSrc={product.posterSrc}
             bgType={product.bgType}
-            showLabels={phase === 'interior'}
+            showLabels={phase === 'interior' && !selectedProduct}
             displayScale={product.displayScale}
           />
         ))}
