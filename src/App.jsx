@@ -6,7 +6,8 @@ import VirtualJoystick from './components/VirtualJoystick'
 
 function ChromaKeyVideo({ src, bgType }) {
   const canvasRef = useRef(null)
-  const [dims, setDims] = useState({ w: 400, h: 300 })
+  const [renderSize, setRenderSize] = useState({ w: 640, h: 360 })
+  const [displaySize, setDisplaySize] = useState({ w: 400, h: 300 })
 
   useEffect(() => {
     const video = document.createElement('video')
@@ -19,11 +20,14 @@ function ChromaKeyVideo({ src, bgType }) {
     video.addEventListener('loadedmetadata', () => {
       const vw = video.videoWidth
       const vh = video.videoHeight
-      // Fit into max 400x300 keeping aspect ratio
-      const maxW = window.innerWidth < 768 ? 250 : 400
-      const maxH = window.innerWidth < 768 ? 188 : 300
-      const scale = Math.min(maxW / vw, maxH / vh)
-      setDims({ w: Math.round(vw * scale), h: Math.round(vh * scale) })
+      // Render at full or half video resolution for sharpness
+      const renderScale = Math.min(1, 640 / vw)
+      setRenderSize({ w: Math.round(vw * renderScale), h: Math.round(vh * renderScale) })
+      // Display size smaller
+      const maxW = window.innerWidth < 768 ? 280 : 420
+      const maxH = window.innerWidth < 768 ? 210 : 315
+      const displayScale = Math.min(maxW / vw, maxH / vh)
+      setDisplaySize({ w: Math.round(vw * displayScale), h: Math.round(vh * displayScale) })
     })
 
     video.play()
@@ -52,7 +56,7 @@ function ChromaKeyVideo({ src, bgType }) {
     return () => { video.pause(); video.src = '' }
   }, [src, bgType])
 
-  return <canvas ref={canvasRef} width={dims.w} height={dims.h} style={{ width: dims.w, height: dims.h }} />
+  return <canvas ref={canvasRef} width={renderSize.w} height={renderSize.h} style={{ width: displaySize.w, height: displaySize.h }} />
 }
 
 export default function App() {
