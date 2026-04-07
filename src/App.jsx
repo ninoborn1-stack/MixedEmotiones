@@ -83,7 +83,7 @@ export default function App() {
 
   useEffect(() => {
     if (phase === 'interior') {
-      const t = setTimeout(() => setUiVisible(true), 1500)
+      const t = setTimeout(() => setUiVisible(true), 400)
       return () => clearTimeout(t)
     } else {
       setUiVisible(false)
@@ -130,7 +130,7 @@ export default function App() {
               animate={{ opacity: 0.7, y: 0 }}
               transition={{ delay: 2, duration: 1.5 }}
             >
-              <h1 className="text-5xl md:text-6xl tracking-[0.3em] text-[#1A1A1A] font-bold" style={{ fontFamily: "'Cinzel', serif" }}>
+              <h1 className="text-7xl md:text-9xl tracking-[0.3em] text-[#1A1A1A] font-bold" style={{ fontFamily: "'Cinzel', serif" }}>
                 MXD MTNS
               </h1>
             </motion.div>
@@ -155,7 +155,7 @@ export default function App() {
             transition={{ duration: 0.8 }}
           >
             <div className="absolute top-8 left-0 right-0 text-center">
-              <h1 className="text-5xl md:text-6xl tracking-[0.3em] text-[#1A1A1A] font-bold opacity-70" style={{ fontFamily: "'Cinzel', serif" }}>
+              <h1 className="text-7xl md:text-9xl tracking-[0.3em] text-[#1A1A1A] font-bold opacity-70" style={{ fontFamily: "'Cinzel', serif" }}>
                 MXD MTNS
               </h1>
             </div>
@@ -166,7 +166,7 @@ export default function App() {
               transition={{ delay: 0.5, duration: 0.8 }}
             >
               <motion.button
-                className="group flex flex-col items-center gap-2 bg-transparent border-none cursor-pointer text-[#1A1A1A] text-lg tracking-[0.35em] uppercase font-bold"
+                className="group flex flex-col items-center gap-2 bg-transparent border-none cursor-pointer text-[#1A1A1A] text-sm md:text-lg tracking-[0.3em] md:tracking-[0.35em] uppercase font-bold"
                 style={{ fontFamily: "'Cinzel', serif" }}
                 onClick={advancePhase}
                 whileTap={{ scale: 0.97 }}
@@ -190,9 +190,9 @@ export default function App() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-6 py-6">
+            <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-4 py-4 md:px-6 md:py-6">
               <motion.button
-                className="text-sm tracking-[0.25em] uppercase text-[#1A1A1A] cursor-pointer bg-transparent border-none font-bold pointer-events-auto flex items-center gap-3 ml-2"
+                className="text-xs md:text-sm tracking-[0.25em] uppercase text-[#1A1A1A] cursor-pointer bg-transparent border-none font-bold pointer-events-auto flex items-center gap-2 md:gap-3 ml-1 md:ml-2"
                 style={{ fontFamily: "'Cinzel', serif" }}
                 onClick={goBack}
                 whileHover={{ x: -4 }}
@@ -205,8 +205,8 @@ export default function App() {
               <span />
               <span />
             </div>
-            <div className="absolute bottom-7 left-0 right-0 text-center">
-              <p className="text-[8px] tracking-[0.35em] uppercase text-[#8A8478]/25 font-light">
+            <div className="absolute bottom-4 md:bottom-7 left-0 right-0 text-center">
+              <p className="text-[7px] md:text-[8px] tracking-[0.35em] uppercase text-[#8A8478]/25 font-light">
                 Select to view
               </p>
             </div>
@@ -230,7 +230,7 @@ export default function App() {
               onClick={() => setSelectedProduct(null)}
             />
             <motion.div
-              className="relative z-10 flex items-center gap-12 max-w-4xl mx-auto px-8"
+              className="relative z-10 flex flex-col md:flex-row items-center gap-6 md:gap-12 max-w-4xl mx-auto px-6 md:px-8"
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 20, opacity: 0 }}
@@ -248,7 +248,7 @@ export default function App() {
                 <p className="text-[9px] tracking-[0.35em] uppercase text-[#8A8478] font-light">
                   {selectedProduct.type}
                 </p>
-                <h2 className="font-display text-3xl tracking-wide text-[#1A1A1A] font-normal">
+                <h2 className="font-display text-2xl md:text-3xl tracking-wide text-[#1A1A1A] font-normal">
                   {selectedProduct.name}
                 </h2>
                 <p className="text-sm tracking-[0.15em] text-[#8A8478] font-light">
