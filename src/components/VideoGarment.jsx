@@ -144,7 +144,7 @@ export default function VideoGarment({ product, position, onClick, visible, vide
 
   if (!visible) return null
 
-  const planeW = 1.6
+  const planeW = 1.85
   const planeH = planeW * (720 / 1280)
   const fragShader = bgType === 'white' ? whiteKeyFrag : blackKeyFrag
 
@@ -180,15 +180,16 @@ export default function VideoGarment({ product, position, onClick, visible, vide
       {/* Labels only visible inside the store */}
       {showLabels && (
         <Html
-          position={[0.4, -1.3, 0]}
+          position={[0, -1.35, 0.3]}
+          center
           distanceFactor={6}
-          style={{ opacity: hovered ? 1 : 0.7, transition: 'opacity 0.3s', pointerEvents: 'none' }}
+          style={{ opacity: hovered ? 1 : 0.8, transition: 'opacity 0.3s', pointerEvents: 'none' }}
         >
-          <div className="text-left select-none whitespace-nowrap">
-            <p className="text-[8px] tracking-[0.3em] uppercase text-[#4A4540] font-light mb-0.5">{product.type}</p>
-            <p className="font-display text-[13px] tracking-wide text-[#1A1A1A] font-medium">{product.name}</p>
-            <p className="text-[8px] tracking-[0.15em] text-[#4A4540] mt-0.5">{product.subtitle}</p>
-            {!playing && <p className="text-[7px] tracking-[0.2em] uppercase text-[#4A4540]/50 mt-1">Click to view</p>}
+          <div className="text-center select-none whitespace-nowrap">
+            <p className="text-[9px] tracking-[0.3em] uppercase text-[#3A3530] font-medium mb-0.5">{product.type}</p>
+            <p className="font-display text-[15px] tracking-wide text-[#1A1A1A] font-bold">{product.name}</p>
+            <p className="text-[9px] tracking-[0.15em] text-[#3A3530] font-medium mt-0.5">{product.subtitle}</p>
+            {!playing && <p className="text-[7px] tracking-[0.2em] uppercase text-[#3A3530]/60 font-medium mt-1">Click to view</p>}
           </div>
         </Html>
       )}
