@@ -245,24 +245,24 @@ export default function App() {
               </div>
               {/* Info on the right */}
               <div className="flex flex-col gap-4">
-                <p className="text-[9px] tracking-[0.35em] uppercase text-[#8A8478] font-light">
+                <p className="text-[10px] tracking-[0.35em] uppercase text-[#3A3530] font-light">
                   {selectedProduct.type}
                 </p>
-                <h2 className="font-display text-2xl md:text-3xl tracking-wide text-[#1A1A1A] font-normal">
+                <h2 className="font-display text-2xl md:text-3xl tracking-wide text-[#1A1A1A] font-semibold">
                   {selectedProduct.name}
                 </h2>
-                <p className="text-sm tracking-[0.15em] text-[#8A8478] font-light">
+                <p className="text-sm tracking-[0.15em] text-[#3A3530]">
                   {selectedProduct.subtitle}
                 </p>
-                <div className="w-8 h-px bg-[#E8E4DF]" />
-                <p className="text-sm leading-[1.8] text-[#8A8478] font-light max-w-xs">
+                <div className="w-8 h-px bg-[#D0CCC7]" />
+                <p className="text-sm leading-[1.8] text-[#3A3530] max-w-xs">
                   {selectedProduct.description}
                 </p>
                 <ul className="flex flex-col gap-1.5">
                   {selectedProduct.details.map((d, i) => (
                     <motion.li
                       key={i}
-                      className="text-[10px] tracking-[0.1em] text-[#8A8478]/50 font-light flex items-center gap-2"
+                      className="text-[11px] tracking-[0.1em] text-[#4A4540] font-light flex items-center gap-2"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.2 + i * 0.08 }}

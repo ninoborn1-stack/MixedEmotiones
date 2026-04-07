@@ -183,13 +183,13 @@ export default function VideoGarment({ product, position, onClick, visible, vide
           position={[0, -0.7, 0]}
           center
           distanceFactor={6}
-          style={{ opacity: hovered ? 1 : 0.5, transition: 'opacity 0.3s', pointerEvents: 'none' }}
+          style={{ opacity: hovered ? 1 : 0.7, transition: 'opacity 0.3s', pointerEvents: 'none' }}
         >
           <div className="text-center select-none whitespace-nowrap">
-            <p className="text-[7px] tracking-[0.3em] uppercase text-[#8A8478] font-light mb-0.5">{product.type}</p>
-            <p className="font-display text-[11px] tracking-wide text-[#1A1A1A]">{product.name}</p>
-            <p className="text-[7px] tracking-[0.15em] text-[#8A8478] mt-0.5">{product.subtitle}</p>
-            {!playing && <p className="text-[6px] tracking-[0.2em] uppercase text-[#8A8478]/40 mt-1">Click to view</p>}
+            <p className="text-[8px] tracking-[0.3em] uppercase text-[#4A4540] font-light mb-0.5">{product.type}</p>
+            <p className="font-display text-[13px] tracking-wide text-[#1A1A1A] font-medium">{product.name}</p>
+            <p className="text-[8px] tracking-[0.15em] text-[#4A4540] mt-0.5">{product.subtitle}</p>
+            {!playing && <p className="text-[7px] tracking-[0.2em] uppercase text-[#4A4540]/50 mt-1">Click to view</p>}
           </div>
         </Html>
       )}
