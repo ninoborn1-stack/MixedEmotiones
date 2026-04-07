@@ -26,7 +26,7 @@ export default function PlayerFigure({ playerPosRef }) {
   const rightLegRef = useRef()
   const leftArmRef = useRef()
   const rightArmRef = useRef()
-  const posRef = useRef({ x: 4.5, z: 0 })
+  const posRef = useRef({ x: 4.5, z: 2.5 })
   const flame1Ref = useRef()
   const flame2Ref = useRef()
   const flame3Ref = useRef()
