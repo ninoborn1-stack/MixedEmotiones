@@ -18,7 +18,7 @@ const PRODUCTS = [
     details: ['100% organic cotton', '240 GSM', 'Relaxed fit', 'Made in Portugal', 'Ab 2 Produkten Lieferung inkl.'],
     position: [-1.8, 1.5, -1.8],
     displayScale: 1.0,
-    labelOffset: [0.25, -0.95, 0.3],
+    labelOffset: [0.12, -0.95, 0.3],
     videoSrc: 'TL.mp4',
     posterSrc: 'poster-left.png',
     bgType: 'white',
