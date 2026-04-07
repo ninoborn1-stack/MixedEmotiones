@@ -29,10 +29,6 @@ const SURFACES = [
   { id: 'shelf-bl', center: [-1.8, 0.7, -2.1], extents: [1.2, 0.5], plane: 'xz', thickness: 0.06, baseDelay: 1.1, opacityBucket: 0, tileSize: 0.18 },
   { id: 'shelf-br', center: [1.8, 0.7, -2.1], extents: [1.2, 0.5], plane: 'xz', thickness: 0.06, baseDelay: 1.15, opacityBucket: 0, tileSize: 0.18 },
   { id: 'shelf-bc', center: [0, 0.7, -2.1], extents: [1.0, 0.5], plane: 'xz', thickness: 0.06, baseDelay: 1.2, opacityBucket: 0, tileSize: 0.18 },
-  { id: 'rail', center: [0, 2.3, -1.5], extents: [4.5, 0.12], plane: 'xy', thickness: 0.04, baseDelay: 1.35, opacityBucket: 0, tileSize: 0.12 },
-  { id: 'rail-sl', center: [-2.2, 2.8, -1.5], extents: [0.08, 1.0], plane: 'xy', thickness: 0.04, baseDelay: 1.3, opacityBucket: 0, tileSize: 0.1 },
-  { id: 'rail-sr', center: [2.2, 2.8, -1.5], extents: [0.08, 1.0], plane: 'xy', thickness: 0.04, baseDelay: 1.3, opacityBucket: 0, tileSize: 0.1 },
-  { id: 'sign', center: [0, 2.8, -2.33], extents: [2.0, 0.3], plane: 'xy', thickness: 0.04, baseDelay: 1.45, opacityBucket: 0, tileSize: 0.15 },
 
   // ==================== ROOF ====================
   // Flat roof overhang (extends slightly beyond walls)

@@ -62,7 +62,7 @@ export default function Experience({ phase, onAssemblyComplete, onEnter, selecte
   const groupRef = useRef()
 
   const handleTilesSettled = useCallback(() => {
-    setTimeout(onAssemblyComplete, 2000)
+    setTimeout(onAssemblyComplete, 800)
   }, [onAssemblyComplete])
 
   // entering -> interior auto-advance handled by App.jsx
@@ -122,8 +122,8 @@ function CameraController({ phase }) {
 
   useFrame((_, delta) => {
     const speed =
-      phase === 'assembling' ? 0.5 :
-      phase === 'exterior' ? 0.6 :
+      phase === 'assembling' ? 0.7 :
+      phase === 'exterior' ? 0.9 :
       phase === 'entering' ? 0.6 :
       1.0
 
