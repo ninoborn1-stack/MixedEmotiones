@@ -196,7 +196,7 @@ function generateTiles() {
   return tiles
 }
 
-export default function TileCloud({ onSettled, pulseTime }) {
+export default function TileCloud({ onSettled, pulseTime, playerPosRef }) {
   const groupRef = useRef()
   const elapsedRef = useRef(0)
   const settledRef = useRef(false)
@@ -281,6 +281,40 @@ export default function TileCloud({ onSettled, pulseTime }) {
         }
         if (timeSincePulse > 2.8) pulseStartRef.current = 0
         return
+      }
+      return
+    }
+
+    // Glow effect — brighten colored tiles near player
+    if (settledRef.current && playerPosRef) {
+      const px = playerPosRef.current.x
+      const pz = playerPosRef.current.z
+      const mesh = meshRefs[0].current // bucket 0 has ground tiles
+      if (mesh && mesh.instanceColor) {
+        const tiles = buckets[0]
+        let changed = false
+        for (let i = 0; i < tiles.length; i++) {
+          const t = tiles[i]
+          // Only affect colored tiles (not white ones)
+          if (t.cr > 0.96 && t.cg > 0.95 && t.cb > 0.93) continue
+          const dx = t.tx - px, dz = t.tz - pz
+          const dist = Math.sqrt(dx * dx + dz * dz)
+          if (dist < 1.5) {
+            const glow = 1 + (1.5 - dist) * 0.4
+            colorTemp.current.setRGB(
+              Math.min(t.cr * glow, 1),
+              Math.min(t.cg * glow, 1),
+              Math.min(t.cb * glow, 1)
+            )
+            mesh.setColorAt(i, colorTemp.current)
+            changed = true
+          } else {
+            colorTemp.current.setRGB(t.cr, t.cg, t.cb)
+            mesh.setColorAt(i, colorTemp.current)
+            changed = true
+          }
+        }
+        if (changed) mesh.instanceColor.needsUpdate = true
       }
       return
     }

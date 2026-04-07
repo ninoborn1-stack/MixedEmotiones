@@ -19,7 +19,7 @@ const GROUND_Y = 0
 const MOVE_SPEED = 3
 const ts = 0.12
 
-export default function PlayerFigure() {
+export default function PlayerFigure({ playerPosRef }) {
   const groupRef = useRef()
   const leftLegRef = useRef()
   const rightLegRef = useRef()
@@ -186,6 +186,7 @@ export default function PlayerFigure() {
 
     groupRef.current.position.set(pos.x, posYRef.current + bob, pos.z)
     groupRef.current.rotation.y = facingRef.current
+    if (playerPosRef) { playerPosRef.current.x = pos.x; playerPosRef.current.z = pos.z }
 
     // Leg + arm swing
     const swing = moving ? Math.sin(walkPhaseRef.current) * 0.6 : 0

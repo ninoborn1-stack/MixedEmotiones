@@ -63,6 +63,7 @@ const CAMERA_TARGETS = {
 
 export default function Experience({ phase, onAssemblyComplete, onEnter, selectedProduct, onSelectProduct, pulseTime }) {
   const groupRef = useRef()
+  const playerPosRef = useRef({ x: 4.5, z: 4 })
 
   const handleTilesSettled = useCallback(() => {
     setTimeout(onAssemblyComplete, 300)
@@ -96,8 +97,8 @@ export default function Experience({ phase, onAssemblyComplete, onEnter, selecte
       </mesh>
 
       <group ref={groupRef}>
-        <TileCloud onSettled={handleTilesSettled} pulseTime={pulseTime} />
-        <PlayerFigure />
+        <TileCloud onSettled={handleTilesSettled} pulseTime={pulseTime} playerPosRef={playerPosRef} />
+        <PlayerFigure playerPosRef={playerPosRef} />
 
         {/* Products ALWAYS rendered — they are part of the store, visible from outside through glass walls */}
         {PRODUCTS.map((product) => (
