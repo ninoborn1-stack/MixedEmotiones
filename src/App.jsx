@@ -235,9 +235,9 @@ export default function App() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="absolute top-5 md:top-0 left-0 right-0 flex items-center justify-between px-4 py-4 md:px-6 md:py-6">
+            <div className="absolute top-8 md:top-0 left-0 right-0 flex items-center justify-between px-6 py-4 md:px-6 md:py-6">
               <motion.button
-                className="text-xs md:text-sm tracking-[0.25em] uppercase text-[#1A1A1A] cursor-pointer bg-transparent border-none font-bold pointer-events-auto flex items-center gap-2 md:gap-3 ml-3 md:ml-2"
+                className="text-[10px] md:text-sm tracking-[0.25em] uppercase text-[#1A1A1A] cursor-pointer bg-transparent border-none font-bold pointer-events-auto flex items-center gap-2 md:gap-3 ml-4 md:ml-2"
                 style={{ fontFamily: "'Cinzel', serif" }}
                 onClick={goBack}
                 whileHover={{ x: -4 }}
