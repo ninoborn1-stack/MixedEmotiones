@@ -71,7 +71,7 @@ export default function App() {
   // Auto-advance from entering -> interior (smooth continuous fly-through)
   useEffect(() => {
     if (phase === 'entering') {
-      const t = setTimeout(() => setPhase('interior'), 3500)
+      const t = setTimeout(() => setPhase('interior'), 1800)
       return () => clearTimeout(t)
     }
   }, [phase])
