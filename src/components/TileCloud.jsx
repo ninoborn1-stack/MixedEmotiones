@@ -42,25 +42,28 @@ const SURFACES = [
   // Back edge detail
   { id: 'roof-back', center: [0, 3.44, -2.76], extents: [6.6, 0.2], plane: 'xy', thickness: 0.12, baseDelay: 1.0, opacityBucket: 0, tileSize: 0.12 },
 
-  // ==================== EAGLE SCULPTURE ON ROOF ====================
-  // Wide pedestal
-  { id: 'eagle-base', center: [0, 3.85, 0], extents: [2.0, 0.8], plane: 'xz', thickness: 0.15, baseDelay: 1.15, opacityBucket: 0, tileSize: 0.14 },
-  // Central body (compact, low)
-  { id: 'eagle-body-f', center: [0, 4.15, 0.05], extents: [0.8, 0.4], plane: 'xy', thickness: 0.2, baseDelay: 1.2, opacityBucket: 0, tileSize: 0.1 },
-  { id: 'eagle-body-s', center: [-0.05, 4.15, 0], extents: [0.6, 0.4], plane: 'zy', thickness: 0.2, baseDelay: 1.2, opacityBucket: 0, tileSize: 0.1 },
-  // Left wing — spread wide
-  { id: 'eagle-wing-l1', center: [-0.8, 4.2, 0.04], extents: [0.8, 0.35], plane: 'xy', thickness: 0.06, baseDelay: 1.25, opacityBucket: 0, tileSize: 0.09 },
-  { id: 'eagle-wing-l2', center: [-1.5, 4.35, 0.04], extents: [0.7, 0.25], plane: 'xy', thickness: 0.05, baseDelay: 1.3, opacityBucket: 0, tileSize: 0.08 },
-  { id: 'eagle-wing-l3', center: [-2.0, 4.45, 0.03], extents: [0.5, 0.15], plane: 'xy', thickness: 0.04, baseDelay: 1.35, opacityBucket: 0, tileSize: 0.07 },
-  // Right wing — spread wide
-  { id: 'eagle-wing-r1', center: [0.8, 4.2, 0.04], extents: [0.8, 0.35], plane: 'xy', thickness: 0.06, baseDelay: 1.25, opacityBucket: 0, tileSize: 0.09 },
-  { id: 'eagle-wing-r2', center: [1.5, 4.35, 0.04], extents: [0.7, 0.25], plane: 'xy', thickness: 0.05, baseDelay: 1.3, opacityBucket: 0, tileSize: 0.08 },
-  { id: 'eagle-wing-r3', center: [2.0, 4.45, 0.03], extents: [0.5, 0.15], plane: 'xy', thickness: 0.04, baseDelay: 1.35, opacityBucket: 0, tileSize: 0.07 },
-  // Head (small, forward)
-  { id: 'eagle-head-f', center: [0, 4.4, 0.2], extents: [0.3, 0.2], plane: 'xy', thickness: 0.12, baseDelay: 1.35, opacityBucket: 0, tileSize: 0.07 },
-  { id: 'eagle-head-s', center: [-0.04, 4.4, 0.2], extents: [0.2, 0.2], plane: 'zy', thickness: 0.12, baseDelay: 1.35, opacityBucket: 0, tileSize: 0.07 },
-  // Tail (small, backward)
-  { id: 'eagle-tail', center: [0, 4.1, -0.3], extents: [0.4, 0.15], plane: 'xy', thickness: 0.06, baseDelay: 1.3, opacityBucket: 0, tileSize: 0.07 },
+  // ==================== "MXD" LETTERS ON ROOF ====================
+  // Each letter ~1.0 wide, 1.2 tall, centered on roof. Total width ~3.6
+  // M: left vertical + left diagonal + right diagonal + right vertical
+  { id: 'M-l', center: [-1.55, 4.4, 0.04], extents: [0.15, 1.2], plane: 'xy', thickness: 0.1, baseDelay: 1.15, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'M-dl', center: [-1.3, 4.4, 0.04], extents: [0.15, 1.2], plane: 'xy', thickness: 0.1, baseDelay: 1.18, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'M-t', center: [-1.1, 4.85, 0.04], extents: [0.15, 0.3], plane: 'xy', thickness: 0.1, baseDelay: 1.2, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'M-m', center: [-1.1, 4.15, 0.04], extents: [0.15, 0.3], plane: 'xy', thickness: 0.1, baseDelay: 1.22, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'M-dr', center: [-0.9, 4.4, 0.04], extents: [0.15, 1.2], plane: 'xy', thickness: 0.1, baseDelay: 1.24, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'M-r', center: [-0.65, 4.4, 0.04], extents: [0.15, 1.2], plane: 'xy', thickness: 0.1, baseDelay: 1.26, opacityBucket: 0, tileSize: 0.1 },
+  // X: left diagonal + right diagonal + center cross
+  { id: 'X-ll', center: [0.05, 4.7, 0.04], extents: [0.15, 0.6], plane: 'xy', thickness: 0.1, baseDelay: 1.2, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'X-lr', center: [0.35, 4.7, 0.04], extents: [0.15, 0.6], plane: 'xy', thickness: 0.1, baseDelay: 1.22, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'X-c', center: [0.2, 4.4, 0.04], extents: [0.5, 0.2], plane: 'xy', thickness: 0.1, baseDelay: 1.25, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'X-bl', center: [0.05, 4.1, 0.04], extents: [0.15, 0.6], plane: 'xy', thickness: 0.1, baseDelay: 1.27, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'X-br', center: [0.35, 4.1, 0.04], extents: [0.15, 0.6], plane: 'xy', thickness: 0.1, baseDelay: 1.29, opacityBucket: 0, tileSize: 0.1 },
+  // D: left vertical + top horizontal + bottom horizontal + right curve (3 segments)
+  { id: 'D-l', center: [0.85, 4.4, 0.04], extents: [0.15, 1.2], plane: 'xy', thickness: 0.1, baseDelay: 1.22, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'D-t', center: [1.1, 4.9, 0.04], extents: [0.4, 0.15], plane: 'xy', thickness: 0.1, baseDelay: 1.25, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'D-b', center: [1.1, 3.9, 0.04], extents: [0.4, 0.15], plane: 'xy', thickness: 0.1, baseDelay: 1.25, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'D-rt', center: [1.4, 4.7, 0.04], extents: [0.15, 0.5], plane: 'xy', thickness: 0.1, baseDelay: 1.28, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'D-rm', center: [1.45, 4.4, 0.04], extents: [0.15, 0.3], plane: 'xy', thickness: 0.1, baseDelay: 1.3, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'D-rb', center: [1.4, 4.1, 0.04], extents: [0.15, 0.5], plane: 'xy', thickness: 0.1, baseDelay: 1.32, opacityBucket: 0, tileSize: 0.1 },
 
   // ==================== FOUNTAIN (left of store) ====================
   // Base platform
