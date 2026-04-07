@@ -1,83 +1,155 @@
-import { useRef, useMemo } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { useFrame } from '@react-three/fiber'
-import * as THREE from 'three'
 
-// Each figure is a simple block-person: legs, body, head
-// They walk across the plaza on different paths
-const FIGURES = [
-  // Near figures (front of store)
-  { id: 1, startX: -12, endX: 12, z: 5, speed: 0.8, delay: 2, scale: 0.6 },
-  { id: 2, startX: 10, endX: -10, z: 7, speed: 0.6, delay: 3.5, scale: 0.55 },
-  // Mid-distance
-  { id: 3, startX: -14, endX: 14, z: -5, speed: 0.5, delay: 1, scale: 0.5 },
-  { id: 4, startX: 12, endX: -12, z: -7, speed: 0.7, delay: 4, scale: 0.45 },
-  // Far background
-  { id: 5, startX: -16, endX: 16, z: -12, speed: 0.4, delay: 0.5, scale: 0.35 },
-  { id: 6, startX: 14, endX: -14, z: -14, speed: 0.35, delay: 2.5, scale: 0.3 },
-  // Crossing near store
-  { id: 7, startX: -8, endX: 8, z: 3.5, speed: 0.9, delay: 5, scale: 0.6 },
-  { id: 8, startX: 15, endX: -15, z: 9, speed: 0.45, delay: 1.5, scale: 0.4 },
-]
+// Store walls for collision
+const WALLS = {
+  left: -2.95,
+  right: 2.95,
+  back: -2.4,
+  front: 2.46,
+  // Door opening (gap in front wall)
+  doorLeft: -0.65,
+  doorRight: 0.65,
+}
 
-function BlockFigure({ figure }) {
+const MOVE_SPEED = 3
+const ts = 0.12
+
+export default function PlayerFigure() {
   const groupRef = useRef()
-  const legPhaseRef = useRef(0)
+  const posRef = useRef({ x: 4.5, z: 4 }) // Start next to store
+  const keysRef = useRef({})
+  const walkPhaseRef = useRef(0)
+  const facingRef = useRef(0) // rotation Y
 
-  useFrame((state) => {
+  useEffect(() => {
+    const onDown = (e) => { keysRef.current[e.key] = true }
+    const onUp = (e) => { keysRef.current[e.key] = false }
+    window.addEventListener('keydown', onDown)
+    window.addEventListener('keyup', onUp)
+    return () => {
+      window.removeEventListener('keydown', onDown)
+      window.removeEventListener('keyup', onUp)
+    }
+  }, [])
+
+  useFrame((_, delta) => {
     if (!groupRef.current) return
-    const t = state.clock.elapsedTime
-    const { startX, endX, z, speed, delay, scale } = figure
+    const keys = keysRef.current
+    const pos = posRef.current
 
-    // Loop position along path
-    const elapsed = Math.max(0, t - delay)
-    const pathLen = Math.abs(endX - startX)
-    const progress = (elapsed * speed) % pathLen
-    const dir = endX > startX ? 1 : -1
-    const x = startX + progress * dir
+    let dx = 0, dz = 0
+    if (keys['ArrowLeft'] || keys['a']) dx = -1
+    if (keys['ArrowRight'] || keys['d']) dx = 1
+    if (keys['ArrowUp'] || keys['w']) dz = -1
+    if (keys['ArrowDown'] || keys['s']) dz = 1
 
-    groupRef.current.position.set(x, 0, z)
-    groupRef.current.scale.setScalar(scale)
+    const moving = dx !== 0 || dz !== 0
 
-    // Walking bob
-    legPhaseRef.current = elapsed * speed * 8
-    const bob = Math.abs(Math.sin(legPhaseRef.current)) * 0.03
-    groupRef.current.position.y = bob
+    if (moving) {
+      // Normalize diagonal
+      const len = Math.sqrt(dx * dx + dz * dz)
+      dx /= len
+      dz /= len
+
+      const newX = pos.x + dx * MOVE_SPEED * delta
+      const newZ = pos.z + dz * MOVE_SPEED * delta
+
+      // Facing direction
+      facingRef.current = Math.atan2(dx, -dz)
+
+      // Collision detection
+      const r = 0.2 // figure radius
+      let canMoveX = true
+      let canMoveZ = true
+
+      // Check if inside store bounds (z-wise)
+      const insideZ = pos.z > WALLS.back && pos.z < WALLS.front
+      const wouldBeInsideZ = newZ > WALLS.back && newZ < WALLS.front
+      const insideX = pos.x > WALLS.left && pos.x < WALLS.right
+
+      // Check wall collisions
+      if (wouldBeInsideZ || insideZ) {
+        // Left wall
+        if (newX > WALLS.left - r && newX < WALLS.left + r && insideZ) canMoveX = false
+        // Right wall
+        if (newX < WALLS.right + r && newX > WALLS.right - r && insideZ) canMoveX = false
+
+        // Front wall (with door gap)
+        if (insideX) {
+          const inDoor = pos.x > WALLS.doorLeft && pos.x < WALLS.doorRight
+          if (!inDoor) {
+            if (newZ > WALLS.front - r && newZ < WALLS.front + r) canMoveZ = false
+          }
+        }
+
+        // Back wall
+        if (insideX && newZ < WALLS.back + r && newZ > WALLS.back - r) canMoveZ = false
+      }
+
+      // Entering from outside — check front wall
+      if (!insideZ && wouldBeInsideZ && insideX) {
+        // Coming from front
+        if (pos.z >= WALLS.front) {
+          const inDoor = newX > WALLS.doorLeft && newX < WALLS.doorRight
+          if (!inDoor) canMoveZ = false
+        }
+      }
+
+      // Side walls from outside
+      if (!insideX && newX > WALLS.left - r && newX < WALLS.right + r) {
+        if (wouldBeInsideZ && pos.z > WALLS.back && pos.z < WALLS.front) {
+          // Already checked above
+        } else if (newZ > WALLS.back - r && newZ < WALLS.front + r) {
+          // Approaching side wall from outside
+          if (pos.x <= WALLS.left && newX > WALLS.left - r) canMoveX = false
+          if (pos.x >= WALLS.right && newX < WALLS.right + r) canMoveX = false
+        }
+      }
+
+      if (canMoveX) pos.x = newX
+      if (canMoveZ) pos.z = newZ
+
+      // Walk animation
+      walkPhaseRef.current += delta * 12
+    }
+
+    const bob = moving ? Math.abs(Math.sin(walkPhaseRef.current)) * 0.04 : 0
+    groupRef.current.position.set(pos.x, bob, pos.z)
+    groupRef.current.rotation.y = facingRef.current
   })
 
-  const ts = 0.12 // tile size for figure blocks
-
   return (
-    <group ref={groupRef}>
+    <group ref={groupRef} scale={0.7}>
       {/* Left leg */}
-      <mesh position={[-0.06, 0.2, 0]}>
-        <boxGeometry args={[ts, 0.35, ts]} />
+      <mesh position={[-0.07, 0.18, 0]}>
+        <boxGeometry args={[ts, 0.3, ts]} />
         <meshStandardMaterial color="#FAFAF8" />
       </mesh>
       {/* Right leg */}
-      <mesh position={[0.06, 0.2, 0]}>
-        <boxGeometry args={[ts, 0.35, ts]} />
+      <mesh position={[0.07, 0.18, 0]}>
+        <boxGeometry args={[ts, 0.3, ts]} />
         <meshStandardMaterial color="#FAFAF8" />
       </mesh>
       {/* Body */}
-      <mesh position={[0, 0.55, 0]}>
-        <boxGeometry args={[ts * 2.2, 0.35, ts * 1.2]} />
+      <mesh position={[0, 0.48, 0]}>
+        <boxGeometry args={[ts * 2.5, 0.3, ts * 1.3]} />
+        <meshStandardMaterial color="#FAFAF8" />
+      </mesh>
+      {/* Arms */}
+      <mesh position={[-0.2, 0.45, 0]}>
+        <boxGeometry args={[ts * 0.7, 0.25, ts * 0.8]} />
+        <meshStandardMaterial color="#FAFAF8" />
+      </mesh>
+      <mesh position={[0.2, 0.45, 0]}>
+        <boxGeometry args={[ts * 0.7, 0.25, ts * 0.8]} />
         <meshStandardMaterial color="#FAFAF8" />
       </mesh>
       {/* Head */}
-      <mesh position={[0, 0.8, 0]}>
-        <boxGeometry args={[ts, ts, ts]} />
+      <mesh position={[0, 0.72, 0]}>
+        <boxGeometry args={[ts * 1.1, ts * 1.1, ts * 1.1]} />
         <meshStandardMaterial color="#FAFAF8" />
       </mesh>
-    </group>
-  )
-}
-
-export default function WalkingFigures() {
-  return (
-    <group>
-      {FIGURES.map((fig) => (
-        <BlockFigure key={fig.id} figure={fig} />
-      ))}
     </group>
   )
 }
