@@ -176,18 +176,18 @@ export default function PlayerFigure() {
 
   return (
     <group ref={groupRef} scale={0.7}>
-      {/* Left leg — pivot at top */}
+      {/* Left leg */}
       <group ref={leftLegRef} position={[-0.07, 0.35, 0]}>
         <mesh position={[0, -0.15, 0]}>
           <boxGeometry args={[ts, 0.3, ts]} />
-          <meshStandardMaterial color="#1A1A1A" />
+          <meshStandardMaterial color="#FAFAF8" />
         </mesh>
       </group>
       {/* Right leg */}
       <group ref={rightLegRef} position={[0.07, 0.35, 0]}>
         <mesh position={[0, -0.15, 0]}>
           <boxGeometry args={[ts, 0.3, ts]} />
-          <meshStandardMaterial color="#1A1A1A" />
+          <meshStandardMaterial color="#FAFAF8" />
         </mesh>
       </group>
       {/* Body — Bear Tee (black with texture on front) */}
@@ -200,18 +200,26 @@ export default function PlayerFigure() {
         <planeGeometry args={[ts * 2.4, 0.28]} />
         <meshBasicMaterial map={teeTexture} transparent alphaTest={0.5} />
       </mesh>
-      {/* Left arm (sleeves — black) */}
+      {/* Left arm — sleeve (black top) + skin (bottom) */}
       <group ref={leftArmRef} position={[-0.22, 0.6, 0]}>
-        <mesh position={[0, -0.12, 0]}>
-          <boxGeometry args={[ts * 0.7, 0.25, ts * 0.8]} />
+        <mesh position={[0, -0.06, 0]}>
+          <boxGeometry args={[ts * 0.7, 0.12, ts * 0.8]} />
           <meshStandardMaterial color="#1A1A1A" />
         </mesh>
+        <mesh position={[0, -0.19, 0]}>
+          <boxGeometry args={[ts * 0.7, 0.12, ts * 0.8]} />
+          <meshStandardMaterial color="#FAFAF8" />
+        </mesh>
       </group>
-      {/* Right arm (sleeve — black) */}
+      {/* Right arm — sleeve (black top) + skin (bottom) */}
       <group ref={rightArmRef} position={[0.22, 0.6, 0]}>
-        <mesh position={[0, -0.12, 0]}>
-          <boxGeometry args={[ts * 0.7, 0.25, ts * 0.8]} />
+        <mesh position={[0, -0.06, 0]}>
+          <boxGeometry args={[ts * 0.7, 0.12, ts * 0.8]} />
           <meshStandardMaterial color="#1A1A1A" />
+        </mesh>
+        <mesh position={[0, -0.19, 0]}>
+          <boxGeometry args={[ts * 0.7, 0.12, ts * 0.8]} />
+          <meshStandardMaterial color="#FAFAF8" />
         </mesh>
       </group>
       {/* Head */}
