@@ -20,7 +20,8 @@ const GROUND_Y = 0
 const MOVE_SPEED = 3
 const ts = 0.12
 
-export default function PlayerFigure({ playerPosRef }) {
+export default function PlayerFigure({ playerPosRef, onEnterStore, onExitStore }) {
+  const wasInsideRef = useRef(false)
   const groupRef = useRef()
   const leftLegRef = useRef()
   const rightLegRef = useRef()
@@ -196,6 +197,16 @@ export default function PlayerFigure({ playerPosRef }) {
 
     groupRef.current.position.set(pos.x, posYRef.current + bob, pos.z)
     groupRef.current.rotation.y = facingRef.current
+
+    // Detect entering/exiting store through door
+    const nowInside = isInsideStore(pos.x, pos.z)
+    if (nowInside && !wasInsideRef.current) {
+      wasInsideRef.current = true
+      onEnterStore?.()
+    } else if (!nowInside && wasInsideRef.current) {
+      wasInsideRef.current = false
+      onExitStore?.()
+    }
     if (playerPosRef) { playerPosRef.current.x = pos.x; playerPosRef.current.z = pos.z }
 
     // Flame animation

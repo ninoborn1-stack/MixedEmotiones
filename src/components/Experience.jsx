@@ -63,9 +63,9 @@ const CAMERA_TARGETS = {
   interior:   { pos: [0, 1.8, 2.0], lookAt: [0, 1.3, -1.2] },
 }
 
-export default function Experience({ phase, onAssemblyComplete, onEnter, selectedProduct, onSelectProduct, pulseTime }) {
+export default function Experience({ phase, onAssemblyComplete, onEnter, onExit, selectedProduct, onSelectProduct, pulseTime }) {
   const groupRef = useRef()
-  const playerPosRef = useRef({ x: 4.5, z: 4 })
+  const playerPosRef = useRef({ x: 4.5, z: 2.5 })
 
   const handleTilesSettled = useCallback(() => {
     setTimeout(onAssemblyComplete, 300)
@@ -91,7 +91,7 @@ export default function Experience({ phase, onAssemblyComplete, onEnter, selecte
       <hemisphereLight args={['#FAFAF8', '#E0DDD8', 0.4]} />
       <Environment preset="studio" environmentIntensity={0.15} />
 
-      <CameraController phase={phase} />
+      <CameraController phase={phase} playerPosRef={playerPosRef} />
 
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.04, 0]} receiveShadow>
         <planeGeometry args={[80, 80]} />
@@ -100,7 +100,7 @@ export default function Experience({ phase, onAssemblyComplete, onEnter, selecte
 
       <group ref={groupRef}>
         <TileCloud onSettled={handleTilesSettled} pulseTime={pulseTime} playerPosRef={playerPosRef} />
-        <PlayerFigure playerPosRef={playerPosRef} />
+        <PlayerFigure playerPosRef={playerPosRef} onEnterStore={onEnter} onExitStore={onExit} />
 
         {/* Products ALWAYS rendered — they are part of the store, visible from outside through glass walls */}
         {PRODUCTS.map((product) => (
@@ -123,7 +123,7 @@ export default function Experience({ phase, onAssemblyComplete, onEnter, selecte
   )
 }
 
-function CameraController({ phase }) {
+function CameraController({ phase, playerPosRef }) {
   const { camera } = useThree()
   const target = CAMERA_TARGETS[phase]
   const lookAtRef = useRef(new THREE.Vector3(...CAMERA_TARGETS.assembling.lookAt))
@@ -135,9 +135,18 @@ function CameraController({ phase }) {
       phase === 'entering' ? 0.6 :
       1.0
 
+    // In interior, camera slightly follows player horizontally
+    let targetPos = new THREE.Vector3(...target.pos)
+    if (phase === 'interior' && playerPosRef) {
+      const px = playerPosRef.current.x
+      // Clamp the camera offset so it doesn't swing too far
+      const offsetX = Math.max(-0.8, Math.min(0.8, px * 0.15))
+      targetPos.x = target.pos[0] + offsetX
+    }
+
     const t = 1 - Math.pow(0.001, delta * speed)
 
-    camera.position.lerp(new THREE.Vector3(...target.pos), t)
+    camera.position.lerp(targetPos, t)
     lookAtRef.current.lerp(new THREE.Vector3(...target.lookAt), t)
     camera.lookAt(lookAtRef.current)
   })

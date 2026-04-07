@@ -110,6 +110,7 @@ export default function App() {
           selectedProduct={selectedProduct}
           onSelectProduct={setSelectedProduct}
           pulseTime={pulseTime}
+          onExit={goBack}
         />
       </Canvas>
 
