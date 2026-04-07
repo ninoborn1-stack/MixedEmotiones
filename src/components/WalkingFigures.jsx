@@ -137,8 +137,15 @@ export default function PlayerFigure() {
     for (const sh of shelves) {
       if (pos.x > sh.cx - sh.hw && pos.x < sh.cx + sh.hw &&
           pos.z > sh.cz - sh.hd && pos.z < sh.cz + sh.hd) {
-        if (posYRef.current <= SHELF_TOP && posYRef.current > SHELF_TOP - 0.3) {
+        // Only land on shelf if coming from above (falling down onto it)
+        if (posYRef.current >= SHELF_TOP - 0.05 && velYRef.current <= 0) {
           floorY = SHELF_TOP
+        }
+        // Block jumping through from below — cap upward movement
+        if (posYRef.current < SHELF_TOP - 0.05 && velYRef.current > 0 &&
+            posYRef.current + velYRef.current * delta >= SHELF_TOP - 0.05) {
+          velYRef.current = 0
+          posYRef.current = SHELF_TOP - 0.06
         }
       }
     }
