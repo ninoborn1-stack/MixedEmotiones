@@ -177,7 +177,7 @@ export default function App() {
             </motion.div>
             {/* Right established */}
             <motion.div
-              className="absolute right-[16%] md:right-[26%] top-[22%] md:top-[18%]"
+              className="absolute right-[14%] md:right-[24%] top-[22%] md:top-[18%]"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 0.5, x: 0 }}
               transition={{ delay: 1.2, duration: 1 }}
