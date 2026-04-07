@@ -43,27 +43,26 @@ const SURFACES = [
   { id: 'roof-back', center: [0, 3.44, -2.76], extents: [6.6, 0.2], plane: 'xy', thickness: 0.12, baseDelay: 1.0, opacityBucket: 0, tileSize: 0.12 },
 
   // ==================== "MXD" LETTERS ON ROOF ====================
-  // Each letter ~1.0 wide, 1.2 tall, centered on roof. Total width ~3.6
-  // M: left vertical + left diagonal + right diagonal + right vertical
-  { id: 'M-l', center: [-1.55, 4.4, 0.04], extents: [0.15, 1.2], plane: 'xy', thickness: 0.1, baseDelay: 1.15, opacityBucket: 0, tileSize: 0.1 },
-  { id: 'M-dl', center: [-1.3, 4.4, 0.04], extents: [0.15, 1.2], plane: 'xy', thickness: 0.1, baseDelay: 1.18, opacityBucket: 0, tileSize: 0.1 },
-  { id: 'M-t', center: [-1.1, 4.85, 0.04], extents: [0.15, 0.3], plane: 'xy', thickness: 0.1, baseDelay: 1.2, opacityBucket: 0, tileSize: 0.1 },
-  { id: 'M-m', center: [-1.1, 4.15, 0.04], extents: [0.15, 0.3], plane: 'xy', thickness: 0.1, baseDelay: 1.22, opacityBucket: 0, tileSize: 0.1 },
-  { id: 'M-dr', center: [-0.9, 4.4, 0.04], extents: [0.15, 1.2], plane: 'xy', thickness: 0.1, baseDelay: 1.24, opacityBucket: 0, tileSize: 0.1 },
-  { id: 'M-r', center: [-0.65, 4.4, 0.04], extents: [0.15, 1.2], plane: 'xy', thickness: 0.1, baseDelay: 1.26, opacityBucket: 0, tileSize: 0.1 },
-  // X: left diagonal + right diagonal + center cross
-  { id: 'X-ll', center: [0.05, 4.7, 0.04], extents: [0.15, 0.6], plane: 'xy', thickness: 0.1, baseDelay: 1.2, opacityBucket: 0, tileSize: 0.1 },
-  { id: 'X-lr', center: [0.35, 4.7, 0.04], extents: [0.15, 0.6], plane: 'xy', thickness: 0.1, baseDelay: 1.22, opacityBucket: 0, tileSize: 0.1 },
-  { id: 'X-c', center: [0.2, 4.4, 0.04], extents: [0.5, 0.2], plane: 'xy', thickness: 0.1, baseDelay: 1.25, opacityBucket: 0, tileSize: 0.1 },
-  { id: 'X-bl', center: [0.05, 4.1, 0.04], extents: [0.15, 0.6], plane: 'xy', thickness: 0.1, baseDelay: 1.27, opacityBucket: 0, tileSize: 0.1 },
-  { id: 'X-br', center: [0.35, 4.1, 0.04], extents: [0.15, 0.6], plane: 'xy', thickness: 0.1, baseDelay: 1.29, opacityBucket: 0, tileSize: 0.1 },
-  // D: left vertical + top horizontal + bottom horizontal + right curve (3 segments)
-  { id: 'D-l', center: [0.85, 4.4, 0.04], extents: [0.15, 1.2], plane: 'xy', thickness: 0.1, baseDelay: 1.22, opacityBucket: 0, tileSize: 0.1 },
-  { id: 'D-t', center: [1.1, 4.9, 0.04], extents: [0.4, 0.15], plane: 'xy', thickness: 0.1, baseDelay: 1.25, opacityBucket: 0, tileSize: 0.1 },
-  { id: 'D-b', center: [1.1, 3.9, 0.04], extents: [0.4, 0.15], plane: 'xy', thickness: 0.1, baseDelay: 1.25, opacityBucket: 0, tileSize: 0.1 },
-  { id: 'D-rt', center: [1.4, 4.7, 0.04], extents: [0.15, 0.5], plane: 'xy', thickness: 0.1, baseDelay: 1.28, opacityBucket: 0, tileSize: 0.1 },
-  { id: 'D-rm', center: [1.45, 4.4, 0.04], extents: [0.15, 0.3], plane: 'xy', thickness: 0.1, baseDelay: 1.3, opacityBucket: 0, tileSize: 0.1 },
-  { id: 'D-rb', center: [1.4, 4.1, 0.04], extents: [0.15, 0.5], plane: 'xy', thickness: 0.1, baseDelay: 1.32, opacityBucket: 0, tileSize: 0.1 },
+  // Solid block letters, same thick style. Each ~0.9 wide, 1.0 tall, ts=0.1
+  // Centered at y=4.3 (0.6 above roof-cap at 3.7), spaced 0.3 apart
+  // --- M (x: -1.5 to -0.6) ---
+  { id: 'M-l',  center: [-1.45, 4.3, 0.04], extents: [0.12, 1.0], plane: 'xy', thickness: 0.1, baseDelay: 1.15, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'M-r',  center: [-0.65, 4.3, 0.04], extents: [0.12, 1.0], plane: 'xy', thickness: 0.1, baseDelay: 1.15, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'M-t',  center: [-1.05, 4.75, 0.04], extents: [0.7, 0.12], plane: 'xy', thickness: 0.1, baseDelay: 1.18, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'M-ml', center: [-1.2, 4.3, 0.04], extents: [0.12, 0.5], plane: 'xy', thickness: 0.1, baseDelay: 1.2, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'M-mr', center: [-0.9, 4.3, 0.04], extents: [0.12, 0.5], plane: 'xy', thickness: 0.1, baseDelay: 1.2, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'M-mc', center: [-1.05, 4.1, 0.04], extents: [0.2, 0.12], plane: 'xy', thickness: 0.1, baseDelay: 1.22, opacityBucket: 0, tileSize: 0.1 },
+  // --- X (x: -0.35 to 0.55) ---
+  { id: 'X-l',  center: [-0.3, 4.3, 0.04], extents: [0.12, 1.0], plane: 'xy', thickness: 0.1, baseDelay: 1.18, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'X-r',  center: [0.5, 4.3, 0.04], extents: [0.12, 1.0], plane: 'xy', thickness: 0.1, baseDelay: 1.18, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'X-t',  center: [0.1, 4.75, 0.04], extents: [0.7, 0.12], plane: 'xy', thickness: 0.1, baseDelay: 1.2, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'X-m',  center: [0.1, 4.3, 0.04], extents: [0.5, 0.12], plane: 'xy', thickness: 0.1, baseDelay: 1.22, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'X-b',  center: [0.1, 3.85, 0.04], extents: [0.7, 0.12], plane: 'xy', thickness: 0.1, baseDelay: 1.24, opacityBucket: 0, tileSize: 0.1 },
+  // --- D (x: 0.75 to 1.65) ---
+  { id: 'D-l',  center: [0.8, 4.3, 0.04], extents: [0.12, 1.0], plane: 'xy', thickness: 0.1, baseDelay: 1.2, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'D-t',  center: [1.15, 4.75, 0.04], extents: [0.6, 0.12], plane: 'xy', thickness: 0.1, baseDelay: 1.22, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'D-b',  center: [1.15, 3.85, 0.04], extents: [0.6, 0.12], plane: 'xy', thickness: 0.1, baseDelay: 1.22, opacityBucket: 0, tileSize: 0.1 },
+  { id: 'D-r',  center: [1.55, 4.3, 0.04], extents: [0.12, 0.8], plane: 'xy', thickness: 0.1, baseDelay: 1.25, opacityBucket: 0, tileSize: 0.1 },
 
   // ==================== FOUNTAIN (left of store) ====================
   // Base platform

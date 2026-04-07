@@ -3,6 +3,7 @@ import { useFrame, useThree } from '@react-three/fiber'
 import { Environment } from '@react-three/drei'
 import * as THREE from 'three'
 import TileCloud from './TileCloud'
+import WalkingFigures from './WalkingFigures'
 import VideoGarment from './VideoGarment'
 
 const PRODUCTS = [
@@ -96,6 +97,7 @@ export default function Experience({ phase, onAssemblyComplete, onEnter, selecte
 
       <group ref={groupRef}>
         <TileCloud onSettled={handleTilesSettled} pulseTime={pulseTime} />
+        <WalkingFigures />
 
         {/* Products ALWAYS rendered — they are part of the store, visible from outside through glass walls */}
         {PRODUCTS.map((product) => (
