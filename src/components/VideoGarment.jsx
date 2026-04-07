@@ -125,11 +125,9 @@ export default function VideoGarment({ product, position, onClick, visible, vide
 
   const handleClick = (e) => {
     e.stopPropagation()
-    if (!playing) {
-      startVideo()
-    } else {
-      onClick()
-    }
+    // First click: show product info + start video
+    if (!playing) startVideo()
+    onClick()
   }
 
   useFrame((state) => {

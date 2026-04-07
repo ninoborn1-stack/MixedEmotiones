@@ -3,6 +3,49 @@ import { Canvas } from '@react-three/fiber'
 import { motion, AnimatePresence } from 'framer-motion'
 import Experience from './components/Experience'
 
+function ChromaKeyVideo({ src, bgType, width, height }) {
+  const canvasRef = useRef(null)
+  const videoRef = useRef(null)
+
+  useEffect(() => {
+    const video = document.createElement('video')
+    video.src = src
+    video.crossOrigin = 'anonymous'
+    video.loop = true
+    video.muted = true
+    video.playsInline = true
+    videoRef.current = video
+    video.play()
+
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext('2d')
+
+    const draw = () => {
+      if (video.paused || video.ended) return
+      ctx.drawImage(video, 0, 0, width, height)
+      const frame = ctx.getImageData(0, 0, width, height)
+      const d = frame.data
+      for (let i = 0; i < d.length; i += 4) {
+        const r = d[i], g = d[i + 1], b = d[i + 2]
+        if (bgType === 'white') {
+          const minC = Math.min(r, g, b)
+          if (minC > 148) d[i + 3] = 0
+        } else {
+          const maxC = Math.max(r, g, b)
+          if (maxC < 5) d[i + 3] = 0
+        }
+      }
+      ctx.putImageData(frame, 0, 0)
+      requestAnimationFrame(draw)
+    }
+    video.addEventListener('playing', () => requestAnimationFrame(draw))
+
+    return () => { video.pause(); video.src = '' }
+  }, [src, bgType, width, height])
+
+  return <canvas ref={canvasRef} width={width} height={height} className="max-w-full max-h-full object-contain" />
+}
+
 export default function App() {
   // assembling -> exterior -> entering -> interior
   const [phase, setPhase] = useState('assembling')
@@ -97,15 +140,18 @@ export default function App() {
             </div>
             <motion.div
               className="absolute bottom-14 left-0 right-0 flex justify-center pointer-events-auto"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
             >
               <motion.button
-                className="px-10 py-3.5 bg-transparent text-[#1A1A1A] text-lg tracking-[0.35em] uppercase font-bold border-none cursor-pointer"
+                className="group px-10 py-3.5 bg-transparent text-[#1A1A1A] text-lg tracking-[0.35em] uppercase font-bold border-none cursor-pointer flex flex-col items-center gap-1"
                 style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                 onClick={advancePhase}
-                whileHover={{ scale: 1.05, letterSpacing: '0.45em' }}
                 whileTap={{ scale: 0.97 }}
               >
                 Enter Store
+                <span className="block h-[1.5px] bg-[#1A1A1A] transition-all duration-300 w-8 group-hover:w-full" />
               </motion.button>
             </motion.div>
             <p className="absolute bottom-8 right-10 text-[8px] tracking-[0.3em] uppercase text-[#8A8478]/30 font-light">
@@ -123,14 +169,15 @@ export default function App() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-10 py-7">
+            <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-6 py-6">
               <motion.button
-                className="text-[10px] tracking-[0.3em] uppercase text-[#8A8478] hover:text-[#1A1A1A] transition-colors duration-300 cursor-pointer bg-transparent border-none font-light pointer-events-auto flex items-center gap-2"
+                className="text-sm tracking-[0.25em] uppercase text-[#1A1A1A] cursor-pointer bg-transparent border-none font-bold pointer-events-auto flex items-center gap-3 ml-2"
+                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                 onClick={goBack}
-                whileHover={{ x: -3 }}
+                whileHover={{ x: -4 }}
               >
-                <svg width="12" height="8" viewBox="0 0 12 8" className="opacity-50">
-                  <path d="M0,4 L5,0 M0,4 L5,8 M0,4 L12,4" fill="none" stroke="currentColor" strokeWidth="0.7" />
+                <svg width="16" height="10" viewBox="0 0 16 10" className="opacity-70">
+                  <path d="M0,5 L6,0 M0,5 L6,10 M0,5 L16,5" fill="none" stroke="currentColor" strokeWidth="1.2" />
                 </svg>
                 Exit
               </motion.button>
@@ -172,16 +219,13 @@ export default function App() {
               exit={{ y: 20, opacity: 0 }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             >
-              {/* Video on the left */}
+              {/* Video on the left with BG removal */}
               <div className="flex-shrink-0 w-[320px] h-[240px] flex items-center justify-center">
-                <video
+                <ChromaKeyVideo
                   src={import.meta.env.BASE_URL + selectedProduct.videoSrc}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="max-w-full max-h-full object-contain"
-                  style={{ background: 'transparent' }}
+                  bgType={selectedProduct.bgType}
+                  width={320}
+                  height={240}
                 />
               </div>
               {/* Info on the right */}
