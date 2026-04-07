@@ -100,6 +100,30 @@ export default function PlayerFigure() {
         if (pos.x >= WALLS.right && newX < WALLS.right + r && newInStoreZ) canX = false
       }
 
+      // Lantern collision (center [5.5, z=1.5], radius ~0.3)
+      const lDx = newX - 5.5, lDz = newZ - 1.5
+      if (Math.sqrt(lDx * lDx + lDz * lDz) < 0.4) {
+        canX = false; canZ = false
+      }
+
+      // Fountain collision (center [-5.5, z=1.5], square basin walls)
+      // Basin outer: x [-6.2, -4.8], z [0.8, 2.2]
+      const fLeft = -6.25, fRight = -4.75, fBack = 0.8, fFront = 2.2
+      const fWall = 0.15 // wall thickness for collision
+      const inFountainX = newX > fLeft - r && newX < fRight + r
+      const inFountainZ = newZ > fBack - r && newZ < fFront + r
+      if (inFountainX && inFountainZ) {
+        const insideFountain = pos.x > fLeft + fWall && pos.x < fRight - fWall &&
+                               pos.z > fBack + fWall && pos.z < fFront - fWall
+        if (!insideFountain) {
+          // Outside trying to enter — block at walls
+          if (pos.x <= fLeft + fWall && newX > fLeft - r) canX = false
+          if (pos.x >= fRight - fWall && newX < fRight + r) canX = false
+          if (pos.z <= fBack + fWall && newZ > fBack - r) canZ = false
+          if (pos.z >= fFront - fWall && newZ < fFront + r) canZ = false
+        }
+      }
+
       if (canX) pos.x = newX
       if (canZ) pos.z = newZ
 
@@ -129,23 +153,24 @@ export default function PlayerFigure() {
     // shelf-bc: center [0, 0.7, -2.1], extents [1.0, 0.5]
     // shelf-br: center [1.8, 0.7, -2.1], extents [1.2, 0.5]
     const SHELF_TOP = 0.76
+    const FOUNTAIN_TOP = 0.65
     const shelves = [
-      { cx: -1.8, cz: -2.1, hw: 0.6, hd: 0.25 },
-      { cx: 0, cz: -2.1, hw: 0.5, hd: 0.25 },
-      { cx: 1.8, cz: -2.1, hw: 0.6, hd: 0.25 },
+      { cx: -1.8, cz: -2.1, hw: 0.6, hd: 0.25, top: SHELF_TOP },
+      { cx: 0, cz: -2.1, hw: 0.5, hd: 0.25, top: SHELF_TOP },
+      { cx: 1.8, cz: -2.1, hw: 0.6, hd: 0.25, top: SHELF_TOP },
+      // Fountain walls — can land on rim
+      { cx: -5.5, cz: 1.5, hw: 0.75, hd: 0.75, top: FOUNTAIN_TOP },
     ]
     for (const sh of shelves) {
       if (pos.x > sh.cx - sh.hw && pos.x < sh.cx + sh.hw &&
           pos.z > sh.cz - sh.hd && pos.z < sh.cz + sh.hd) {
-        // Only land on shelf if coming from above (falling down onto it)
-        if (posYRef.current >= SHELF_TOP - 0.05 && velYRef.current <= 0) {
-          floorY = SHELF_TOP
+        if (posYRef.current >= sh.top - 0.05 && velYRef.current <= 0) {
+          floorY = sh.top
         }
-        // Block jumping through from below — cap upward movement
-        if (posYRef.current < SHELF_TOP - 0.05 && velYRef.current > 0 &&
-            posYRef.current + velYRef.current * delta >= SHELF_TOP - 0.05) {
+        if (posYRef.current < sh.top - 0.05 && velYRef.current > 0 &&
+            posYRef.current + velYRef.current * delta >= sh.top - 0.05) {
           velYRef.current = 0
-          posYRef.current = SHELF_TOP - 0.06
+          posYRef.current = sh.top - 0.06
         }
       }
     }
