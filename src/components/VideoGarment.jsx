@@ -36,7 +36,7 @@ const blackKeyFrag = `
   }
 `
 
-export default function VideoGarment({ product, position, onClick, visible, videoSrc, posterSrc, bgType = 'black', showLabels = false }) {
+export default function VideoGarment({ product, position, onClick, visible, videoSrc, posterSrc, bgType = 'black', showLabels = false, displayScale }) {
   const groupRef = useRef()
   const [hovered, setHovered] = useState(false)
   const [playing, setPlaying] = useState(false)
@@ -154,7 +154,7 @@ export default function VideoGarment({ product, position, onClick, visible, vide
     <group
       ref={groupRef}
       position={position}
-      scale={0.8}
+      scale={displayScale || 0.8}
       onClick={handleClick}
       onPointerEnter={(e) => { e.stopPropagation(); setHovered(true); document.body.style.cursor = 'pointer' }}
       onPointerLeave={() => { setHovered(false); document.body.style.cursor = 'default' }}

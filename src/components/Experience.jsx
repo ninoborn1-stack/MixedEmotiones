@@ -29,7 +29,8 @@ const PRODUCTS = [
     color: '#1A1A1A',
     description: 'Brushed fleece interior. Oversized silhouette. Heart line art.',
     details: ['80% cotton, 20% polyester', '380 GSM', 'Oversized fit', 'Made in Portugal'],
-    position: [0, 1.5, -1.8],
+    position: [-0.08, 1.5, -1.8],
+    displayScale: 0.9,
     videoSrc: 'HM2.mp4',
     posterSrc: 'poster-center.png',
     bgType: 'white',
@@ -57,7 +58,7 @@ const CAMERA_TARGETS = {
   interior:   { pos: [0, 1.8, 2.0], lookAt: [0, 1.3, -1.2] },
 }
 
-export default function Experience({ phase, onAssemblyComplete, onEnter, selectedProduct, onSelectProduct }) {
+export default function Experience({ phase, onAssemblyComplete, onEnter, selectedProduct, onSelectProduct, pulseTime }) {
   const groupRef = useRef()
 
   const handleTilesSettled = useCallback(() => {
@@ -92,7 +93,7 @@ export default function Experience({ phase, onAssemblyComplete, onEnter, selecte
       </mesh>
 
       <group ref={groupRef}>
-        <TileCloud onSettled={handleTilesSettled} />
+        <TileCloud onSettled={handleTilesSettled} pulseTime={pulseTime} />
 
         {/* Products ALWAYS rendered — they are part of the store, visible from outside through glass walls */}
         {PRODUCTS.map((product) => (
@@ -106,6 +107,7 @@ export default function Experience({ phase, onAssemblyComplete, onEnter, selecte
             posterSrc={product.posterSrc}
             bgType={product.bgType}
             showLabels={phase === 'interior'}
+            displayScale={product.displayScale}
           />
         ))}
       </group>
