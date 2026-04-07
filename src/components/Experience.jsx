@@ -124,8 +124,8 @@ function CameraController({ phase }) {
 
   useFrame((_, delta) => {
     const speed =
-      phase === 'assembling' ? 0.5 :
-      phase === 'exterior' ? 0.6 :
+      phase === 'assembling' ? 0.3 :
+      phase === 'exterior' ? 0.4 :
       phase === 'entering' ? 0.6 :
       1.0
 
