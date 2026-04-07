@@ -18,6 +18,7 @@ const PRODUCTS = [
     details: ['100% organic cotton', '240 GSM', 'Relaxed fit', 'Made in Portugal', 'Ab 2 Produkten Lieferung inkl.'],
     position: [-1.8, 1.5, -1.8],
     displayScale: 1.0,
+    labelOffset: [0.25, -0.95, 0.3],
     videoSrc: 'TL.mp4',
     posterSrc: 'poster-left.png',
     bgType: 'white',
@@ -33,6 +34,7 @@ const PRODUCTS = [
     details: ['80% cotton, 20% polyester', '380 GSM', 'Oversized fit', 'Made in Portugal', 'Ab 2 Produkten Lieferung inkl.'],
     position: [-0.08, 1.42, -1.8],
     displayScale: 1.45,
+    labelOffset: [0.06, -1.05, 0.3],
     videoSrc: 'HM2.mp4',
     posterSrc: 'poster-center.png',
     bgType: 'white',
@@ -113,6 +115,7 @@ export default function Experience({ phase, onAssemblyComplete, onEnter, selecte
             bgType={product.bgType}
             showLabels={phase === 'interior' && !selectedProduct}
             displayScale={product.displayScale}
+            labelOffset={product.labelOffset}
           />
         ))}
       </group>
