@@ -245,11 +245,6 @@ export default function PlayerFigure({ playerPosRef }) {
         <boxGeometry args={[ts * 1.1, ts * 1.1, ts * 1.1]} />
         <meshStandardMaterial color="#FAFAF8" />
       </mesh>
-      {/* Hood — behind and over head */}
-      <mesh position={[0, 0.82, -0.05]}>
-        <boxGeometry args={[ts * 1.4, ts * 1.3, ts * 0.8]} />
-        <meshStandardMaterial color="#1A1A1A" />
-      </mesh>
     </group>
   )
 }
