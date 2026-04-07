@@ -187,12 +187,8 @@ export default function App() {
                 </svg>
                 Exit
               </motion.button>
-              <span className="text-2xl tracking-[0.25em] text-[#1A1A1A] font-bold opacity-60" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                MXD MTNS
-              </span>
-              <span className="text-[9px] tracking-[0.2em] uppercase text-[#8A8478]/40 font-light">
-                001
-              </span>
+              <span />
+              <span />
             </div>
             <div className="absolute bottom-7 left-0 right-0 text-center">
               <p className="text-[8px] tracking-[0.35em] uppercase text-[#8A8478]/25 font-light">
