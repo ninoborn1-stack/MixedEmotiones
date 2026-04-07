@@ -166,7 +166,7 @@ export default function App() {
             </motion.div>
             {/* Left tagline */}
             <motion.div
-              className="absolute left-[8%] md:left-[12%] top-[22%] md:top-[18%]"
+              className="absolute left-[8%] md:left-[12%] top-[25%] md:top-[21%]"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 0.5, x: 0 }}
               transition={{ delay: 1.2, duration: 1 }}
@@ -177,7 +177,7 @@ export default function App() {
             </motion.div>
             {/* Right established */}
             <motion.div
-              className="absolute right-[10%] md:right-[20%] top-[22%] md:top-[18%]"
+              className="absolute right-[10%] md:right-[20%] top-[25%] md:top-[21%]"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 0.5, x: 0 }}
               transition={{ delay: 1.2, duration: 1 }}
