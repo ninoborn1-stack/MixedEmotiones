@@ -26,6 +26,9 @@ export default function PlayerFigure({ playerPosRef }) {
   const leftArmRef = useRef()
   const rightArmRef = useRef()
   const posRef = useRef({ x: 4.5, z: 4 })
+  const flame1Ref = useRef()
+  const flame2Ref = useRef()
+  const flame3Ref = useRef()
   const keysRef = useRef({})
   const walkPhaseRef = useRef(0)
   const facingRef = useRef(0)
@@ -188,6 +191,12 @@ export default function PlayerFigure({ playerPosRef }) {
     groupRef.current.rotation.y = facingRef.current
     if (playerPosRef) { playerPosRef.current.x = pos.x; playerPosRef.current.z = pos.z }
 
+    // Flame animation
+    const ft = state.clock.elapsedTime
+    if (flame1Ref.current) flame1Ref.current.scale.y = 0.8 + Math.sin(ft * 12) * 0.3
+    if (flame2Ref.current) flame2Ref.current.scale.y = 0.6 + Math.sin(ft * 15 + 1) * 0.4
+    if (flame3Ref.current) flame3Ref.current.scale.y = 0.5 + Math.sin(ft * 18 + 2) * 0.3
+
     // Leg + arm swing
     const swing = moving ? Math.sin(walkPhaseRef.current) * 0.6 : 0
     if (leftLegRef.current) leftLegRef.current.rotation.x = swing
@@ -240,10 +249,18 @@ export default function PlayerFigure({ playerPosRef }) {
           <meshStandardMaterial color="#1A1A1A" />
         </mesh>
       </group>
-      {/* Head */}
-      <mesh position={[0, 0.78, 0]}>
-        <boxGeometry args={[ts * 1.1, ts * 1.1, ts * 1.1]} />
-        <meshStandardMaterial color="#FAFAF8" />
+      {/* Flame head */}
+      <mesh ref={flame1Ref} position={[0, 0.78, 0]}>
+        <boxGeometry args={[ts * 1.0, ts * 1.4, ts * 1.0]} />
+        <meshStandardMaterial color="#FF6B1A" emissive="#FF4500" emissiveIntensity={0.5} />
+      </mesh>
+      <mesh ref={flame2Ref} position={[0, 0.88, 0]}>
+        <boxGeometry args={[ts * 0.7, ts * 1.0, ts * 0.7]} />
+        <meshStandardMaterial color="#FFD700" emissive="#FFA500" emissiveIntensity={0.6} />
+      </mesh>
+      <mesh ref={flame3Ref} position={[0, 0.96, 0]}>
+        <boxGeometry args={[ts * 0.4, ts * 0.7, ts * 0.4]} />
+        <meshStandardMaterial color="#FFEE88" emissive="#FFD700" emissiveIntensity={0.8} />
       </mesh>
     </group>
   )

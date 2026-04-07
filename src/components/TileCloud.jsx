@@ -42,21 +42,6 @@ const SURFACES = [
   // Back edge detail
   { id: 'roof-back', center: [0, 3.44, -2.76], extents: [6.6, 0.2], plane: 'xy', thickness: 0.12, baseDelay: 1.0, opacityBucket: 0, tileSize: 0.12 },
 
-  // ==================== SPOTLIGHTS AT CORNERS ====================
-  // Front-left corner spotlight (pole + head angled up)
-  { id: 'spot-fl-pole', center: [-3.1, 2.0, 2.6], extents: [0.08, 1.2], plane: 'xy', thickness: 0.06, baseDelay: 1.1, opacityBucket: 0, tileSize: 0.08 },
-  { id: 'spot-fl-head', center: [-3.1, 2.65, 2.6], extents: [0.2, 0.12], plane: 'xy', thickness: 0.1, baseDelay: 1.15, opacityBucket: 0, tileSize: 0.08 },
-  { id: 'spot-fl-arm', center: [-3.0, 2.55, 2.6], extents: [0.15, 0.06], plane: 'xy', thickness: 0.06, baseDelay: 1.13, opacityBucket: 0, tileSize: 0.06 },
-  // Front-right corner spotlight
-  { id: 'spot-fr-pole', center: [3.1, 2.0, 2.6], extents: [0.08, 1.2], plane: 'xy', thickness: 0.06, baseDelay: 1.1, opacityBucket: 0, tileSize: 0.08 },
-  { id: 'spot-fr-head', center: [3.1, 2.65, 2.6], extents: [0.2, 0.12], plane: 'xy', thickness: 0.1, baseDelay: 1.15, opacityBucket: 0, tileSize: 0.08 },
-  { id: 'spot-fr-arm', center: [3.2, 2.55, 2.6], extents: [0.15, 0.06], plane: 'xy', thickness: 0.06, baseDelay: 1.13, opacityBucket: 0, tileSize: 0.06 },
-  // Back-left corner spotlight
-  { id: 'spot-bl-pole', center: [-3.1, 2.0, -2.5], extents: [0.08, 1.2], plane: 'xy', thickness: 0.06, baseDelay: 1.1, opacityBucket: 0, tileSize: 0.08 },
-  { id: 'spot-bl-head', center: [-3.1, 2.65, -2.5], extents: [0.2, 0.12], plane: 'xy', thickness: 0.1, baseDelay: 1.15, opacityBucket: 0, tileSize: 0.08 },
-  // Back-right corner spotlight
-  { id: 'spot-br-pole', center: [3.1, 2.0, -2.5], extents: [0.08, 1.2], plane: 'xy', thickness: 0.06, baseDelay: 1.1, opacityBucket: 0, tileSize: 0.08 },
-  { id: 'spot-br-head', center: [3.1, 2.65, -2.5], extents: [0.2, 0.12], plane: 'xy', thickness: 0.1, baseDelay: 1.15, opacityBucket: 0, tileSize: 0.08 },
 
   // ==================== FOUNTAIN (left of store) ====================
   // Base platform
