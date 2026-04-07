@@ -273,7 +273,7 @@ export default function App() {
                 </ul>
                 <div className="flex items-center gap-6 mt-2">
                   <span className="text-xl tracking-[0.1em] text-[#1A1A1A] font-light">
-                    EUR {selectedProduct.price}
+                    {selectedProduct.price} €
                   </span>
                   <motion.button
                     className="px-7 py-2.5 bg-[#1A1A1A] text-[#F8F6F3] text-[9px] tracking-[0.3em] uppercase font-light border-none cursor-pointer"
