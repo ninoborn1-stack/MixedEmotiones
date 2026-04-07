@@ -57,11 +57,13 @@ const PRODUCTS = [
   },
 ]
 
+const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
+
 const CAMERA_TARGETS = {
   assembling: { pos: [14, 9, 14], lookAt: [0, 1, 0] },
   exterior:   { pos: [2, 3.5, 16], lookAt: [0, 1.0, 0] },
-  entering:   { pos: [0, 1.8, 2.0], lookAt: [0, 1.4, -1.0] },
-  interior:   { pos: [0, 1.8, 2.0], lookAt: [0, 1.3, -1.2] },
+  entering:   { pos: [0, 1.8, isMobile ? 2.8 : 2.0], lookAt: [0, 1.4, -1.0] },
+  interior:   { pos: [0, 1.8, isMobile ? 2.8 : 2.0], lookAt: [0, 1.3, -1.2] },
 }
 
 export default function Experience({ phase, onAssemblyComplete, onEnter, onExit, selectedProduct, onSelectProduct, pulseTime, keysRef }) {
