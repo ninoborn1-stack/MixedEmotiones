@@ -155,8 +155,8 @@ function generateTiles() {
             if (Math.random() < colorChance) {
               const hue = Math.random()
               // Soft pastels: high lightness, low saturation
-              const s = 0.3 + Math.random() * 0.4
-              const l = 0.75 + Math.random() * 0.15
+              const s = 0.5 + Math.random() * 0.4
+              const l = 0.6 + Math.random() * 0.15
               // HSL to RGB
               const c = (1 - Math.abs(2 * l - 1)) * s
               const x = c * (1 - Math.abs((hue * 6) % 2 - 1))
