@@ -180,7 +180,7 @@ export default function VideoGarment({ product, position, onClick, visible, vide
       {/* Labels only visible inside the store */}
       {showLabels && (
         <Html
-          position={[0, -1.35, 0.3]}
+          position={[0, -0.95, 0.3]}
           center
           distanceFactor={6}
           style={{ opacity: hovered ? 1 : 0.8, transition: 'opacity 0.3s', pointerEvents: 'none' }}
