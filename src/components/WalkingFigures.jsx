@@ -26,7 +26,7 @@ export default function PlayerFigure({ playerPosRef }) {
   const rightLegRef = useRef()
   const leftArmRef = useRef()
   const rightArmRef = useRef()
-  const posRef = useRef({ x: 4.5, z: 4 })
+  const posRef = useRef({ x: 4.5, z: 0 })
   const flame1Ref = useRef()
   const flame2Ref = useRef()
   const flame3Ref = useRef()
@@ -269,27 +269,44 @@ export default function PlayerFigure({ playerPosRef }) {
         <boxGeometry args={[ts * 0.4, ts * 0.7, ts * 0.4]} />
         <meshStandardMaterial color="#FFEE88" emissive="#FFD700" emissiveIntensity={0.8} />
       </mesh>
-      {/* Arrow keys hint + pointer above head */}
+      {/* Arrow keys painted on floor + arrow above head */}
       {showHint && (
         <>
+          {/* Arrow above head */}
           <Html position={[0, 1.4, 0]} center distanceFactor={5} style={{ pointerEvents: 'none' }}>
-            <div className="flex flex-col items-center gap-0.5 select-none opacity-70">
-              <svg width="14" height="10" viewBox="0 0 14 10">
-                <path d="M7,1 L12,9 L2,9 Z" fill="#1A1A1A" />
+            <div className="flex flex-col items-center gap-0.5 select-none opacity-70 animate-bounce">
+              <svg width="16" height="12" viewBox="0 0 16 12">
+                <path d="M8,1 L14,10 L2,10 Z" fill="#1A1A1A" />
               </svg>
-              <span className="text-[7px] tracking-[0.15em] text-[#1A1A1A] font-medium">MOVE</span>
             </div>
           </Html>
-          <Html position={[0, -0.3, 0.5]} center distanceFactor={5} style={{ pointerEvents: 'none' }}>
-            <div className="flex flex-col items-center gap-[2px] select-none opacity-60">
-              <div className="w-4 h-4 border border-[#1A1A1A] rounded-[2px] flex items-center justify-center text-[6px] text-[#1A1A1A]">W</div>
-              <div className="flex gap-[2px]">
-                <div className="w-4 h-4 border border-[#1A1A1A] rounded-[2px] flex items-center justify-center text-[6px] text-[#1A1A1A]">A</div>
-                <div className="w-4 h-4 border border-[#1A1A1A] rounded-[2px] flex items-center justify-center text-[6px] text-[#1A1A1A]">S</div>
-                <div className="w-4 h-4 border border-[#1A1A1A] rounded-[2px] flex items-center justify-center text-[6px] text-[#1A1A1A]">D</div>
-              </div>
-            </div>
-          </Html>
+          {/* Floor arrows — flat on ground */}
+          {/* Forward arrow */}
+          <mesh position={[0, 0.02, -0.6]} rotation={[-Math.PI / 2, 0, 0]}>
+            <planeGeometry args={[0.25, 0.4]} />
+            <meshBasicMaterial color="#1A1A1A" transparent opacity={0.3} />
+          </mesh>
+          <mesh position={[0, 0.02, -0.85]} rotation={[-Math.PI / 2, 0, 0]}>
+            <bufferGeometry>
+              <float32BufferAttribute attach="attributes-position" args={[new Float32Array([-0.2,0,0, 0.2,0,0, 0,0.25,0]), 3]} />
+            </bufferGeometry>
+            <meshBasicMaterial color="#1A1A1A" transparent opacity={0.3} side={THREE.DoubleSide} />
+          </mesh>
+          {/* Back arrow */}
+          <mesh position={[0, 0.02, 0.6]} rotation={[-Math.PI / 2, 0, Math.PI]}>
+            <planeGeometry args={[0.25, 0.4]} />
+            <meshBasicMaterial color="#1A1A1A" transparent opacity={0.2} />
+          </mesh>
+          {/* Left arrow */}
+          <mesh position={[-0.6, 0.02, 0]} rotation={[-Math.PI / 2, 0, Math.PI / 2]}>
+            <planeGeometry args={[0.25, 0.4]} />
+            <meshBasicMaterial color="#1A1A1A" transparent opacity={0.2} />
+          </mesh>
+          {/* Right arrow */}
+          <mesh position={[0.6, 0.02, 0]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]}>
+            <planeGeometry args={[0.25, 0.4]} />
+            <meshBasicMaterial color="#1A1A1A" transparent opacity={0.2} />
+          </mesh>
         </>
       )}
     </group>
