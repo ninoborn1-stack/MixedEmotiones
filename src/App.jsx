@@ -140,7 +140,7 @@ export default function App() {
             transition={{ duration: 0.8 }}
           >
             <div className="absolute top-8 left-0 right-0 text-center">
-              <h1 className="text-5xl md:text-6xl tracking-[0.3em] text-[#1A1A1A] font-bold opacity-70" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              <h1 className="text-5xl md:text-6xl tracking-[0.3em] text-[#1A1A1A] font-bold opacity-70" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                 MXD MTNS
               </h1>
             </div>
@@ -151,13 +151,13 @@ export default function App() {
               transition={{ delay: 0.5, duration: 0.8 }}
             >
               <motion.button
-                className="group px-10 py-3.5 bg-transparent text-[#1A1A1A] text-lg tracking-[0.35em] uppercase font-bold border-none cursor-pointer flex flex-col items-center gap-1"
-                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                className="group relative px-10 py-3.5 text-[#1A1A1A] text-lg tracking-[0.35em] uppercase font-bold border-2 border-transparent cursor-pointer overflow-hidden"
+                style={{ fontFamily: "'Cormorant Garamond', serif" }}
                 onClick={advancePhase}
                 whileTap={{ scale: 0.97 }}
               >
-                Enter Store
-                <span className="block h-[1.5px] bg-[#1A1A1A] transition-all duration-300 w-8 group-hover:w-full" />
+                <span className="relative z-10 transition-colors duration-300 group-hover:text-[#F8F6F3]">Enter Store</span>
+                <span className="absolute inset-x-0 bottom-0 h-[2px] bg-[#1A1A1A] transition-all duration-400 ease-out group-hover:h-full" />
               </motion.button>
             </motion.div>
             <p className="absolute bottom-8 right-10 text-[8px] tracking-[0.3em] uppercase text-[#8A8478]/30 font-light">
@@ -178,7 +178,7 @@ export default function App() {
             <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-6 py-6">
               <motion.button
                 className="text-sm tracking-[0.25em] uppercase text-[#1A1A1A] cursor-pointer bg-transparent border-none font-bold pointer-events-auto flex items-center gap-3 ml-2"
-                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                style={{ fontFamily: "'Cormorant Garamond', serif" }}
                 onClick={goBack}
                 whileHover={{ x: -4 }}
               >

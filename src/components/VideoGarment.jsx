@@ -157,12 +157,6 @@ export default function VideoGarment({ product, position, onClick, visible, vide
       onPointerEnter={(e) => { e.stopPropagation(); setHovered(true); document.body.style.cursor = 'pointer' }}
       onPointerLeave={() => { setHovered(false); document.body.style.cursor = 'default' }}
     >
-      {/* Thin hanger wire only */}
-      <mesh position={[0, 0.7, 0]}>
-        <cylinderGeometry args={[0.002, 0.002, 1.4, 6]} />
-        <meshStandardMaterial color="#C0B8AE" transparent opacity={0.35} />
-      </mesh>
-
       <mesh position={[0, -0.05, 0.01]}>
         <planeGeometry args={[planeW, planeH]} />
         {(!playing || !videoReady) ? (
