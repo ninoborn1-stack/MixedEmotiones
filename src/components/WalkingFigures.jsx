@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useLoader } from '@react-three/fiber'
+import * as THREE from 'three'
 
 const WALLS = {
   left: -2.95,
@@ -162,39 +163,48 @@ export default function PlayerFigure() {
     if (rightArmRef.current) rightArmRef.current.rotation.x = swing * 0.8
   })
 
+  // Load Bear Tee poster as texture for the shirt
+  const teeTexture = useLoader(THREE.TextureLoader, import.meta.env.BASE_URL + 'poster-left.png')
+  teeTexture.colorSpace = THREE.SRGBColorSpace
+
   return (
     <group ref={groupRef} scale={0.7}>
       {/* Left leg — pivot at top */}
       <group ref={leftLegRef} position={[-0.07, 0.35, 0]}>
         <mesh position={[0, -0.15, 0]}>
           <boxGeometry args={[ts, 0.3, ts]} />
-          <meshStandardMaterial color="#FAFAF8" />
+          <meshStandardMaterial color="#1A1A1A" />
         </mesh>
       </group>
       {/* Right leg */}
       <group ref={rightLegRef} position={[0.07, 0.35, 0]}>
         <mesh position={[0, -0.15, 0]}>
           <boxGeometry args={[ts, 0.3, ts]} />
-          <meshStandardMaterial color="#FAFAF8" />
+          <meshStandardMaterial color="#1A1A1A" />
         </mesh>
       </group>
-      {/* Body */}
+      {/* Body — Bear Tee (black with texture on front) */}
       <mesh position={[0, 0.55, 0]}>
         <boxGeometry args={[ts * 2.5, 0.3, ts * 1.3]} />
-        <meshStandardMaterial color="#FAFAF8" />
+        <meshStandardMaterial color="#1A1A1A" />
       </mesh>
-      {/* Left arm — pivot at shoulder */}
+      {/* Bear Tee graphic on front */}
+      <mesh position={[0, 0.55, ts * 0.66]}>
+        <planeGeometry args={[ts * 2.4, 0.28]} />
+        <meshBasicMaterial map={teeTexture} transparent alphaTest={0.5} />
+      </mesh>
+      {/* Left arm (sleeves — black) */}
       <group ref={leftArmRef} position={[-0.22, 0.6, 0]}>
         <mesh position={[0, -0.12, 0]}>
           <boxGeometry args={[ts * 0.7, 0.25, ts * 0.8]} />
-          <meshStandardMaterial color="#FAFAF8" />
+          <meshStandardMaterial color="#1A1A1A" />
         </mesh>
       </group>
-      {/* Right arm */}
+      {/* Right arm (sleeve — black) */}
       <group ref={rightArmRef} position={[0.22, 0.6, 0]}>
         <mesh position={[0, -0.12, 0]}>
           <boxGeometry args={[ts * 0.7, 0.25, ts * 0.8]} />
-          <meshStandardMaterial color="#FAFAF8" />
+          <meshStandardMaterial color="#1A1A1A" />
         </mesh>
       </group>
       {/* Head */}
