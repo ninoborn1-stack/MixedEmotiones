@@ -55,7 +55,7 @@ export default function PlayerFigure({ playerPosRef }) {
     return x > WALLS.doorLeft && x < WALLS.doorRight
   }
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
     if (!groupRef.current) return
     const keys = keysRef.current
     const pos = posRef.current
