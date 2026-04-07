@@ -58,7 +58,8 @@ export default function VirtualJoystick({ keysRef }) {
     }
   }, [keysRef])
 
-  if (!isTouch) return null
+  // Joystick disabled
+  return null
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-40 pointer-events-none" style={{ height: '35vh' }}>
